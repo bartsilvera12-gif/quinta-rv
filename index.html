@@ -302,7 +302,7 @@
               <div style="display:grid;gap:10px">
                 <sc-for list="{{ shiftOptions }}" as="s" hint-placeholder-count="2">
                   <button onClick="{{ s.onClick }}" disabled="{{ s.disabled }}" style="{{ s.style }}">
-                    <span style="display:flex;justify-content:space-between;align-items:center;gap:14px">
+                    <span style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:4px 14px">
                       <span style="display:block;text-align:left">
                         <span style="display:block;font-family:'Poppins',sans-serif;font-size:22px;color:#2A1F15">{{ s.label }}</span>
                         <span style="display:block;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.12em;color:#7A6856;margin-top:6px">{{ s.time }} · {{ s.stateLabel }}</span>
@@ -1110,8 +1110,9 @@ class Component extends DCLogic {
   }
 
   dayStyle(bg, color, cursor, border) {
-    return 'aspect-ratio:1;min-height:44px;border-radius:50%;border:' + border + ';background:' + bg +
-      ';color:' + color + ";font-family:'Poppins',sans-serif;font-size:16px;font-weight:600;cursor:" + cursor;
+    const chico = this.state.vw < 380;
+    return 'aspect-ratio:1;min-height:' + (chico ? 34 : 44) + 'px;border-radius:50%;border:' + border + ';background:' + bg +
+      ';color:' + color + ";font-family:'Poppins',sans-serif;font-weight:600;cursor:" + cursor + ';font-size:' + (chico ? 14 : 16) + 'px';
   }
 
   // ---------------------------------------------------------------- panel
@@ -1546,7 +1547,8 @@ class Component extends DCLogic {
           ? "position:absolute;top:100%;left:0;right:0;background:#FFF9F2;border-bottom:1px solid #E7D9C8;display:flex;flex-direction:column;gap:6px;padding:14px 18px 20px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase"
           : 'display:none')
         : "display:flex;gap:20px;flex-wrap:wrap;align-items:center;margin-left:auto;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase",
-      headerCtaStyle: "text-decoration:none;background:#2A1F15;color:#FFF9F2;padding:12px 20px;border-radius:999px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap" + (mobile ? ';margin-left:auto' : ''),
+      headerCtaStyle: "text-decoration:none;flex:none;background:#2A1F15;color:#FFF9F2;border-radius:999px;font-family:'DM Mono',monospace;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;padding:" +
+        (narrow ? "11px 15px" : "12px 20px") + ";font-size:" + (narrow ? 10 : 11) + "px" + (mobile ? ";margin-left:auto" : ""),
       menuBtnStyle: mobile
         ? 'width:46px;height:46px;min-width:46px;border-radius:999px;border:1px solid #E0CFBC;background:#FFFDFA;color:#2A1F15;font-size:18px;line-height:1;cursor:pointer'
         : 'display:none',
