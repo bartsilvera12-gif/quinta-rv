@@ -47,9 +47,12 @@
 <div>
 <header style="position:sticky;top:0;z-index:40;background:#FFF9F2;border-bottom:1px solid #E7D9C8">
   <div style="max-width:1280px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:12px;position:relative;flex-wrap:nowrap">
-    <a href="#inicio" style="text-decoration:none;display:flex;align-items:baseline;gap:9px">
-      <span style="font-family:'Poppins',sans-serif;font-size:22px;letter-spacing:-0.01em;color:#2A1F15">Quinta RV</span>
-      <span style="font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#6E5C48">Yukyry</span>
+    <a href="#inicio" style="text-decoration:none;display:flex;align-items:center;gap:10px">
+      <img src="/favicon-96.png" alt="Casa Quinta RV" width="36" height="36" style="display:block;width:36px;height:36px;flex:none" />
+      <span style="display:flex;align-items:baseline;gap:9px">
+        <span style="font-family:'Poppins',sans-serif;font-size:22px;letter-spacing:-0.01em;color:#2A1F15">Quinta RV</span>
+        <span style="font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#6E5C48">Yukyry</span>
+      </span>
     </a>
     <nav style="{{ navStyle }}">
       <a href="#quinta" onClick="{{ closeMenu }}" style="text-decoration:none;color:#6B5A49;padding:6px 0">La quinta</a>
@@ -75,17 +78,14 @@
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,120px),1fr));gap:12px;margin-top:clamp(28px,3.4vw,46px)">
         <div style="background:#F7F2EA;border-radius:12px;padding:18px">
-          <div style="width:40px;height:40px;border-radius:50%;overflow:hidden;margin-bottom:14px"><image-slot id="v2-stat-1" shape="circle"></image-slot></div>
           <p style="margin:0;font-size:clamp(24px,2.6vw,32px);font-weight:600;letter-spacing:-0.02em;color:#2A1F15;line-height:1">8h</p>
           <p style="margin:6px 0 0;font-family:'DM Mono',monospace;font-size:10px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;color:#6E5C48">de turno completo</p>
         </div>
         <div style="background:#F7F2EA;border-radius:12px;padding:18px">
-          <div style="width:40px;height:40px;border-radius:50%;overflow:hidden;margin-bottom:14px"><image-slot id="v2-stat-2" shape="circle"></image-slot></div>
           <p style="margin:0;font-size:clamp(24px,2.6vw,32px);font-weight:600;letter-spacing:-0.02em;color:#2A1F15;line-height:1">15</p>
           <p style="margin:6px 0 0;font-family:'DM Mono',monospace;font-size:10px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;color:#6E5C48">personas incluidas</p>
         </div>
         <div style="background:#F7F2EA;border-radius:12px;padding:18px">
-          <div style="width:40px;height:40px;border-radius:50%;overflow:hidden;margin-bottom:14px"><image-slot id="v2-stat-3" shape="circle"></image-slot></div>
           <p style="margin:0;font-size:clamp(24px,2.6vw,32px);font-weight:600;letter-spacing:-0.02em;color:#2A1F15;line-height:1">2</p>
           <p style="margin:6px 0 0;font-family:'DM Mono',monospace;font-size:10px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;color:#6E5C48">turnos: día y noche</p>
         </div>
@@ -507,7 +507,7 @@
     <p style="margin:clamp(34px,5vw,56px) 0 0;font-family:'Poppins',sans-serif;font-weight:600;font-size:clamp(30px,8.4vw,108px);line-height:1;letter-spacing:-0.02em;color:#FFF9F2">Casa Quinta RV</p>
     <div style="margin-top:26px;padding-top:16px;border-top:1px solid rgba(255,249,242,0.2);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#C4B2A0">
       <span>© 2026 Casa Quinta RV</span>
-      <span style="display:flex;gap:18px"><a href="#inicio" style="color:#C4B2A0;text-decoration:none">Desarrollado por Neura</a><a onClick="{{ openAdmin }}" style="color:#C4B2A0;text-decoration:none;cursor:pointer">Admin</a></span>
+      <span style="display:flex;gap:18px"><a href="#inicio" style="color:#C4B2A0;text-decoration:none">Desarrollado por Neura</a></span>
     </div>
   </div>
 </footer>
