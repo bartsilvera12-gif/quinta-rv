@@ -40,6 +40,11 @@
   input, button { font-family:'Poppins',system-ui,sans-serif; }
   html { scroll-behavior:smooth; }
   @keyframes rvmarquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+  /* image-slot pone touch-action:none en su <img> para poder reencuadrar
+     dentro del editor. En el sitio publicado no se reencuadra nada, y eso
+     dejaba la pagina sin scroll tactil sobre cualquier foto. Lo devolvemos
+     a pan-y: la pagina scrollea y el carrusel sigue recibiendo el swipe. */
+  image-slot::part(image) { touch-action:pan-y !important; }
 </style>
 </helmet>
 
@@ -47,11 +52,11 @@
 <div>
 <header style="position:sticky;top:0;z-index:40;background:#FFF9F2;border-bottom:1px solid #E7D9C8">
   <div style="max-width:1280px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:12px;position:relative;flex-wrap:nowrap">
-    <a href="#inicio" style="text-decoration:none;display:flex;align-items:center;gap:10px">
-      <img src="/favicon-96.png" alt="Casa Quinta RV" width="36" height="36" style="display:block;width:36px;height:36px;flex:none" />
+    <a href="#inicio" style="text-decoration:none;display:flex;align-items:center;gap:10px;flex:none;min-width:0">
+      <img src="/favicon-96.png" alt="Casa Quinta RV" style="{{ brandLogoStyle }}" />
       <span style="display:flex;align-items:baseline;gap:9px">
-        <span style="font-family:'Poppins',sans-serif;font-size:22px;letter-spacing:-0.01em;color:#2A1F15">Quinta RV</span>
-        <span style="font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#6E5C48">Yukyry</span>
+        <span style="{{ brandNameStyle }}">Quinta RV</span>
+        <span style="{{ brandTagStyle }}">Yukyry</span>
       </span>
     </a>
     <nav style="{{ navStyle }}">
@@ -91,8 +96,8 @@
         </div>
       </div>
     </div>
-    <div style="position:relative;min-height:clamp(340px,46vw,620px);border-radius:clamp(12px,1.2vw,18px);background:#DCE7E8">
-      <div style="position:absolute;top:clamp(-34px,-2.6vw,-18px);left:clamp(-52px,-4vw,-20px);right:clamp(10px,1.4vw,18px);bottom:clamp(22px,2.6vw,36px);border-radius:clamp(10px,1.1vw,16px);overflow:hidden;box-shadow:0 34px 60px -30px rgba(42,31,21,0.45);z-index:3">
+    <div style="{{ heroBoxStyle }}">
+      <div style="{{ heroPhotoStyle }}">
         <image-slot id="v2-hero" shape="rect" placeholder="Foto real de la piscina — protagonista"></image-slot>
       </div>
     </div>
@@ -205,9 +210,6 @@
       </div>
       <button onClick="{{ galPrev }}" style="{{ prevStyle }}" aria-label="Anterior">‹</button>
       <button onClick="{{ galNext }}" style="{{ nextStyle }}" aria-label="Siguiente">›</button>
-      <div style="position:absolute;left:18px;bottom:16px;display:flex;gap:10px;align-items:center;background:rgba(26,20,13,0.62);color:#FFF9F2;padding:8px 14px;border-radius:999px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;pointer-events:none">
-        <span>{{ galCounter }}</span><span style="opacity:.6">·</span><span>{{ galCurrentLabel }}</span>
-      </div>
       <button onClick="{{ openCurrent }}" style="position:absolute;right:16px;bottom:16px;background:#FFF9F2;border:none;color:#2A1F15;padding:11px 18px;border-radius:999px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer" style-hover="background:#FFFFFF">Ampliar</button>
     </div>
 
@@ -1446,6 +1448,10 @@ class Component extends DCLogic {
     const allPrices = this.activeModalities().flatMap(m => m.shifts.map(s => s.price));
 
     const mobile = st.vw < 860;
+    // Pantalla de telefono: ahi el header se apretaba y la foto del hero,
+    // que en escritorio sale un poco de su caja a proposito, se salia de la
+    // pantalla.
+    const narrow = st.vw < 620;
 
     // ------------------------------------------------------------- panel
     const tab = (id, label) => ({
@@ -1524,6 +1530,16 @@ class Component extends DCLogic {
       adminWho: st.adminWho,
 
       // -------- sitio
+      brandLogoStyle: "display:block;flex:none;width:" + (narrow ? 32 : 36) + "px;height:" + (narrow ? 32 : 36) + "px",
+      brandNameStyle: "font-family:'Poppins',sans-serif;white-space:nowrap;letter-spacing:-0.01em;color:#2A1F15;font-size:" + (narrow ? 19 : 22) + "px",
+      brandTagStyle: narrow
+        ? "display:none"
+        : "font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#6E5C48;white-space:nowrap",
+      heroBoxStyle: "position:relative;border-radius:clamp(12px,1.2vw,18px);background:#DCE7E8;min-height:" +
+        (mobile ? "clamp(240px,58vw,340px)" : "clamp(340px,46vw,620px)"),
+      heroPhotoStyle: mobile
+        ? "position:absolute;inset:0;border-radius:clamp(12px,1.2vw,18px);overflow:hidden;box-shadow:0 18px 38px -26px rgba(42,31,21,0.45);z-index:3"
+        : "position:absolute;top:clamp(-34px,-2.6vw,-18px);left:clamp(-52px,-4vw,-20px);right:clamp(10px,1.4vw,18px);bottom:clamp(22px,2.6vw,36px);border-radius:clamp(10px,1.1vw,16px);overflow:hidden;box-shadow:0 34px 60px -30px rgba(42,31,21,0.45);z-index:3",
       facilitiesRailStyle: 'display:flex;flex-direction:column',
       navStyle: mobile
         ? (st.menuOpen
@@ -1563,14 +1579,39 @@ class Component extends DCLogic {
       prevStyle: 'position:absolute;left:14px;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;padding-bottom:4px;background:#FFF9F2;color:#2A1F15;box-shadow:0 6px 18px rgba(42,31,21,0.25);z-index:2;cursor:' + (gi === 0 ? 'not-allowed' : 'pointer') + ';opacity:' + (gi === 0 ? '0.4' : '0.88'),
       nextStyle: 'position:absolute;right:14px;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;padding-bottom:4px;background:#FFF9F2;color:#2A1F15;box-shadow:0 6px 18px rgba(42,31,21,0.25);z-index:2;cursor:' + (gi >= filtered.length - 1 ? 'not-allowed' : 'pointer') + ';opacity:' + (gi >= filtered.length - 1 ? '0.4' : '0.88'),
       openCurrent: () => { if (filtered.length) this.setState({ lightbox: filtered[gi].id }); },
-      dragStart: (e) => { this._drag = { x: e.clientX, w: this.trackRef.current ? this.trackRef.current.offsetWidth : 1 }; this.setState({ dragging: true }); },
-      dragMove: (e) => { if (this._drag) this.setState({ dragDx: (e.clientX - this._drag.x) * 0.9 }); },
+      // El arrastre empieza recien cuando se sabe que el gesto es horizontal:
+      // si arranca vertical es scroll de la pagina y lo soltamos. Y tomamos el
+      // puntero, porque si el dedo se iba de la foto el pointerup no llegaba
+      // nunca y el carrusel quedaba trabado a mitad de camino.
+      dragStart: (e) => {
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        this._drag = {
+          x: e.clientX, y: e.clientY, id: e.pointerId, el: e.currentTarget, axis: null,
+          w: this.trackRef.current ? this.trackRef.current.offsetWidth : 1
+        };
+      },
+      dragMove: (e) => {
+        const d = this._drag;
+        if (!d || e.pointerId !== d.id) return;
+        const dx = e.clientX - d.x, dy = e.clientY - d.y;
+        if (!d.axis) {
+          if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+          if (Math.abs(dy) >= Math.abs(dx)) { this._drag = null; return; }
+          d.axis = 'x';
+          try { d.el.setPointerCapture(d.id); } catch (err) {}
+          this.setState({ dragging: true });
+        }
+        this.setState({ dragDx: dx * 0.9 });
+      },
       dragEnd: (e) => {
-        if (!this._drag) return;
-        const dx = e.clientX - this._drag.x, w = this._drag.w;
+        const d = this._drag;
+        if (!d || (e.pointerId != null && e.pointerId !== d.id)) return;
         this._drag = null;
+        if (d.axis !== 'x') return;
+        try { d.el.releasePointerCapture(d.id); } catch (err) {}
+        const dx = e.clientX - d.x;
         this.setState({ dragging: false, dragDx: 0 });
-        if (Math.abs(dx) > w * 0.2) this.stepGal(dx > 0 ? -1 : 1);
+        if (Math.abs(dx) > d.w * 0.2) this.stepGal(dx > 0 ? -1 : 1);
       },
       lightboxOpen: !!lb,
       lightboxSlotId: lb ? 'v2g-' + lb.id : '',
