@@ -34,7 +34,7 @@ create table if not exists quintarv.config (
   day_time            text    not null default '10:00 - 18:00',
   night_time          text    not null default '19:00 - 03:00',
   alias               text    not null default 'quintarv.py',
-  whatsapp            text    not null default '595981123456',
+  whatsapp            text    not null default '595983145432',
   promo_couple        boolean not null default true,
   constraint config_singleton check (id = 1)
 );

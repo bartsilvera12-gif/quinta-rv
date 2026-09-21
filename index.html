@@ -812,7 +812,7 @@
   &quot;promoPareja&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Reservas&quot; },
   &quot;extraPerson&quot;: { &quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 50000, &quot;min&quot;: 0, &quot;max&quot;: 200000, &quot;step&quot;: 5000, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Reservas&quot; },
   &quot;alias&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;quintarv.py&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Contacto&quot; },
-  &quot;whatsapp&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;595981123456&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Contacto&quot; }
+  &quot;whatsapp&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;595983145432&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Contacto&quot; }
 }">
 const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','setiembre','octubre','noviembre','diciembre'];
 const DIAS = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
@@ -1008,7 +1008,7 @@ class Component extends DCLogic {
       depositPct: num('deposit_pct', this.props.depositPct ?? 30),
       holdMinutes: num('hold_minutes', this.props.holdMinutes ?? 30),
       alias: txt('alias', this.props.alias ?? 'quintarv.py'),
-      whatsapp: digits(txt('whatsapp', this.props.whatsapp ?? '595981123456')),
+      whatsapp: digits(txt('whatsapp', this.props.whatsapp ?? '595983145432')),
       extraPerson: num('price_extra_person', this.props.extraPerson ?? 50000),
       dayTime, nightTime,
       modalities: [
@@ -1847,8 +1847,8 @@ class Component extends DCLogic {
             fieldPlain('depositPct', 'deposit_pct', 'Porcentaje de seña (%)', val('deposit_pct', 30)),
             fieldPlain('hold', 'hold_minutes', 'Vencimiento pre-reserva (min)', val('hold_minutes', 30)),
             fieldTxt('alias', 'alias', 'Alias de transferencia', val('alias', 'quintarv.py')),
-            fieldTxt('wa', 'whatsapp', 'WhatsApp', val('whatsapp', '595981123456'),
-              cfg.whatsapp ? 'Los mensajes van a wa.me/' + cfg.whatsapp : 'Escribí el número con el código: 595981123456')
+            fieldTxt('wa', 'whatsapp', 'WhatsApp', val('whatsapp', '595983145432'),
+              cfg.whatsapp ? 'Los mensajes van a wa.me/' + cfg.whatsapp : 'Escribí el número con el código: 595983145432')
           ]
         }
       ],
