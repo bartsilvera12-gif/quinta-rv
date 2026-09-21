@@ -14,6 +14,19 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="./image-slot.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+  // === Supabase — schema propio `quintarv` ===
+  window.__SUPABASE_URL  = 'https://api.neura.com.py';
+  window.__SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzc0MTAxNDYxLCJleHAiOjE5MzE3ODE0NjF9.7_wAph8IolPMXtgfpezSwS5XR62IdD__qhqCywLDp3Q';
+  (function ready() {
+    if (!window.supabase) return setTimeout(ready, 50);
+    window.__supa = window.supabase.createClient(window.__SUPABASE_URL, window.__SUPABASE_ANON, {
+      auth: { persistSession: true, autoRefreshToken: true },
+      db: { schema: 'quintarv' }
+    });
+  })();
+</script>
 <style>
   body { margin:0; background:#FFF9F2; color:#2A1F15; font-family:'Poppins',system-ui,sans-serif; -webkit-text-size-adjust:100%; padding-bottom:92px; overflow-x:hidden; }
   * { box-sizing:border-box; min-width:0; }
@@ -25,6 +38,8 @@
 </style>
 </helmet>
 
+<sc-if value="{{ isSite }}" hint-placeholder-val="{{ true }}">
+<div>
 <header style="position:sticky;top:0;z-index:40;background:#FFF9F2;border-bottom:1px solid #E7D9C8">
   <div style="max-width:1280px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:12px;position:relative;flex-wrap:nowrap">
     <a href="#inicio" style="text-decoration:none;display:flex;align-items:baseline;gap:9px">
@@ -55,17 +70,17 @@
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,120px),1fr));gap:12px;margin-top:clamp(28px,3.4vw,46px)">
         <div style="background:#F7F2EA;border-radius:12px;padding:18px">
-          <div style="width:40px;height:40px;border-radius:50%;overflow:hidden;margin-bottom:14px"><image-slot id="v2-stat-1" shape="circle" src="https://images.unsplash.com/photo-1635122212082-c4b6f108f36a?auto=format&fit=crop&q=70&w=300&h=300&fit=crop&crop=focalpoint&fp-y=0.9&fp-z=2.6" credit="Photo by Point3D Commercial Imaging Ltd. on Unsplash" credit-href="https://unsplash.com/@3dottawa"></image-slot></div>
+          <div style="width:40px;height:40px;border-radius:50%;overflow:hidden;margin-bottom:14px"><image-slot id="v2-stat-1" shape="circle"></image-slot></div>
           <p style="margin:0;font-size:clamp(24px,2.6vw,32px);font-weight:600;letter-spacing:-0.02em;color:#2A1F15;line-height:1">8h</p>
           <p style="margin:6px 0 0;font-family:'DM Mono',monospace;font-size:10px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;color:#6E5C48">de turno completo</p>
         </div>
         <div style="background:#F7F2EA;border-radius:12px;padding:18px">
-          <div style="width:40px;height:40px;border-radius:50%;overflow:hidden;margin-bottom:14px"><image-slot id="v2-stat-2" shape="circle" src="https://images.unsplash.com/photo-1635122212082-c4b6f108f36a?auto=format&fit=crop&q=70&w=300&h=300&fit=crop&crop=focalpoint&fp-x=0.3&fp-y=0.88&fp-z=2.4" credit="Photo by Point3D Commercial Imaging Ltd. on Unsplash" credit-href="https://unsplash.com/@3dottawa"></image-slot></div>
+          <div style="width:40px;height:40px;border-radius:50%;overflow:hidden;margin-bottom:14px"><image-slot id="v2-stat-2" shape="circle"></image-slot></div>
           <p style="margin:0;font-size:clamp(24px,2.6vw,32px);font-weight:600;letter-spacing:-0.02em;color:#2A1F15;line-height:1">15</p>
           <p style="margin:6px 0 0;font-family:'DM Mono',monospace;font-size:10px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;color:#6E5C48">personas incluidas</p>
         </div>
         <div style="background:#F7F2EA;border-radius:12px;padding:18px">
-          <div style="width:40px;height:40px;border-radius:50%;overflow:hidden;margin-bottom:14px"><image-slot id="v2-stat-3" shape="circle" src="https://images.unsplash.com/photo-1635122212082-c4b6f108f36a?auto=format&fit=crop&q=70&w=300&h=300&fit=crop&crop=focalpoint&fp-x=0.72&fp-y=0.88&fp-z=2.4" credit="Photo by Point3D Commercial Imaging Ltd. on Unsplash" credit-href="https://unsplash.com/@3dottawa"></image-slot></div>
+          <div style="width:40px;height:40px;border-radius:50%;overflow:hidden;margin-bottom:14px"><image-slot id="v2-stat-3" shape="circle"></image-slot></div>
           <p style="margin:0;font-size:clamp(24px,2.6vw,32px);font-weight:600;letter-spacing:-0.02em;color:#2A1F15;line-height:1">2</p>
           <p style="margin:6px 0 0;font-family:'DM Mono',monospace;font-size:10px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;color:#6E5C48">turnos: día y noche</p>
         </div>
@@ -73,8 +88,7 @@
     </div>
     <div style="position:relative;min-height:clamp(340px,46vw,620px);border-radius:clamp(12px,1.2vw,18px);background:#DCE7E8">
       <div style="position:absolute;top:clamp(-34px,-2.6vw,-18px);left:clamp(-52px,-4vw,-20px);right:clamp(10px,1.4vw,18px);bottom:clamp(22px,2.6vw,36px);border-radius:clamp(10px,1.1vw,16px);overflow:hidden;box-shadow:0 34px 60px -30px rgba(42,31,21,0.45);z-index:3">
-        <p style="position:absolute;right:12px;bottom:10px;z-index:5;margin:0;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.06em;color:rgba(255,255,255,0.92);text-shadow:0 1px 4px rgba(0,0,0,0.6)">Foto de prueba: <a href="https://unsplash.com/@3dottawa?utm_source=omelette&amp;utm_medium=referral" target="_blank" style="color:#FFFFFF">Point3D Commercial Imaging Ltd.</a> · <a href="https://unsplash.com/?utm_source=omelette&amp;utm_medium=referral" target="_blank" style="color:#FFFFFF">Unsplash</a></p>
-        <image-slot id="v2-hero" shape="rect" src="https://images.unsplash.com/photo-1635122212082-c4b6f108f36a?auto=format&fit=crop&q=70&w=1200&h=1500&fit=crop&crop=focalpoint&fp-y=0.86&fp-z=1.7" placeholder="Foto real de la piscina — protagonista" credit="Photo by Point3D Commercial Imaging Ltd. on Unsplash" credit-href="https://unsplash.com/@3dottawa"></image-slot>
+        <image-slot id="v2-hero" shape="rect" placeholder="Foto real de la piscina — protagonista"></image-slot>
       </div>
       <div style="position:absolute;top:0;left:0;right:clamp(10px,1.4vw,18px);display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;padding:16px;z-index:4;pointer-events:none">
         <a href="#reservar" style="pointer-events:auto;text-decoration:none;background:rgba(255,253,250,0.95);color:#2A1F15;padding:13px 20px;border-radius:999px;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap" style-hover="background:#FFFFFF">Ver disponibilidad</a>
@@ -488,7 +502,7 @@
     <p style="margin:clamp(34px,5vw,56px) 0 0;font-family:'Poppins',sans-serif;font-weight:600;font-size:clamp(30px,8.4vw,108px);line-height:1;letter-spacing:-0.02em;color:#FFF9F2">Casa Quinta RV</p>
     <div style="margin-top:26px;padding-top:16px;border-top:1px solid rgba(255,249,242,0.2);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#C4B2A0">
       <span>© 2026 Casa Quinta RV</span>
-      <span style="display:flex;gap:18px"><a href="#inicio" style="color:#C4B2A0;text-decoration:none">Desarrollado por Neura</a></span>
+      <span style="display:flex;gap:18px"><a href="#inicio" style="color:#C4B2A0;text-decoration:none">Desarrollado por Neura</a><a onClick="{{ openAdmin }}" style="color:#C4B2A0;text-decoration:none;cursor:pointer">Admin</a></span>
     </div>
   </div>
 </footer>
@@ -496,6 +510,292 @@
 <a href="{{ whatsappPlain }}" target="_blank" aria-label="Escribinos por WhatsApp" style="position:fixed;right:18px;bottom:18px;z-index:60;width:58px;height:58px;border-radius:50%;background:#25D366;box-shadow:0 16px 34px -16px rgba(20,60,30,0.65);display:flex;align-items:center;justify-content:center;text-decoration:none" style-hover="background:#1FBE5A">
   <svg viewBox="0 0 24 24" width="30" height="30" fill="#FFFFFF" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2Zm0 18.13h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.22 8.22 0 0 1-1.26-4.36c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.7 8.21-8.24 8.21Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.71-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.24-.87.85-.87 2.07s.89 2.4 1.02 2.56c.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29Z"></path></svg>
 </a>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
+<div style="min-height:100vh;background:#F3ECE2">
+
+  <!-- LOGIN -->
+  <sc-if value="{{ needsLogin }}" hint-placeholder-val="{{ true }}">
+    <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:#2F3B24">
+      <div style="width:100%;max-width:380px;background:#FFF9F2;border-radius:18px;padding:32px 28px">
+        <p style="margin:0 0 6px;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#7C8A5B">Casa Quinta RV</p>
+        <h1 style="margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:27px;letter-spacing:-0.015em;color:#2A1F15">Panel</h1>
+        <label style="display:block;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#6B5A49;margin:26px 0 8px">Email</label>
+        <input value="{{ adminEmail }}" onChange="{{ onAdminEmail }}" inputMode="email" placeholder="admin@quintarv.com" style="width:100%;padding:16px;font-size:16px;border:1px solid #E0CFBC;border-radius:10px;background:#FFFDFA;outline:none;color:#2A1F15" />
+        <label style="display:block;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#6B5A49;margin:16px 0 8px">Contraseña</label>
+        <input type="password" value="{{ adminPass }}" onChange="{{ onAdminPass }}" onKeyDown="{{ onLoginKey }}" placeholder="••••••••" style="width:100%;padding:16px;font-size:16px;border:1px solid #E0CFBC;border-radius:10px;background:#FFFDFA;outline:none;color:#2A1F15" />
+        <sc-if value="{{ loginError }}" hint-placeholder-val="{{ '' }}">
+          <div style="margin-top:16px;padding:12px 14px;background:#FBE7DC;border:1px solid #F0CDB8;color:#8E4C28;font-size:13px;border-radius:10px">{{ loginError }}</div>
+        </sc-if>
+        <button onClick="{{ doLogin }}" style="width:100%;margin-top:22px;background:#2A1F15;color:#FFF9F2;border:none;padding:18px;border-radius:999px;font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer" style-hover="background:#5B6B37">Ingresar</button>
+        <button onClick="{{ closeAdmin }}" style="width:100%;margin-top:10px;background:none;border:none;color:#6B5A49;font-size:12.5px;padding:10px;cursor:pointer">Volver al sitio</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- PANEL -->
+  <sc-if value="{{ loggedIn }}" hint-placeholder-val="{{ false }}">
+  <div>
+    <div style="background:#2A1F15;color:#FFF9F2">
+      <div style="max-width:1080px;margin:0 auto;padding:16px clamp(14px,3vw,22px);display:flex;align-items:center;gap:12px">
+        <div style="flex:1;min-width:0">
+          <div style="font-family:'Poppins',sans-serif;font-size:19px;letter-spacing:-0.01em">Panel · Casa Quinta RV</div>
+          <div style="font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#A89684;margin-top:3px">{{ adminWho }}</div>
+        </div>
+        <button onClick="{{ closeAdmin }}" style="background:none;border:1px solid rgba(255,249,242,0.28);color:#FFF9F2;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:12px 16px;border-radius:999px;cursor:pointer">Salir</button>
+      </div>
+      <div style="max-width:1080px;margin:0 auto;padding:0 clamp(14px,3vw,22px);display:flex;gap:5px;overflow-x:auto">
+        <sc-for list="{{ adminTabs }}" as="t" hint-placeholder-count="4">
+          <button onClick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="max-width:1080px;margin:0 auto;padding:26px clamp(14px,3vw,22px) 70px">
+
+      <sc-if value="{{ dbWarning }}" hint-placeholder-val="{{ '' }}">
+        <div style="margin-bottom:20px;padding:14px 16px;background:#F9EBD1;border:1px solid #E8C98D;color:#6B5327;font-size:13.5px;line-height:1.55;border-radius:12px">{{ dbWarning }}</div>
+      </sc-if>
+
+      <!-- ================= RESERVAS ================= -->
+      <sc-if value="{{ tabRes }}" hint-placeholder-val="{{ true }}">
+      <div>
+        <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+          <h2 style="margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:clamp(24px,3.4vw,34px);letter-spacing:-0.015em;color:#2A1F15">Reservas</h2>
+          <span style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#7C8A5B">{{ pendingCount }}</span>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:16px">
+          <sc-for list="{{ resFilters }}" as="f" hint-placeholder-count="4">
+            <button onClick="{{ f.onClick }}" style="{{ f.style }}">{{ f.label }}</button>
+          </sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-top:18px">
+          <sc-for list="{{ reservations }}" as="r" hint-placeholder-count="3">
+            <div style="background:#FFF9F2;border:1px solid #E7D9C8;border-radius:14px;padding:18px">
+              <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px">
+                <span style="font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.08em;color:#2A1F15">{{ r.code }}</span>
+                <span style="{{ r.badgeStyle }}">{{ r.status }}</span>
+                <span style="font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#8A7866">{{ r.origin }}</span>
+                <span style="margin-left:auto;font-size:12px;color:#8A7866">{{ r.created }}</span>
+              </div>
+              <div style="font-family:'Poppins',sans-serif;font-size:18px;margin-top:10px;color:#2A1F15">{{ r.name }}</div>
+              <a href="{{ r.waLink }}" target="_blank" style="display:inline-block;font-size:14px;color:#5B6B37;text-decoration:none;margin-top:2px">{{ r.phone }}</a>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,120px),1fr));gap:12px;margin-top:14px;padding-top:14px;border-top:1px solid #EDE2D4">
+                <div>
+                  <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8A7866">Fecha</div>
+                  <div style="font-size:14.5px;margin-top:4px;color:#2A1F15">{{ r.dateTxt }}</div>
+                </div>
+                <div>
+                  <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8A7866">Turno</div>
+                  <div style="font-size:14.5px;margin-top:4px;color:#2A1F15">{{ r.shiftTxt }}</div>
+                </div>
+                <div>
+                  <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8A7866">Modalidad</div>
+                  <div style="font-size:14.5px;margin-top:4px;color:#2A1F15">{{ r.modalityTxt }}</div>
+                </div>
+                <div>
+                  <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8A7866">Personas</div>
+                  <div style="font-size:14.5px;margin-top:4px;color:#2A1F15">{{ r.people }}</div>
+                </div>
+                <div>
+                  <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8A7866">Total / seña</div>
+                  <div style="font-size:14.5px;margin-top:4px;color:#2A1F15">{{ r.money }}</div>
+                </div>
+              </div>
+              <sc-if value="{{ r.actionable }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+                  <button onClick="{{ r.approve }}" style="flex:1;min-width:140px;background:#5B6B37;color:#FFF9F2;border:none;padding:15px;border-radius:999px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer">Confirmar</button>
+                  <button onClick="{{ r.reject }}" style="flex:1;min-width:140px;background:none;color:#9A6A50;border:1px solid #E6C9B6;padding:15px;border-radius:999px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer">Rechazar</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ r.reopenable }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:14px">
+                  <button onClick="{{ r.approve }}" style="background:none;border:1px solid #D9CBB8;color:#6B5A49;padding:11px 18px;border-radius:999px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer">Volver a confirmar</button>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ noReservations }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:18px;padding:34px 20px;text-align:center;background:#FFF9F2;border:1px dashed #DCCDBA;border-radius:14px;color:#8A7866;font-size:14px">{{ noReservationsTxt }}</div>
+        </sc-if>
+      </div>
+      </sc-if>
+
+      <!-- ================= CALENDARIO ================= -->
+      <sc-if value="{{ tabCal }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <h2 style="margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:clamp(24px,3.4vw,34px);letter-spacing:-0.015em;color:#2A1F15">Calendario</h2>
+        <p style="margin:8px 0 0;font-size:14.5px;line-height:1.6;color:#6B5A49;max-width:56ch">Cada día tiene dos turnos. Tocá <strong>D</strong> (día) o <strong>N</strong> (noche) para bloquearlo o liberarlo. Los turnos con reserva no se tocan desde acá: se manejan en la pestaña Reservas.</p>
+
+        <div style="background:#FFF9F2;border:1px solid #E7D9C8;border-radius:16px;padding:18px;margin-top:18px">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px">
+            <button onClick="{{ adminPrevMonth }}" style="width:42px;height:42px;border-radius:999px;border:1px solid #E0CFBC;background:#FFFDFA;color:#2A1F15;font-size:18px;cursor:pointer">‹</button>
+            <div style="font-family:'Poppins',sans-serif;font-size:19px;color:#2A1F15">{{ adminMonthLabel }}</div>
+            <button onClick="{{ adminNextMonth }}" style="width:42px;height:42px;border-radius:999px;border:1px solid #E0CFBC;background:#FFFDFA;color:#2A1F15;font-size:18px;cursor:pointer">›</button>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px">
+            <sc-for list="{{ weekdays }}" as="w" hint-placeholder-count="7">
+              <div style="text-align:center;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#8A7866;padding:4px 0">{{ w }}</div>
+            </sc-for>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px">
+            <sc-for list="{{ adminDays }}" as="d" hint-placeholder-count="35">
+              <div style="{{ d.cellStyle }}">
+                <div style="{{ d.numStyle }}">{{ d.num }}</div>
+                <div style="display:flex;gap:3px">
+                  <button onClick="{{ d.dayClick }}" title="{{ d.dayTitle }}" style="{{ d.dayStyle }}">D</button>
+                  <button onClick="{{ d.nightClick }}" title="{{ d.nightTitle }}" style="{{ d.nightStyle }}">N</button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:16px">
+            <sc-for list="{{ adminLegend }}" as="l" hint-placeholder-count="4">
+              <span style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:#6B5A49"><span style="width:13px;height:13px;border-radius:4px;background:{{ l.bg }};border:1px solid {{ l.border }}"></span>{{ l.label }}</span>
+            </sc-for>
+          </div>
+        </div>
+
+        <!-- Reserva a mano -->
+        <div style="background:#FFF9F2;border:1px solid #E7D9C8;border-radius:16px;padding:18px;margin-top:16px">
+          <h3 style="margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:21px;letter-spacing:-0.01em;color:#2A1F15">Cargar una reserva a mano</h3>
+          <p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:#6B5A49;max-width:60ch">Para lo que entra por WhatsApp, llamada o en persona. Se guarda como confirmada, así que ese turno queda ocupado en el calendario y en el sitio al instante.</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:14px;margin-top:18px">
+            <div>
+              <label style="display:block;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#6B5A49;margin-bottom:7px">Nombre del cliente</label>
+              <input value="{{ mrName }}" onChange="{{ onMrName }}" placeholder="Ej. María González" style="width:100%;padding:14px;font-size:15px;border:1px solid #E0CFBC;border-radius:10px;background:#FFFDFA;outline:none;color:#2A1F15" />
+            </div>
+            <div>
+              <label style="display:block;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#6B5A49;margin-bottom:7px">Teléfono / WhatsApp</label>
+              <input value="{{ mrPhone }}" onChange="{{ onMrPhone }}" inputMode="tel" placeholder="0981 123 456" style="width:100%;padding:14px;font-size:15px;border:1px solid #E0CFBC;border-radius:10px;background:#FFFDFA;outline:none;color:#2A1F15" />
+            </div>
+            <div>
+              <label style="display:block;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#6B5A49;margin-bottom:7px">Fecha</label>
+              <input type="date" value="{{ mrDate }}" onChange="{{ onMrDate }}" style="width:100%;padding:13px 14px;font-size:15px;border:1px solid #E0CFBC;border-radius:10px;background:#FFFDFA;outline:none;color:#2A1F15" />
+            </div>
+            <div>
+              <label style="display:block;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#6B5A49;margin-bottom:7px">Modalidad</label>
+              <select value="{{ mrModality }}" onChange="{{ onMrModality }}" style="width:100%;padding:14px;font-size:15px;border:1px solid #E0CFBC;border-radius:10px;background:#FFFDFA;color:#2A1F15">
+                <option value="full">Quinta completa</option>
+                <option value="couple">Promo pareja</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#6B5A49;margin-bottom:7px">Turno</label>
+              <select value="{{ mrShift }}" onChange="{{ onMrShift }}" style="width:100%;padding:14px;font-size:15px;border:1px solid #E0CFBC;border-radius:10px;background:#FFFDFA;color:#2A1F15">
+                <option value="day">Día</option>
+                <option value="night">Noche</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#6B5A49;margin-bottom:7px">Cantidad de personas</label>
+              <input inputMode="numeric" value="{{ mrPeople }}" onChange="{{ onMrPeople }}" placeholder="2" style="width:100%;padding:14px;font-size:15px;border:1px solid #E0CFBC;border-radius:10px;background:#FFFDFA;outline:none;color:#2A1F15" />
+            </div>
+            <div>
+              <label style="display:block;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#6B5A49;margin-bottom:7px">Monto total (Gs.)</label>
+              <input inputMode="numeric" value="{{ mrTotal }}" onChange="{{ onMrTotal }}" placeholder="{{ mrTotalHint }}" style="width:100%;padding:14px;font-size:15px;border:1px solid #E0CFBC;border-radius:10px;background:#FFFDFA;outline:none;color:#2A1F15" />
+            </div>
+            <div>
+              <label style="display:block;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#6B5A49;margin-bottom:7px">Monto de la seña (Gs.)</label>
+              <input inputMode="numeric" value="{{ mrDeposit }}" onChange="{{ onMrDeposit }}" placeholder="{{ mrDepositHint }}" style="width:100%;padding:14px;font-size:15px;border:1px solid #E0CFBC;border-radius:10px;background:#FFFDFA;outline:none;color:#2A1F15" />
+            </div>
+          </div>
+          <p style="margin:12px 0 0;font-size:12.5px;color:#8A7866">{{ mrHint }}</p>
+          <sc-if value="{{ mrError }}" hint-placeholder-val="{{ '' }}">
+            <div style="margin-top:14px;padding:12px 14px;background:#FBE7DC;border:1px solid #F0CDB8;color:#8E4C28;font-size:13px;border-radius:10px">{{ mrError }}</div>
+          </sc-if>
+          <sc-if value="{{ mrSaved }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:14px;padding:12px 14px;background:#E8EFDA;border:1px solid #C9D3B2;color:#4A5A2B;font-size:13px;border-radius:10px">Reserva guardada. El turno ya figura como ocupado.</div>
+          </sc-if>
+          <button onClick="{{ saveManual }}" style="width:100%;margin-top:16px;background:#2A1F15;color:#FFF9F2;border:none;padding:17px;border-radius:999px;font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer" style-hover="background:#5B6B37">Guardar reserva</button>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ================= GALERÍA ================= -->
+      <sc-if value="{{ tabGal }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap">
+          <div>
+            <h2 style="margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:clamp(24px,3.4vw,34px);letter-spacing:-0.015em;color:#2A1F15">Galería</h2>
+            <p style="margin:8px 0 0;font-size:14.5px;color:#6B5A49">Subí fotos, cambiales la categoría, reordenalas o borralas. {{ photosCount }}</p>
+          </div>
+          <label style="display:inline-flex;align-items:center;gap:8px;background:#2A1F15;color:#FFF9F2;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:14px 22px;border-radius:999px;cursor:pointer">
+            <span>Subir fotos</span>
+            <input type="file" accept="image/*" multiple onChange="{{ onUploadPhotos }}" style="display:none" />
+          </label>
+        </div>
+        <sc-if value="{{ uploading }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:14px;padding:12px 14px;background:#E8EFDA;border:1px solid #C9D3B2;color:#4A5A2B;font-size:13px;border-radius:10px">Subiendo… {{ uploadProgress }}</div>
+        </sc-if>
+        <sc-if value="{{ hasPhotos }}" hint-placeholder-val="{{ true }}">
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,165px),1fr));gap:12px;margin-top:20px">
+            <sc-for list="{{ adminPhotos }}" as="p" hint-placeholder-count="6">
+              <div style="background:#FFF9F2;border:1px solid #E7D9C8;border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:8px">
+                <div style="position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;background:#EFE7DC">
+                  <img src="{{ p.src }}" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />
+                </div>
+                <select value="{{ p.cat }}" onChange="{{ p.onChangeCat }}" style="width:100%;padding:8px;font-size:12.5px;border:1px solid #E0CFBC;border-radius:7px;background:#FFFDFA;color:#2A1F15">
+                  <option>Piscina</option><option>Exterior</option><option>Interior</option><option>Habitación</option><option>Quincho</option><option>Noche</option>
+                </select>
+                <div style="display:flex;gap:6px">
+                  <button onClick="{{ p.moveUp }}" title="Subir" style="flex:1;background:#F3ECE2;border:none;border-radius:7px;font-size:14px;padding:8px;cursor:pointer;color:#2A1F15">↑</button>
+                  <button onClick="{{ p.moveDown }}" title="Bajar" style="flex:1;background:#F3ECE2;border:none;border-radius:7px;font-size:14px;padding:8px;cursor:pointer;color:#2A1F15">↓</button>
+                  <button onClick="{{ p.remove }}" title="Eliminar" style="flex:1;background:#FBE7DC;border:none;border-radius:7px;font-size:13px;padding:8px;cursor:pointer;color:#8E4C28">✕</button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ noPhotos }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:20px;padding:34px 20px;text-align:center;background:#FFF9F2;border:1px dashed #DCCDBA;border-radius:14px;color:#8A7866;font-size:14px;line-height:1.6">Todavía no subiste ninguna foto.<br />Mientras tanto el sitio muestra las fotos que vinieron con el diseño.</div>
+        </sc-if>
+      </div>
+      </sc-if>
+
+      <!-- ================= CONFIGURACIÓN ================= -->
+      <sc-if value="{{ tabCfg }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <h2 style="margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:clamp(24px,3.4vw,34px);letter-spacing:-0.015em;color:#2A1F15">Configuración</h2>
+        <p style="margin:8px 0 0;font-size:14.5px;line-height:1.6;color:#6B5A49;max-width:56ch">Estos valores son los que usa el sitio para mostrar precios y calcular la seña. Se guardan solos: cuando terminás de escribir, el campo avisa «Guardado».</p>
+
+        <sc-for list="{{ settingsGroups }}" as="g" hint-placeholder-count="3">
+          <div style="background:#FFF9F2;border:1px solid #E7D9C8;border-radius:16px;padding:18px;margin-top:16px">
+            <p style="margin:0 0 16px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#7C8A5B">{{ g.title }}</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:14px">
+              <sc-for list="{{ g.fields }}" as="f" hint-placeholder-count="4">
+                <div>
+                  <label style="display:block;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#6B5A49;margin-bottom:7px">{{ f.label }}</label>
+                  <input value="{{ f.value }}" onChange="{{ f.onChange }}" style="width:100%;padding:14px;font-size:15px;border:1px solid #E0CFBC;border-radius:10px;background:#FFFDFA;outline:none;color:#2A1F15" />
+                  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:6px">
+                    <span style="font-size:11.5px;color:#8A7866">{{ f.hint }}</span>
+                    <span style="flex:none;font-size:11px;font-weight:600;white-space:nowrap;color:{{ f.statusColor }}">{{ f.status }}</span>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+
+        <div style="background:#FFF9F2;border:1px solid #E7D9C8;border-radius:16px;padding:18px;margin-top:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+          <div style="flex:1;min-width:200px">
+            <div style="font-family:'Poppins',sans-serif;font-size:16px;color:#2A1F15">Promo pareja</div>
+            <div style="font-size:13.5px;color:#6B5A49;margin-top:4px">Si la apagás, deja de aparecer como modalidad en el sitio.</div>
+          </div>
+          <button onClick="{{ togglePromo }}" style="{{ promoStyle }}">{{ promoLabel }}</button>
+        </div>
+      </div>
+      </sc-if>
+
+    </div>
+  </div>
+  </sc-if>
+</div>
+</sc-if>
 
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{
@@ -509,6 +809,8 @@
 const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','setiembre','octubre','noviembre','diciembre'];
 const DIAS = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
 
+// Fotos que vinieron con el diseño. Son el fallback: apenas el admin sube
+// una foto desde el panel, la galería pasa a mostrar las de la base.
 const PHOTOS = [
   { id: 'p1', cat: 'Piscina', label: 'Piscina con cascada', src: 'uploads/quintarv/quinta-rv (13).webp' },
   { id: 'p2', cat: 'Piscina', label: 'Piscina al atardecer', src: 'uploads/quintarv/quinta-rv (2) (1).webp' },
@@ -533,36 +835,123 @@ const BENEFITS = [
   ['06', 'WiFi y Bluetooth', 'Conexión y música, si te hacen falta.']
 ];
 
+const SHIFT_NAME = { day: 'Día', night: 'Noche' };
+const MODALITY_NAME = { full: 'Quinta completa', couple: 'Promo pareja' };
+
 function hash(s) {
   let h = 2166136261;
   for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
   return Math.abs(h);
 }
 const gs = n => 'Gs. ' + Math.round(n).toLocaleString('es-PY').replace(/,/g, '.');
+const miles = n => Math.round(n).toLocaleString('es-PY').replace(/,/g, '.');
+const digits = v => String(v == null ? '' : v).replace(/[^0-9]/g, '');
 const iso = d => new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+const isAdminUrl = () => typeof location !== 'undefined' &&
+  (location.pathname === '/admin' || location.pathname === '/admin/' ||
+   location.hash === '#admin' || location.hash === '#/admin');
 
 class Component extends DCLogic {
   state = {
+    page: isAdminUrl() ? 'admin' : 'site',
     view: 'stepper', step: 1, month: null,
     date: null, modality: null, shift: null, people: null,
     name: '', phone: '', code: '', raceError: false,
     cat: 'Todas', showAll: false, lightbox: null, copied: '',
     galIndex: 0, dragDx: 0, dragging: false,
-    vw: typeof window !== 'undefined' ? window.innerWidth : 1280, menuOpen: false
+    vw: typeof window !== 'undefined' ? window.innerWidth : 1280, menuOpen: false,
+
+    // --- panel ---
+    loggedIn: false, adminEmail: '', adminPass: '', loginError: '', adminWho: 'Administración',
+    adminTab: 'res', adminMonth: null, resFilter: 'PENDIENTE',
+    dbCfg: null, dbGallery: null, dbSlots: {}, dbReservations: [], dbError: '',
+    cfgSaved: {},
+    mrName: '', mrPhone: '', mrDate: '', mrModality: 'full', mrShift: 'day',
+    mrPeople: '', mrTotal: '', mrDeposit: '', mrError: '', mrSaved: false,
+    uploading: false, uploadProgress: ''
   };
 
   _onResize = () => this.setState({ vw: window.innerWidth });
+  _onPopState = () => this.setState({ page: isAdminUrl() ? 'admin' : 'site' });
 
   trackRef = React.createRef();
   thumbsRef = React.createRef();
   _drag = null;
+  _cfgTimers = {};
+  _cfgClear = {};
 
-  componentDidMount() { window.addEventListener('resize', this._onResize); }
-  componentWillUnmount() { window.removeEventListener('resize', this._onResize); }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.galIndex !== this.state.galIndex || prevState.cat !== this.state.cat) this.centerThumb();
+  componentDidMount() {
+    window.addEventListener('resize', this._onResize);
+    window.addEventListener('popstate', this._onPopState);
+    this.hydrate();
+    this.checkSession();
   }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._onResize);
+    window.removeEventListener('popstate', this._onPopState);
+  }
+
+  // El runtime llama a componentDidUpdate con un solo argumento (prevProps),
+  // asi que el estado anterior lo guardamos nosotros.
+  componentDidUpdate() {
+    const { galIndex, cat } = this.state;
+    if (this._lastGal === galIndex && this._lastCat === cat) return;
+    this._lastGal = galIndex; this._lastCat = cat;
+    this.centerThumb();
+  }
+
+  // ---------------------------------------------------------------- Supabase
+
+  supa() { return typeof window !== 'undefined' ? window.__supa : null; }
+
+  async checkSession() {
+    const supa = this.supa();
+    if (!supa) return setTimeout(() => this.checkSession(), 150);
+    const { data } = await supa.auth.getSession();
+    if (!data || !data.session || !data.session.user) return;
+    const chk = await supa.rpc('is_admin');
+    if (chk.data) this.setState({ loggedIn: true, adminWho: data.session.user.email || 'Administración' });
+    else await supa.auth.signOut();
+  }
+
+  async hydrate() {
+    const supa = this.supa();
+    if (!supa) return setTimeout(() => this.hydrate(), 150);
+    const [cfgR, resR, blkR, galR] = await Promise.all([
+      supa.from('config').select('*').eq('id', 1).maybeSingle(),
+      supa.from('reservations').select('*').order('created_at', { ascending: false }),
+      supa.from('blocked_slots').select('*'),
+      supa.from('gallery').select('*').order('sort_order', { ascending: true })
+    ]);
+
+    const err = (cfgR && cfgR.error) || (resR && resR.error);
+    const slots = {};
+    const rows = (resR && resR.data) || [];
+    rows.forEach(r => {
+      if (r.status === 'CONFIRMADA') slots[r.date + '|' + r.shift] = 'reserved';
+      else if (r.status === 'PENDIENTE') slots[r.date + '|' + r.shift] = 'pending';
+    });
+    ((blkR && blkR.data) || []).forEach(b => { slots[b.date + '|' + b.shift] = 'blocked'; });
+
+    this.setState({
+      dbCfg: (cfgR && cfgR.data) || null,
+      dbGallery: (galR && galR.data) || null,
+      dbReservations: rows,
+      dbSlots: slots,
+      dbError: err ? err.message : ''
+    });
+  }
+
+  photoUrl(path) {
+    if (!path) return '';
+    if (path.startsWith('http') || path.startsWith('uploads/')) return path;
+    const supa = this.supa();
+    if (!supa) return '';
+    const { data } = supa.storage.from('quintarv-photos').getPublicUrl(path);
+    return (data && data.publicUrl) || '';
+  }
+
+  // ---------------------------------------------------------------- galería
 
   centerThumb() {
     const el = this.thumbsRef.current;
@@ -571,49 +960,71 @@ class Component extends DCLogic {
     el.scrollTo({ left: Math.max(0, left), behavior: 'smooth' });
   }
 
-  galPhotos() {
-    return this.state.cat === 'Todas' ? PHOTOS : PHOTOS.filter(p => p.cat === this.state.cat);
+  allPhotos() {
+    const db = this.state.dbGallery;
+    if (db && db.length) {
+      return db.map(g => ({
+        id: 'db-' + g.id, cat: g.category,
+        label: g.title || 'Casa Quinta RV', src: this.photoUrl(g.path)
+      }));
+    }
+    return PHOTOS;
   }
-
+  galPhotos() {
+    const all = this.allPhotos();
+    return this.state.cat === 'Todas' ? all : all.filter(p => p.cat === this.state.cat);
+  }
   goGal(i) {
     const max = this.galPhotos().length - 1;
     this.setState({ galIndex: Math.max(0, Math.min(max, i)), dragDx: 0 });
   }
-
   stepGal(d) {
     const max = this.galPhotos().length - 1;
     this.setState(s => ({ galIndex: Math.max(0, Math.min(max, s.galIndex + d)), dragDx: 0 }));
   }
 
-  // Configuración administrable (en producción: Supabase → settings / modalities / rates / time_slots)
+  // ---------------------------------------------------------------- config
+
+  // La base manda. Si todavía no respondió, valen los props del diseño.
   config() {
+    const c = this.state.dbCfg;
+    const num = (col, fallback) => (c && c[col] != null ? Number(c[col]) : fallback);
+    const txt = (col, fallback) => (c && c[col] != null ? String(c[col]) : fallback);
+    const dayTime = txt('day_time', '10:00 – 18:00');
+    const nightTime = txt('night_time', '19:00 – 03:00');
     return {
-      depositPct: this.props.depositPct ?? 30,
-      holdMinutes: this.props.holdMinutes ?? 30,
-      alias: this.props.alias ?? 'quintarv.py',
-      whatsapp: String(this.props.whatsapp ?? '595981123456').replace(/[^0-9]/g, ''),
-      extraPerson: this.props.extraPerson ?? 50000,
+      depositPct: num('deposit_pct', this.props.depositPct ?? 30),
+      holdMinutes: num('hold_minutes', this.props.holdMinutes ?? 30),
+      alias: txt('alias', this.props.alias ?? 'quintarv.py'),
+      whatsapp: digits(txt('whatsapp', this.props.whatsapp ?? '595981123456')),
+      extraPerson: num('price_extra_person', this.props.extraPerson ?? 50000),
+      dayTime, nightTime,
       modalities: [
         {
           id: 'full', name: 'Quinta completa',
           description: 'Uso exclusivo del predio: piscina, quincho, parrilla y habitación climatizada.',
-          days: 'Todos los días', capacity: 'Hasta 15 personas', included: 15, max: 25,
+          days: 'Todos los días',
+          capacity: 'Hasta ' + num('included_full', 15) + ' personas',
+          included: num('included_full', 15), max: num('max_full', 25),
           slotId: 'v2-rate-full', photoLabel: 'Quinta completa — piscina y quincho',
           weekdays: [0, 1, 2, 3, 4, 5, 6],
           shifts: [
-            { id: 'day', label: 'Turno día', time: '10:00 – 18:00', price: 900000 },
-            { id: 'night', label: 'Turno noche', time: '19:00 – 03:00', price: 1100000 }
+            { id: 'day', label: 'Turno día', time: dayTime, price: num('price_full_day', 900000) },
+            { id: 'night', label: 'Turno noche', time: nightTime, price: num('price_full_night', 1100000) }
           ]
         },
         {
-          id: 'couple', name: 'Promo pareja', active: this.props.promoPareja ?? true,
+          id: 'couple', name: 'Promo pareja',
+          active: c ? !!c.promo_couple : (this.props.promoPareja ?? true),
           description: 'Un turno para dos, con piscina y quincho para ustedes solos.',
-          days: 'Lunes a jueves', capacity: '2 personas', included: 2, max: 2,
+          days: 'Lunes a jueves',
+          capacity: num('max_couple', 2) + ' personas',
+          included: num('included_couple', 2), max: num('max_couple', 2),
           slotId: 'v2-rate-couple', photoLabel: 'Promo pareja — atardecer en la piscina',
           weekdays: [1, 2, 3, 4],
           shifts: [
-            { id: 'day', label: 'Turno día', time: '10:00 – 18:00', price: 450000 },
-            { id: 'night', label: 'Turno noche', time: '19:00 – 03:00', price: 550000 }
+            { id: 'day', label: 'Turno día', time: dayTime, price: num('price_couple_day', 450000) },
+            { id: 'night', label: 'Turno noche', time: nightTime, price: num('price_couple_night', 550000) }
           ]
         }
       ]
@@ -621,15 +1032,14 @@ class Component extends DCLogic {
   }
 
   activeModalities() { return this.config().modalities.filter(m => m.active !== false); }
+  modalityById(id) { return this.config().modalities.find(m => m.id === id) || null; }
+
+  // ---------------------------------------------------------------- turnos
 
   slotState(dateIso, shiftId) {
     const today = new Date(); today.setHours(0, 0, 0, 0);
     if (new Date(dateIso + 'T12:00:00') < today) return 'blocked';
-    const h = hash(dateIso + shiftId) % 100;
-    if (h < 14) return 'reserved';
-    if (h < 21) return 'pending';
-    if (h < 26) return 'blocked';
-    return 'available';
+    return this.state.dbSlots[dateIso + '|' + shiftId] || 'available';
   }
 
   dayState(dateIso) {
@@ -642,6 +1052,11 @@ class Component extends DCLogic {
 
   monthRef() {
     if (this.state.month) return this.state.month;
+    const n = new Date();
+    return { y: n.getFullYear(), m: n.getMonth() };
+  }
+  adminMonthRef() {
+    if (this.state.adminMonth) return this.state.adminMonth;
     const n = new Date();
     return { y: n.getFullYear(), m: n.getMonth() };
   }
@@ -662,10 +1077,24 @@ class Component extends DCLogic {
   }
   deposit() { return Math.round(this.total() * this.config().depositPct / 100); }
 
-  dateLabel() {
-    if (!this.state.date) return '';
-    const d = new Date(this.state.date + 'T12:00:00');
+  priceFor(modalityId, shiftId, people) {
+    const m = this.modalityById(modalityId);
+    if (!m) return 0;
+    const s = m.shifts.find(x => x.id === shiftId);
+    if (!s) return 0;
+    return s.price + Math.max(0, (people || m.included) - m.included) * this.config().extraPerson;
+  }
+
+  dateLabel(key) {
+    const k = key || this.state.date;
+    if (!k) return '';
+    const d = new Date(k + 'T12:00:00');
     return DIAS[d.getDay()] + ' ' + d.getDate() + ' de ' + MESES[d.getMonth()];
+  }
+  shortDate(key) {
+    if (!key) return '—';
+    const d = new Date(key + 'T12:00:00');
+    return d.getDate() + '/' + (d.getMonth() + 1) + '/' + String(d.getFullYear()).slice(2);
   }
 
   copy(text, key) {
@@ -679,6 +1108,242 @@ class Component extends DCLogic {
       ';color:' + color + ";font-family:'Poppins',sans-serif;font-size:16px;font-weight:600;cursor:" + cursor;
   }
 
+  // ---------------------------------------------------------------- panel
+
+  goAdmin() {
+    try { history.pushState({}, '', '/admin'); } catch (e) { location.hash = 'admin'; }
+    this.setState({ page: 'admin', menuOpen: false });
+  }
+
+  async doLogin() {
+    const email = (this.state.adminEmail || '').trim().toLowerCase();
+    const pass = this.state.adminPass || '';
+    const supa = this.supa();
+    if (!supa) { this.setState({ loginError: 'Todavía conectando con el servidor. Probá de nuevo en un segundo.' }); return; }
+    if (!email || !pass) { this.setState({ loginError: 'Completá el email y la contraseña.' }); return; }
+    this.setState({ loginError: '' });
+    const { data, error } = await supa.auth.signInWithPassword({ email, password: pass });
+    if (error || !data || !data.user) {
+      this.setState({ loginError: 'Email o contraseña incorrectos.' });
+      return;
+    }
+    const chk = await supa.rpc('is_admin');
+    if (chk.error || !chk.data) {
+      await supa.auth.signOut();
+      this.setState({ loginError: 'Ese usuario no tiene acceso al panel.' + (chk.error ? ' (' + chk.error.message + ')' : '') });
+      return;
+    }
+    this.setState({ loggedIn: true, loginError: '', adminPass: '', adminWho: data.user.email || 'Administración' });
+    this.hydrate();
+  }
+
+  async closeAdmin() {
+    const supa = this.supa();
+    if (supa) await supa.auth.signOut();
+    try { history.pushState({}, '', '/'); } catch (e) { location.hash = ''; }
+    this.setState({ page: 'site', loggedIn: false, adminPass: '' });
+  }
+
+  // Guardado automático de cada campo de configuración, con un timer propio
+  // por campo para que editar dos seguidos no descarte el primero.
+  cfgSet(key, col, value) {
+    this.setState(s => ({ dbCfg: Object.assign({ id: 1 }, s.dbCfg, { [col]: value }) }));
+    const supa = this.supa();
+    if (!supa) return this.cfgStatus(key, 'error');
+    this.cfgStatus(key, 'saving');
+    clearTimeout(this._cfgTimers[key]);
+    this._cfgTimers[key] = setTimeout(async () => {
+      // .select() devuelve las filas tocadas: si RLS bloquea vienen 0 y avisamos.
+      const r = await supa.from('config').update({ [col]: value }).eq('id', 1).select('id');
+      this.cfgStatus(key, (!r.error && r.data && r.data.length) ? 'saved' : 'error');
+    }, 500);
+  }
+  cfgStatus(key, st) {
+    this.setState(s => ({ cfgSaved: Object.assign({}, s.cfgSaved, { [key]: st }) }));
+    if (st !== 'saved') return;
+    clearTimeout(this._cfgClear[key]);
+    this._cfgClear[key] = setTimeout(() => this.setState(s => {
+      if (s.cfgSaved[key] !== 'saved') return null;
+      const n = Object.assign({}, s.cfgSaved); delete n[key]; return { cfgSaved: n };
+    }), 2400);
+  }
+
+  async toggleSlot(dateIso, shiftId) {
+    const cur = this.state.dbSlots[dateIso + '|' + shiftId];
+    if (cur === 'reserved' || cur === 'pending') return;   // pertenece a una reserva
+    const k = dateIso + '|' + shiftId;
+    this.setState(s => {
+      const n = Object.assign({}, s.dbSlots);
+      if (n[k] === 'blocked') delete n[k]; else n[k] = 'blocked';
+      return { dbSlots: n };
+    });
+    const supa = this.supa();
+    if (!supa) return;
+    if (cur === 'blocked') await supa.from('blocked_slots').delete().eq('date', dateIso).eq('shift', shiftId);
+    else await supa.from('blocked_slots').insert({ date: dateIso, shift: shiftId, reason: 'manual' });
+  }
+
+  async decide(code, next) {
+    const supa = this.supa();
+    if (supa) {
+      const r = await supa.from('reservations').update({ status: next }).eq('code', code).select('code');
+      if (r.error || !r.data || !r.data.length) {
+        this.setState({ dbError: 'No se pudo actualizar la reserva. Revisá que el usuario sea admin.' });
+        return;
+      }
+    }
+    this.hydrate();
+  }
+
+  newCode(dateIso, shiftId, name) {
+    const d = new Date(dateIso + 'T12:00:00');
+    const dd = String(d.getDate()).padStart(2, '0') + String(d.getMonth() + 1).padStart(2, '0') + String(d.getFullYear()).slice(2);
+    return 'QRV-' + dd + '-' + hash(dateIso + shiftId + name + Date.now()).toString(16).slice(0, 4).toUpperCase();
+  }
+
+  // Reserva cargada a mano (WhatsApp, llamada, presencial). Entra CONFIRMADA
+  // para que el turno quede ocupado en el sitio al instante.
+  async saveManual() {
+    const s = this.state;
+    const name = (s.mrName || '').trim();
+    const phone = (s.mrPhone || '').trim();
+    const date = s.mrDate;
+    const modality = s.mrModality, shift = s.mrShift;
+    const m = this.modalityById(modality);
+    const people = Math.max(1, Number(digits(s.mrPeople)) || (m ? m.included : 1));
+
+    if (!name || !phone) return this.setState({ mrError: 'Completá el nombre y el teléfono.', mrSaved: false });
+    if (!date) return this.setState({ mrError: 'Elegí la fecha del turno.', mrSaved: false });
+    const st = this.slotState(date, shift);
+    if (st !== 'available') {
+      return this.setState({
+        mrError: 'Ese turno no está libre (' + (st === 'blocked' ? 'bloqueado o ya pasó' : 'ya tiene una reserva') + '). Elegí otro.',
+        mrSaved: false
+      });
+    }
+
+    const total = Number(digits(s.mrTotal)) || this.priceFor(modality, shift, people);
+    const deposit = Number(digits(s.mrDeposit)) || Math.round(total * this.config().depositPct / 100);
+    const code = this.newCode(date, shift, name);
+
+    const supa = this.supa();
+    if (supa) {
+      const r = await supa.from('reservations').insert({
+        code, name, phone, date, modality, shift, people, total, deposit,
+        status: 'CONFIRMADA', source: 'manual'
+      });
+      if (r.error) {
+        return this.setState({ mrError: 'No se pudo guardar: ' + r.error.message, mrSaved: false });
+      }
+    }
+    this.setState({
+      mrName: '', mrPhone: '', mrDate: '', mrPeople: '', mrTotal: '', mrDeposit: '',
+      mrError: '', mrSaved: true
+    });
+    this.hydrate();
+  }
+
+  async uploadPhotos(files) {
+    const supa = this.supa();
+    if (!files || !files.length || !supa) return;
+    this.setState({ uploading: true, uploadProgress: '0 / ' + files.length });
+    const maxSort = (this.state.dbGallery || []).reduce((mx, g) => Math.max(mx, g.sort_order || 0), 0);
+    let done = 0;
+    for (const f of files) {
+      const ext = (f.name.split('.').pop() || 'jpg').toLowerCase();
+      const path = 'photo-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8) + '.' + ext;
+      const up = await supa.storage.from('quintarv-photos').upload(path, f, { cacheControl: '3600', upsert: false });
+      if (!up.error) await supa.from('gallery').insert({ path, category: 'Piscina', sort_order: maxSort + done + 1 });
+      done++;
+      this.setState({ uploadProgress: done + ' / ' + files.length });
+    }
+    this.setState({ uploading: false, uploadProgress: '' });
+    this.hydrate();
+  }
+  async setPhotoCat(id, cat) {
+    this.setState(s => ({ dbGallery: (s.dbGallery || []).map(g => g.id === id ? Object.assign({}, g, { category: cat }) : g) }));
+    const supa = this.supa();
+    if (supa) await supa.from('gallery').update({ category: cat }).eq('id', id);
+  }
+  async movePhoto(id, dir) {
+    const list = (this.state.dbGallery || []).slice();
+    const i = list.findIndex(g => g.id === id);
+    const j = i + dir;
+    if (i < 0 || j < 0 || j >= list.length) return;
+    const a = list[i], b = list[j];
+    list[i] = b; list[j] = a;
+    list.forEach((g, k) => { g.sort_order = k + 1; });
+    this.setState({ dbGallery: list });
+    const supa = this.supa();
+    if (supa) {
+      await Promise.all([
+        supa.from('gallery').update({ sort_order: b.sort_order }).eq('id', b.id),
+        supa.from('gallery').update({ sort_order: a.sort_order }).eq('id', a.id)
+      ]);
+    }
+  }
+  async removePhoto(id, path) {
+    if (!confirm('¿Borrar esta foto de la galería?')) return;
+    this.setState(s => ({ dbGallery: (s.dbGallery || []).filter(g => g.id !== id) }));
+    const supa = this.supa();
+    if (!supa) return;
+    if (path && !path.startsWith('uploads/') && !path.startsWith('http')) {
+      await supa.storage.from('quintarv-photos').remove([path]);
+    }
+    await supa.from('gallery').delete().eq('id', id);
+  }
+
+  // ---------------------------------------------------------------- render
+
+  adminCalendar() {
+    const ref = this.adminMonthRef();
+    const pad = new Date(ref.y, ref.m, 1).getDay();
+    const dim = new Date(ref.y, ref.m + 1, 0).getDate();
+    const cells = [];
+    const blank = {
+      cellStyle: 'border:none;background:none', numStyle: 'display:none', num: '',
+      dayStyle: 'display:none', nightStyle: 'display:none',
+      dayTitle: '', nightTitle: '', dayClick: () => {}, nightClick: () => {}
+    };
+    for (let i = 0; i < pad; i++) cells.push(blank);
+
+    const look = {
+      available: { bg: '#FFFFFF', fg: '#2A1F15', border: '#C9D3B2', txt: 'Libre · tocá para bloquear' },
+      pending:   { bg: '#F9EBD1', fg: '#6B5327', border: '#F1DDB4', txt: 'Reserva pendiente' },
+      reserved:  { bg: '#BE3B36', fg: '#FFF1EE', border: '#BE3B36', txt: 'Reservado' },
+      blocked:   { bg: '#26221E', fg: 'rgba(255,249,242,0.78)', border: '#26221E', txt: 'Bloqueado · tocá para liberar' }
+    };
+
+    for (let d = 1; d <= dim; d++) {
+      const key = iso(new Date(ref.y, ref.m, d, 12));
+      const past = new Date(key + 'T12:00:00') < new Date(new Date().setHours(0, 0, 0, 0));
+      const mk = (shift) => {
+        const raw = this.state.dbSlots[key + '|' + shift];
+        const stt = past ? 'blocked' : (raw || 'available');
+        const l = past ? { bg: '#F6F3EF', fg: '#B3ABA1', border: '#EDE7E0', txt: 'ya paso' } : look[stt];
+        const locked = past || stt === 'reserved' || stt === 'pending';
+        return {
+          style: 'flex:1;min-width:0;border-radius:6px;border:1px solid ' + l.border + ';background:' + l.bg +
+            ';color:' + l.fg + ";font-family:'DM Mono',monospace;font-size:9.5px;padding:4px 0;cursor:" +
+            (locked ? 'not-allowed' : 'pointer'),
+          title: (shift === 'day' ? 'Día' : 'Noche') + ': ' + (past ? 'ya pasó' : l.txt),
+          onClick: locked ? () => {} : () => this.toggleSlot(key, shift)
+        };
+      };
+      const dS = mk('day'), nS = mk('night');
+      cells.push({
+        num: String(d),
+        cellStyle: 'border:1px solid #EDE2D4;border-radius:9px;background:#FFFDFA;padding:5px 4px;display:flex;flex-direction:column;gap:4px' +
+          (past ? ';opacity:0.6' : ''),
+        numStyle: "text-align:center;font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;color:#2A1F15;line-height:1",
+        dayStyle: dS.style, dayTitle: dS.title, dayClick: dS.onClick,
+        nightStyle: nS.style, nightTitle: nS.title, nightClick: nS.onClick
+      });
+    }
+    while (cells.length % 7 !== 0) cells.push(blank);
+    return { cells, label: MESES[ref.m].charAt(0).toUpperCase() + MESES[ref.m].slice(1) + ' ' + ref.y, ref };
+  }
+
   renderVals() {
     const cfg = this.config(), st = this.state, ref = this.monthRef();
     const pad = new Date(ref.y, ref.m, 1).getDay();
@@ -690,12 +1355,16 @@ class Component extends DCLogic {
       const key = iso(new Date(ref.y, ref.m, d, 12));
       const s = this.dayState(key);
       const sel = st.date === key;
+      // Un dia que ya paso no es lo mismo que uno bloqueado: el negro queda
+      // reservado para el bloqueo real del admin.
+      const past = new Date(key + 'T12:00:00') < new Date(new Date().setHours(0, 0, 0, 0));
       let style;
-      if (sel) style = this.dayStyle('#2A1F15', '#FFF9F2', 'pointer', '1px solid #2A1F15');
+      if (past) style = this.dayStyle('#F6F3EF', '#B3ABA1', 'not-allowed', '1px solid #EDE7E0');
+      else if (sel) style = this.dayStyle('#2A1F15', '#FFF9F2', 'pointer', '1px solid #2A1F15');
       else if (s === 'available') style = this.dayStyle('#FFFFFF', '#2A1F15', 'pointer', '1px solid #C9D3B2');
       else if (s === 'pending') style = this.dayStyle('#F9EBD1', '#6B5327', 'not-allowed', '1px solid #F1DDB4');
-      else if (s === 'reserved') style = this.dayStyle('#FBE7DC', '#9A6A50', 'not-allowed', '1px solid #F3D8C8');
-      else style = this.dayStyle('#F2EFEB', '#6F6962', 'not-allowed', '1px solid #E7E2DC');
+      else if (s === 'reserved') style = this.dayStyle('#BE3B36', '#FFF1EE', 'not-allowed', '1px solid #BE3B36');
+      else style = this.dayStyle('#26221E', 'rgba(255,249,242,0.74)', 'not-allowed', '1px solid #26221E');
       const free = s === 'available';
       days.push({
         label: String(d), disabled: !free, style,
@@ -743,7 +1412,7 @@ class Component extends DCLogic {
 
     const filtered = this.galPhotos();
     const gi = Math.max(0, Math.min(filtered.length - 1, st.galIndex));
-    const lb = st.lightbox ? PHOTOS.find(p => p.id === st.lightbox) : null;
+    const lb = st.lightbox ? this.allPhotos().find(p => p.id === st.lightbox) : null;
 
     // próximos turnos libres (fecha + turno)
     const nextSlots = [];
@@ -774,7 +1443,83 @@ class Component extends DCLogic {
 
     const mobile = st.vw < 860;
 
+    // ------------------------------------------------------------- panel
+    const tab = (id, label) => ({
+      label,
+      onClick: () => this.setState({ adminTab: id }),
+      style: 'border:none;border-radius:10px 10px 0 0;padding:13px 18px;cursor:pointer;white-space:nowrap;' +
+        "font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;background:" +
+        (st.adminTab === id ? '#F3ECE2' : 'rgba(255,249,242,0.1)') + ';color:' +
+        (st.adminTab === id ? '#2A1F15' : '#C4B2A0')
+    });
+
+    const badgeStyle = status => {
+      const c = status === 'CONFIRMADA' ? ['#E8EFDA', '#4A5A2B']
+        : status === 'RECHAZADA' ? ['#FBE7DC', '#8E4C28']
+        : status === 'VENCIDA' ? ['#EDE7E0', '#6F6962']
+        : ['#F9EBD1', '#6B5327'];
+      return "font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:" +
+        c[0] + ';color:' + c[1];
+    };
+
+    const resList = st.dbReservations.filter(r => st.resFilter === 'TODAS' || r.status === st.resFilter);
+    const pendingN = st.dbReservations.filter(r => r.status === 'PENDIENTE').length;
+
+    const filterBtn = (id, label) => ({
+      label,
+      onClick: () => this.setState({ resFilter: id }),
+      style: "border-radius:999px;padding:9px 16px;cursor:pointer;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;background:" +
+        (st.resFilter === id ? '#2A1F15' : 'transparent') + ';color:' + (st.resFilter === id ? '#FFF9F2' : '#6B5A49') +
+        ';border:1px solid ' + (st.resFilter === id ? '#2A1F15' : '#DCCDBA')
+    });
+
+    const waAdmin = raw => {
+      const d = digits(raw);
+      if (!d) return '';
+      return 'https://wa.me/' + (d.startsWith('595') ? d : d.startsWith('0') ? '595' + d.slice(1) : '595' + d);
+    };
+
+    const saved = st.cfgSaved || {};
+    const fieldNum = (key, col, label, value, hint) => ({
+      label, value: miles(value), hint: hint || '',
+      onChange: e => this.cfgSet(key, col, Number(digits(e.target.value)) || 0),
+      status: saved[key] === 'saving' ? 'Guardando…' : saved[key] === 'saved' ? 'Guardado' : saved[key] === 'error' ? 'No se pudo guardar' : '',
+      statusColor: saved[key] === 'error' ? '#8E4C28' : '#5B6B37'
+    });
+    const fieldPlain = (key, col, label, value, hint) => ({
+      label, value: String(value), hint: hint || '',
+      onChange: e => this.cfgSet(key, col, Number(digits(e.target.value)) || 0),
+      status: saved[key] === 'saving' ? 'Guardando…' : saved[key] === 'saved' ? 'Guardado' : saved[key] === 'error' ? 'No se pudo guardar' : '',
+      statusColor: saved[key] === 'error' ? '#8E4C28' : '#5B6B37'
+    });
+    const fieldTxt = (key, col, label, value, hint) => ({
+      label, value: String(value), hint: hint || '',
+      onChange: e => this.cfgSet(key, col, e.target.value),
+      status: saved[key] === 'saving' ? 'Guardando…' : saved[key] === 'saved' ? 'Guardado' : saved[key] === 'error' ? 'No se pudo guardar' : '',
+      statusColor: saved[key] === 'error' ? '#8E4C28' : '#5B6B37'
+    });
+
+    const c = st.dbCfg || {};
+    const val = (col, d) => (c[col] != null ? c[col] : d);
+    const cal = this.adminCalendar();
+
+    const mrM = this.modalityById(st.mrModality);
+    const mrPeople = Math.max(1, Number(digits(st.mrPeople)) || (mrM ? mrM.included : 1));
+    const mrSuggested = st.mrDate ? this.priceFor(st.mrModality, st.mrShift, mrPeople) : 0;
+
+    const promoOn = st.dbCfg ? !!st.dbCfg.promo_couple : true;
+
     return {
+      // -------- routing
+      isSite: st.page === 'site',
+      isAdmin: st.page === 'admin',
+      needsLogin: st.page === 'admin' && !st.loggedIn,
+      loggedIn: st.page === 'admin' && st.loggedIn,
+      openAdmin: () => this.goAdmin(),
+      closeAdmin: () => this.closeAdmin(),
+      adminWho: st.adminWho,
+
+      // -------- sitio
       facilitiesRailStyle: 'display:flex;flex-direction:column',
       navStyle: mobile
         ? (st.menuOpen
@@ -789,11 +1534,11 @@ class Component extends DCLogic {
       toggleMenu: () => this.setState({ menuOpen: !st.menuOpen }),
       closeMenu: () => this.setState({ menuOpen: false }),
       benefits: BENEFITS.map(b => ({ n: b[0], title: b[1], text: b[2] })),
-      categories: CATS.map(c => ({
-        label: c,
-        onClick: () => this.setState({ cat: c, galIndex: 0, dragDx: 0 }),
+      categories: CATS.map(cc => ({
+        label: cc,
+        onClick: () => this.setState({ cat: cc, galIndex: 0, dragDx: 0 }),
         style: "background:none;border:none;padding:0 0 5px;cursor:pointer;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:" +
-          (st.cat === c ? '#2A1F15' : '#6B5A49') + ';border-bottom:1px solid ' + (st.cat === c ? '#2A1F15' : 'transparent')
+          (st.cat === cc ? '#2A1F15' : '#6B5A49') + ';border-bottom:1px solid ' + (st.cat === cc ? '#2A1F15' : 'transparent')
       })),
       carouselPhotos: filtered.map(p => ({ slotId: 'v2g-' + p.id, label: p.label, src: p.src })),
       carouselThumbs: filtered.map((p, i) => ({
@@ -811,8 +1556,8 @@ class Component extends DCLogic {
       galCurrentLabel: filtered.length ? filtered[gi].label : '',
       galPrev: () => this.stepGal(-1),
       galNext: () => this.stepGal(1),
-      prevStyle: 'position:absolute;' + 'left' + ':14px;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;padding-bottom:4px;background:#FFF9F2;color:#2A1F15;box-shadow:0 6px 18px rgba(42,31,21,0.25);z-index:2;cursor:' + (gi === 0 ? 'not-allowed' : 'pointer') + ';opacity:' + (gi === 0 ? '0.4' : '0.88'),
-      nextStyle: 'position:absolute;' + 'right' + ':14px;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;padding-bottom:4px;background:#FFF9F2;color:#2A1F15;box-shadow:0 6px 18px rgba(42,31,21,0.25);z-index:2;cursor:' + (gi >= filtered.length - 1 ? 'not-allowed' : 'pointer') + ';opacity:' + (gi >= filtered.length - 1 ? '0.4' : '0.88'),
+      prevStyle: 'position:absolute;left:14px;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;padding-bottom:4px;background:#FFF9F2;color:#2A1F15;box-shadow:0 6px 18px rgba(42,31,21,0.25);z-index:2;cursor:' + (gi === 0 ? 'not-allowed' : 'pointer') + ';opacity:' + (gi === 0 ? '0.4' : '0.88'),
+      nextStyle: 'position:absolute;right:14px;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;padding-bottom:4px;background:#FFF9F2;color:#2A1F15;box-shadow:0 6px 18px rgba(42,31,21,0.25);z-index:2;cursor:' + (gi >= filtered.length - 1 ? 'not-allowed' : 'pointer') + ';opacity:' + (gi >= filtered.length - 1 ? '0.4' : '0.88'),
       openCurrent: () => { if (filtered.length) this.setState({ lightbox: filtered[gi].id }); },
       dragStart: (e) => { this._drag = { x: e.clientX, w: this.trackRef.current ? this.trackRef.current.offsetWidth : 1 }; this.setState({ dragging: true }); },
       dragMove: (e) => { if (this._drag) this.setState({ dragDx: (e.clientX - this._drag.x) * 0.9 }); },
@@ -886,15 +1631,33 @@ class Component extends DCLogic {
         { k: 'Personas', v: String(people) },
         { k: 'A nombre de', v: st.name }
       ],
-      confirm: () => {
+      confirm: async () => {
         if (!st.date || !ss || this.slotState(st.date, ss.id) !== 'available') {
           this.setState({ raceError: true, step: 1, date: null, modality: null, shift: null });
           return;
         }
-        const d = new Date(st.date + 'T12:00:00');
-        const dd = String(d.getDate()).padStart(2, '0') + String(d.getMonth() + 1).padStart(2, '0') + String(d.getFullYear()).slice(2);
-        const suffix = hash(st.date + ss.id + st.name + Date.now()).toString(16).slice(0, 4).toUpperCase();
-        this.setState({ view: 'hold', code: 'QRV-' + dd + '-' + suffix, raceError: false });
+        const code = this.newCode(st.date, ss.id, st.name);
+        const supa = this.supa();
+        if (supa) {
+          // El índice único de (fecha, turno) hace de árbitro: si dos personas
+          // confirman el mismo turno al mismo tiempo, la segunda recibe error.
+          const r = await supa.from('reservations').insert({
+            code, name: st.name, phone: st.phone, date: st.date,
+            modality: sm.id, shift: ss.id, people,
+            total: this.total(), deposit: this.deposit(),
+            status: 'PENDIENTE', source: 'web'
+          });
+          if (r.error) {
+            this.setState({ raceError: true, step: 1, view: 'stepper', date: null, modality: null, shift: null });
+            this.hydrate();
+            return;
+          }
+        }
+        this.setState(s => ({
+          view: 'hold', code, raceError: false,
+          dbSlots: Object.assign({}, s.dbSlots, { [st.date + '|' + ss.id]: 'pending' })
+        }));
+        this.hydrate();
       },
       code: st.code,
       copyAlias: () => this.copy(cfg.alias, 'alias'),
@@ -904,7 +1667,131 @@ class Component extends DCLogic {
       whatsappUrl: 'https://wa.me/' + cfg.whatsapp + '?text=' + encodeURIComponent(msg),
       whatsappPlain: 'https://wa.me/' + cfg.whatsapp,
       markSent: () => setTimeout(() => this.setState({ view: 'done' }), 400),
-      restart: () => this.setState({ view: 'stepper', step: 1, date: null, modality: null, shift: null, people: null, name: '', phone: '', code: '' })
+      restart: () => this.setState({ view: 'stepper', step: 1, date: null, modality: null, shift: null, people: null, name: '', phone: '', code: '' }),
+
+      // -------- panel: login
+      adminEmail: st.adminEmail, adminPass: st.adminPass, loginError: st.loginError,
+      onAdminEmail: e => this.setState({ adminEmail: e.target.value, loginError: '' }),
+      onAdminPass: e => this.setState({ adminPass: e.target.value, loginError: '' }),
+      onLoginKey: e => { if (e.key === 'Enter') this.doLogin(); },
+      doLogin: () => this.doLogin(),
+
+      // -------- panel: tabs
+      adminTabs: [tab('res', 'Reservas'), tab('cal', 'Calendario'), tab('gal', 'Galería'), tab('cfg', 'Configuración')],
+      tabRes: st.adminTab === 'res', tabCal: st.adminTab === 'cal',
+      tabGal: st.adminTab === 'gal', tabCfg: st.adminTab === 'cfg',
+      dbWarning: st.dbError
+        ? 'No se pudo leer la base: ' + st.dbError + ' — revisá que el schema `quintarv` esté en Exposed schemas de Supabase.'
+        : '',
+
+      // -------- panel: reservas
+      pendingCount: pendingN === 1 ? '1 pendiente' : pendingN + ' pendientes',
+      resFilters: [filterBtn('PENDIENTE', 'Pendientes'), filterBtn('CONFIRMADA', 'Confirmadas'), filterBtn('RECHAZADA', 'Rechazadas'), filterBtn('TODAS', 'Todas')],
+      noReservations: resList.length === 0,
+      noReservationsTxt: st.resFilter === 'TODAS' ? 'Todavía no hay reservas.' : 'No hay reservas en este estado.',
+      reservations: resList.map(r => ({
+        code: r.code, name: r.name, phone: r.phone,
+        waLink: waAdmin(r.phone),
+        status: r.status, badgeStyle: badgeStyle(r.status),
+        origin: r.source === 'manual' ? 'a mano' : 'web',
+        created: new Date(r.created_at).toLocaleString('es-PY', { dateStyle: 'short', timeStyle: 'short' }),
+        dateTxt: this.shortDate(r.date),
+        shiftTxt: SHIFT_NAME[r.shift] || r.shift,
+        modalityTxt: MODALITY_NAME[r.modality] || r.modality,
+        people: String(r.people),
+        money: gs(r.total) + ' / ' + (r.deposit != null ? miles(r.deposit) : miles(r.total * cfg.depositPct / 100)),
+        actionable: r.status === 'PENDIENTE',
+        reopenable: r.status === 'RECHAZADA' || r.status === 'VENCIDA',
+        approve: () => this.decide(r.code, 'CONFIRMADA'),
+        reject: () => this.decide(r.code, 'RECHAZADA')
+      })),
+
+      // -------- panel: calendario
+      adminDays: cal.cells,
+      adminMonthLabel: cal.label,
+      adminPrevMonth: () => this.setState({ adminMonth: cal.ref.m === 0 ? { y: cal.ref.y - 1, m: 11 } : { y: cal.ref.y, m: cal.ref.m - 1 } }),
+      adminNextMonth: () => this.setState({ adminMonth: cal.ref.m === 11 ? { y: cal.ref.y + 1, m: 0 } : { y: cal.ref.y, m: cal.ref.m + 1 } }),
+      adminLegend: [
+        { label: 'Libre', bg: '#FFFFFF', border: '#C9D3B2' },
+        { label: 'Pendiente', bg: '#F9EBD1', border: '#F1DDB4' },
+        { label: 'Reservado', bg: '#BE3B36', border: '#BE3B36' },
+        { label: 'Bloqueado', bg: '#26221E', border: '#26221E' }
+      ],
+
+      // -------- panel: reserva a mano
+      mrName: st.mrName, mrPhone: st.mrPhone, mrDate: st.mrDate,
+      mrModality: st.mrModality, mrShift: st.mrShift,
+      mrPeople: st.mrPeople, mrTotal: st.mrTotal ? miles(Number(digits(st.mrTotal))) : '',
+      mrDeposit: st.mrDeposit ? miles(Number(digits(st.mrDeposit))) : '',
+      mrTotalHint: mrSuggested ? miles(mrSuggested) : '0',
+      mrDepositHint: mrSuggested ? miles(Math.round(mrSuggested * cfg.depositPct / 100)) : '0',
+      mrHint: mrSuggested
+        ? 'Si dejás los montos vacíos se guarda el precio de lista: ' + gs(mrSuggested) + ' con ' + gs(Math.round(mrSuggested * cfg.depositPct / 100)) + ' de seña.'
+        : 'Elegí la fecha y el turno y te calculo el precio de lista.',
+      mrError: st.mrError, mrSaved: st.mrSaved,
+      onMrName: e => this.setState({ mrName: e.target.value, mrError: '', mrSaved: false }),
+      onMrPhone: e => this.setState({ mrPhone: e.target.value.replace(/[^\d\s+()-]/g, ''), mrError: '', mrSaved: false }),
+      onMrDate: e => this.setState({ mrDate: e.target.value, mrError: '', mrSaved: false }),
+      onMrModality: e => this.setState({ mrModality: e.target.value, mrError: '', mrSaved: false }),
+      onMrShift: e => this.setState({ mrShift: e.target.value, mrError: '', mrSaved: false }),
+      onMrPeople: e => this.setState({ mrPeople: digits(e.target.value), mrError: '', mrSaved: false }),
+      onMrTotal: e => this.setState({ mrTotal: digits(e.target.value), mrError: '', mrSaved: false }),
+      onMrDeposit: e => this.setState({ mrDeposit: digits(e.target.value), mrError: '', mrSaved: false }),
+      saveManual: () => this.saveManual(),
+
+      // -------- panel: galería
+      uploading: st.uploading, uploadProgress: st.uploadProgress,
+      onUploadPhotos: e => this.uploadPhotos(e.target.files),
+      photosCount: st.dbGallery == null ? 'Cargando…'
+        : st.dbGallery.length === 1 ? '1 foto' : st.dbGallery.length + ' fotos',
+      hasPhotos: !!(st.dbGallery && st.dbGallery.length),
+      noPhotos: !!(st.dbGallery && st.dbGallery.length === 0),
+      adminPhotos: (st.dbGallery || []).map(g => ({
+        id: g.id, src: this.photoUrl(g.path), cat: g.category,
+        onChangeCat: e => this.setPhotoCat(g.id, e.target.value),
+        moveUp: () => this.movePhoto(g.id, -1),
+        moveDown: () => this.movePhoto(g.id, +1),
+        remove: () => this.removePhoto(g.id, g.path)
+      })),
+
+      // -------- panel: configuración
+      settingsGroups: [
+        {
+          title: 'Precios por turno',
+          fields: [
+            fieldNum('fullDay', 'price_full_day', 'Quinta completa · día (Gs.)', val('price_full_day', 900000)),
+            fieldNum('fullNight', 'price_full_night', 'Quinta completa · noche (Gs.)', val('price_full_night', 1100000)),
+            fieldNum('coupleDay', 'price_couple_day', 'Promo pareja · día (Gs.)', val('price_couple_day', 450000)),
+            fieldNum('coupleNight', 'price_couple_night', 'Promo pareja · noche (Gs.)', val('price_couple_night', 550000)),
+            fieldNum('extra', 'price_extra_person', 'Persona adicional (Gs.)', val('price_extra_person', 50000))
+          ]
+        },
+        {
+          title: 'Capacidad y horarios',
+          fields: [
+            fieldPlain('incFull', 'included_full', 'Personas incluidas · quinta completa', val('included_full', 15)),
+            fieldPlain('maxFull', 'max_full', 'Máximo de personas · quinta completa', val('max_full', 25)),
+            fieldPlain('maxCouple', 'max_couple', 'Personas · promo pareja', val('max_couple', 2)),
+            fieldTxt('dayTime', 'day_time', 'Horario del turno día', val('day_time', '10:00 – 18:00')),
+            fieldTxt('nightTime', 'night_time', 'Horario del turno noche', val('night_time', '19:00 – 03:00'))
+          ]
+        },
+        {
+          title: 'Reservas y contacto',
+          fields: [
+            fieldPlain('depositPct', 'deposit_pct', 'Porcentaje de seña (%)', val('deposit_pct', 30)),
+            fieldPlain('hold', 'hold_minutes', 'Vencimiento de la pre-reserva (min)', val('hold_minutes', 30)),
+            fieldTxt('alias', 'alias', 'Alias de transferencia', val('alias', 'quintarv.py')),
+            fieldTxt('wa', 'whatsapp', 'WhatsApp', val('whatsapp', '595981123456'),
+              cfg.whatsapp ? 'Los mensajes van a wa.me/' + cfg.whatsapp : 'Escribí el número con el código: 595981123456')
+          ]
+        }
+      ],
+      promoLabel: promoOn ? 'Activa' : 'Apagada',
+      promoStyle: "border-radius:999px;padding:13px 26px;cursor:pointer;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;border:1px solid " +
+        (promoOn ? '#5B6B37' : '#DCCDBA') + ';background:' + (promoOn ? '#5B6B37' : 'transparent') +
+        ';color:' + (promoOn ? '#FFF9F2' : '#6B5A49'),
+      togglePromo: () => this.cfgSet('promo', 'promo_couple', !promoOn)
     };
   }
 }

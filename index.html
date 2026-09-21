@@ -14,66 +14,81 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="./image-slot.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+  // === Supabase — schema propio `quintarv` ===
+  window.__SUPABASE_URL  = 'https://api.neura.com.py';
+  window.__SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzc0MTAxNDYxLCJleHAiOjE5MzE3ODE0NjF9.7_wAph8IolPMXtgfpezSwS5XR62IdD__qhqCywLDp3Q';
+  (function ready() {
+    if (!window.supabase) return setTimeout(ready, 50);
+    window.__supa = window.supabase.createClient(window.__SUPABASE_URL, window.__SUPABASE_ANON, {
+      auth: { persistSession: true, autoRefreshToken: true },
+      db: { schema: 'quintarv' }
+    });
+  })();
+</script>
 <style>
   body { margin:0; background:#FFF9F2; color:#2A1F15; font-family:'Poppins',system-ui,sans-serif; -webkit-text-size-adjust:100%; padding-bottom:92px; overflow-x:hidden; }
   * { box-sizing:border-box; min-width:0; }
   a { color:#2A1F15; }
-  a:hover { color:#A55F35; }
+  a:hover { color:#5B6B37; }
   input, button { font-family:'Poppins',system-ui,sans-serif; }
   html { scroll-behavior:smooth; }
   @keyframes rvmarquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
 </style>
 </helmet>
 
+<sc-if value="{{ isSite }}" hint-placeholder-val="{{ true }}">
+<div>
 <header style="position:sticky;top:0;z-index:40;background:#FFF9F2;border-bottom:1px solid #E7D9C8">
-  <div style="max-width:1280px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:16px">
+  <div style="max-width:1280px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:12px;position:relative;flex-wrap:nowrap">
     <a href="#inicio" style="text-decoration:none;display:flex;align-items:baseline;gap:9px">
       <span style="font-family:'Poppins',sans-serif;font-size:22px;letter-spacing:-0.01em;color:#2A1F15">Quinta RV</span>
       <span style="font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#6E5C48">Yukyry</span>
     </a>
-    <nav style="display:flex;gap:20px;flex-wrap:wrap;align-items:center;margin-left:auto;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase">
-      <a href="#quinta" style="text-decoration:none;color:#6B5A49">La quinta</a>
-      <a href="#instalaciones" style="text-decoration:none;color:#6B5A49">Instalaciones</a>
-      <a href="#galeria" style="text-decoration:none;color:#6B5A49">Galería</a>
-      <a href="#tarifas" style="text-decoration:none;color:#6B5A49">Tarifas</a>
-      <a href="#ubicacion" style="text-decoration:none;color:#6B5A49">Ubicación</a>
+    <nav style="{{ navStyle }}">
+      <a href="#quinta" onClick="{{ closeMenu }}" style="text-decoration:none;color:#6B5A49;padding:6px 0">La quinta</a>
+      <a href="#instalaciones" onClick="{{ closeMenu }}" style="text-decoration:none;color:#6B5A49;padding:6px 0">Instalaciones</a>
+      <a href="#galeria" onClick="{{ closeMenu }}" style="text-decoration:none;color:#6B5A49;padding:6px 0">Galería</a>
+      <a href="#tarifas" onClick="{{ closeMenu }}" style="text-decoration:none;color:#6B5A49;padding:6px 0">Tarifas</a>
+      <a href="#ubicacion" onClick="{{ closeMenu }}" style="text-decoration:none;color:#6B5A49;padding:6px 0">Ubicación</a>
     </nav>
-    <a href="#reservar" style="text-decoration:none;background:#76513A;color:#FFF9F2;padding:12px 20px;border-radius:999px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap" style-hover="background:#5B6B37">Reservar</a>
+    <a href="#reservar" style="{{ headerCtaStyle }}" style-hover="background:#5B6B37">Reservar</a>
+    <button onClick="{{ toggleMenu }}" style="{{ menuBtnStyle }}" aria-label="Menú">{{ menuIcon }}</button>
   </div>
 </header>
 
-<section id="inicio" style="padding:clamp(40px,4.4vw,60px) clamp(12px,2vw,22px) clamp(24px,3vw,34px);background:#DCEDEF;overflow:hidden">
-  <div style="max-width:1340px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:clamp(14px,1.6vw,20px);align-items:stretch;position:relative">
-    <div style="background:#FFFDFA;border-radius:clamp(22px,2.4vw,34px);padding:clamp(26px,3.6vw,54px);display:flex;flex-direction:column;justify-content:center">
+<section id="inicio" style="padding:clamp(40px,4.4vw,60px) clamp(12px,2vw,22px) clamp(24px,3vw,34px);background:#F3ECE2;overflow:hidden">
+  <div style="max-width:1340px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,310px),1fr));gap:clamp(14px,1.6vw,20px);align-items:stretch;position:relative">
+    <div style="background:#FFFDFA;border-radius:clamp(12px,1.2vw,18px);padding:clamp(26px,3.6vw,54px);display:flex;flex-direction:column;justify-content:center">
       <p style="margin:0 0 clamp(16px,2vw,24px);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#6E5C48">Yukyry · Luque — Paraguay</p>
       <h1 style="margin:0;font-weight:600;font-size:clamp(28px,3.6vw,50px);line-height:1.14;letter-spacing:-0.02em;color:#2A1F15;text-wrap:balance">Quinta privada con piscina<br />por turno, en Yukyry</h1>
       <p style="margin:clamp(16px,2vw,22px) 0 0;font-size:clamp(14.5px,1.4vw,16.5px);line-height:1.65;color:#5A4A3A;max-width:44ch">Piscina, quincho y predio exclusivo para tu grupo. Elegís fecha y turno, y reservás en un minuto.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:clamp(22px,2.6vw,34px)">
-        <a href="#reservar" style="text-decoration:none;background:#76513A;color:#FFF9F2;padding:18px 32px;border-radius:999px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;display:inline-flex;align-items:center;gap:12px" style-hover="background:#5B6B37">Reservar ahora <span style="font-size:14px">↓</span></a>
+        <a href="#reservar" style="text-decoration:none;background:#2A1F15;color:#FFF9F2;padding:18px 32px;border-radius:999px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;display:inline-flex;align-items:center;gap:12px" style-hover="background:#5B6B37">Reservar ahora <span style="font-size:14px">↓</span></a>
         <a href="#galeria" style="text-decoration:none;border:1px solid #DCCCB8;color:#2A1F15;padding:18px 28px;border-radius:999px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase" style-hover="background:#F4CE91;border-color:#F4CE91">Ver fotos</a>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-top:clamp(28px,3.4vw,46px)">
-        <div style="background:#B9D9DD;border-radius:20px;padding:18px">
-          <div style="width:40px;height:40px;border-radius:50%;overflow:hidden;margin-bottom:14px"><image-slot id="v2-stat-1" shape="circle" src="https://images.unsplash.com/photo-1635122212082-c4b6f108f36a?auto=format&fit=crop&q=70&w=300&h=300&fit=crop&crop=focalpoint&fp-y=0.9&fp-z=2.6" credit="Photo by Point3D Commercial Imaging Ltd. on Unsplash" credit-href="https://unsplash.com/@3dottawa"></image-slot></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,120px),1fr));gap:12px;margin-top:clamp(28px,3.4vw,46px)">
+        <div style="background:#F7F2EA;border-radius:12px;padding:18px">
+          <div style="width:40px;height:40px;border-radius:50%;overflow:hidden;margin-bottom:14px"><image-slot id="v2-stat-1" shape="circle"></image-slot></div>
           <p style="margin:0;font-size:clamp(24px,2.6vw,32px);font-weight:600;letter-spacing:-0.02em;color:#2A1F15;line-height:1">8h</p>
-          <p style="margin:6px 0 0;font-family:'DM Mono',monospace;font-size:10px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;color:#31424A">de turno completo</p>
+          <p style="margin:6px 0 0;font-family:'DM Mono',monospace;font-size:10px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;color:#6E5C48">de turno completo</p>
         </div>
-        <div style="background:#F4CE91;border-radius:20px;padding:18px">
-          <div style="width:40px;height:40px;border-radius:50%;overflow:hidden;margin-bottom:14px"><image-slot id="v2-stat-2" shape="circle" src="https://images.unsplash.com/photo-1635122212082-c4b6f108f36a?auto=format&fit=crop&q=70&w=300&h=300&fit=crop&crop=focalpoint&fp-x=0.3&fp-y=0.88&fp-z=2.4" credit="Photo by Point3D Commercial Imaging Ltd. on Unsplash" credit-href="https://unsplash.com/@3dottawa"></image-slot></div>
+        <div style="background:#F7F2EA;border-radius:12px;padding:18px">
+          <div style="width:40px;height:40px;border-radius:50%;overflow:hidden;margin-bottom:14px"><image-slot id="v2-stat-2" shape="circle"></image-slot></div>
           <p style="margin:0;font-size:clamp(24px,2.6vw,32px);font-weight:600;letter-spacing:-0.02em;color:#2A1F15;line-height:1">15</p>
-          <p style="margin:6px 0 0;font-family:'DM Mono',monospace;font-size:10px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;color:#4A3324">personas incluidas</p>
+          <p style="margin:6px 0 0;font-family:'DM Mono',monospace;font-size:10px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;color:#6E5C48">personas incluidas</p>
         </div>
-        <div style="background:#EFAE91;border-radius:20px;padding:18px">
-          <div style="width:40px;height:40px;border-radius:50%;overflow:hidden;margin-bottom:14px"><image-slot id="v2-stat-3" shape="circle" src="https://images.unsplash.com/photo-1635122212082-c4b6f108f36a?auto=format&fit=crop&q=70&w=300&h=300&fit=crop&crop=focalpoint&fp-x=0.72&fp-y=0.88&fp-z=2.4" credit="Photo by Point3D Commercial Imaging Ltd. on Unsplash" credit-href="https://unsplash.com/@3dottawa"></image-slot></div>
+        <div style="background:#F7F2EA;border-radius:12px;padding:18px">
+          <div style="width:40px;height:40px;border-radius:50%;overflow:hidden;margin-bottom:14px"><image-slot id="v2-stat-3" shape="circle"></image-slot></div>
           <p style="margin:0;font-size:clamp(24px,2.6vw,32px);font-weight:600;letter-spacing:-0.02em;color:#2A1F15;line-height:1">2</p>
-          <p style="margin:6px 0 0;font-family:'DM Mono',monospace;font-size:10px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;color:#4A3324">turnos: día y noche</p>
+          <p style="margin:6px 0 0;font-family:'DM Mono',monospace;font-size:10px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;color:#6E5C48">turnos: día y noche</p>
         </div>
       </div>
     </div>
-    <div style="position:relative;min-height:clamp(340px,46vw,620px);border-radius:clamp(22px,2.4vw,34px);background:#73823D">
-      <div style="position:absolute;top:clamp(-34px,-2.6vw,-18px);left:clamp(-52px,-4vw,-20px);right:clamp(10px,1.4vw,18px);bottom:clamp(22px,2.6vw,36px);border-radius:clamp(20px,2.2vw,30px);overflow:hidden;box-shadow:0 34px 60px -30px rgba(42,31,21,0.45);z-index:3">
-        <p style="position:absolute;right:12px;bottom:10px;z-index:5;margin:0;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.06em;color:rgba(255,255,255,0.92);text-shadow:0 1px 4px rgba(0,0,0,0.6)">Foto de prueba: <a href="https://unsplash.com/@3dottawa?utm_source=omelette&amp;utm_medium=referral" target="_blank" style="color:#FFFFFF">Point3D Commercial Imaging Ltd.</a> · <a href="https://unsplash.com/?utm_source=omelette&amp;utm_medium=referral" target="_blank" style="color:#FFFFFF">Unsplash</a></p>
-        <image-slot id="v2-hero" shape="rect" src="https://images.unsplash.com/photo-1635122212082-c4b6f108f36a?auto=format&fit=crop&q=70&w=1200&h=1500&fit=crop&crop=focalpoint&fp-y=0.86&fp-z=1.7" placeholder="Foto real de la piscina — protagonista" credit="Photo by Point3D Commercial Imaging Ltd. on Unsplash" credit-href="https://unsplash.com/@3dottawa"></image-slot>
+    <div style="position:relative;min-height:clamp(340px,46vw,620px);border-radius:clamp(12px,1.2vw,18px);background:#DCE7E8">
+      <div style="position:absolute;top:clamp(-34px,-2.6vw,-18px);left:clamp(-52px,-4vw,-20px);right:clamp(10px,1.4vw,18px);bottom:clamp(22px,2.6vw,36px);border-radius:clamp(10px,1.1vw,16px);overflow:hidden;box-shadow:0 34px 60px -30px rgba(42,31,21,0.45);z-index:3">
+        <image-slot id="v2-hero" shape="rect" placeholder="Foto real de la piscina — protagonista"></image-slot>
       </div>
       <div style="position:absolute;top:0;left:0;right:clamp(10px,1.4vw,18px);display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;padding:16px;z-index:4;pointer-events:none">
         <a href="#reservar" style="pointer-events:auto;text-decoration:none;background:rgba(255,253,250,0.95);color:#2A1F15;padding:13px 20px;border-radius:999px;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap" style-hover="background:#FFFFFF">Ver disponibilidad</a>
@@ -83,145 +98,148 @@
   </div>
 </section>
 
-<section id="quinta" style="padding:clamp(60px,9vw,120px) 18px;background:#FFF9F2">
+<section id="quinta" style="padding:clamp(60px,9vw,120px) 18px;overflow:hidden">
   <div style="max-width:1280px;margin:0 auto">
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(26px,4vw,64px);align-items:start">
-      <div>
-        <p style="margin:0 0 20px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#59662C">01 — La quinta</p>
-        <h2 style="margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:clamp(28px,4.2vw,52px);line-height:1.08;letter-spacing:-0.015em;color:#2A1F15;text-wrap:balance">Un lugar hecho para disfrutar sin apuros.</h2>
-      </div>
-      <div>
-        <p style="margin:0;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:#5A4A3A">Vení con tu familia, tus amigos o en pareja. Durante todo tu turno el predio es exclusivo: piscina, quincho, parrilla y sombra de sobra. Traé la carne, el resto ya está listo.</p>
-        <a href="#reservar" style="margin-top:26px;text-decoration:none;display:inline-block;border-bottom:1px solid #2A1F15;padding-bottom:4px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#2A1F15" style-hover="border-color:#5B6B37">Ver disponibilidad →</a>
-      </div>
-    </div>
-    <div style="margin-top:clamp(34px,5vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px">
-      <div style="height:clamp(230px,30vw,400px);border-radius:24px;overflow:hidden;grid-column:span 2"><image-slot id="v2-q1" shape="rect" placeholder="Piscina con cascada (horizontal)"></image-slot></div>
-      <div style="height:clamp(230px,30vw,400px);border-radius:999px 24px 999px 24px;overflow:hidden"><image-slot id="v2-q2" shape="rect" placeholder="Reposeras / jardín"></image-slot></div>
-    </div>
-    <div style="margin-top:clamp(40px,6vw,76px);border-top:1px solid #E7D9C8">
-      <sc-for list="{{ benefits }}" as="b" hint-placeholder-count="6">
-        <div style="display:flex;gap:clamp(14px,3vw,40px);align-items:baseline;padding:20px 0;border-bottom:1px solid #E7D9C8;flex-wrap:wrap">
-          <span style="font-family:'DM Mono',monospace;font-size:11px;color:#6E5C48;letter-spacing:.1em">{{ b.n }}</span>
-          <span style="font-family:'Poppins',sans-serif;font-size:clamp(22px,3vw,34px);line-height:1.05;color:#2A1F15;flex:1 1 200px">{{ b.title }}</span>
-          <span style="font-size:14.5px;color:#6B5A49;flex:1 1 220px;max-width:44ch">{{ b.text }}</span>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(30px,4.5vw,70px);align-items:center">
+      <div style="position:relative">
+        <div style="position:relative;height:clamp(320px,42vw,560px);border-radius:clamp(160px,22vw,280px) clamp(160px,22vw,280px) 16px 16px;overflow:hidden;background:#EAF3F4">
+          <image-slot id="v2-q1b" shape="rect" src="uploads/quintarv/quinta-rv (11).webp" placeholder="Piscina y hamaca paraguaya"></image-slot>
+          
         </div>
-      </sc-for>
+        <div style="position:absolute;right:clamp(-4px,-0.4vw,0px);bottom:clamp(-16px,-1.6vw,-8px);background:#FFFDFA;border-radius:10px;padding:14px 18px;box-shadow:0 20px 40px -26px rgba(42,31,21,0.45);z-index:2;display:flex;align-items:center;gap:12px">
+          <span style="width:10px;height:10px;border-radius:50%;background:#5B6B37;display:block"></span>
+          <span style="display:block;line-height:1.25">
+            <span style="display:block;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#6E5C48">Yukyry · Luque</span>
+            <span style="display:block;font-size:14px;font-weight:600;color:#2A1F15">Predio 100% privado</span>
+          </span>
+        </div>
+      </div>
+      <div>
+        <p style="margin:0 0 18px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#6E5C48">La quinta</p>
+        <h2 style="margin:0;font-weight:600;font-size:clamp(28px,4vw,50px);line-height:1.1;letter-spacing:-0.02em;color:#2A1F15;text-wrap:balance">Un lugar hecho para disfrutar sin apuros.</h2>
+        <p style="margin:22px 0 0;font-size:clamp(15.5px,1.5vw,18px);line-height:1.7;color:#5A4A3A;max-width:42ch">Vení con tu familia, tus amigos o en pareja. Durante todo tu turno el predio es exclusivo: piscina, quincho, parrilla y sombra de sobra. Traé la carne, el resto ya está listo.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:24px">
+          <span style="background:#EAF3F4;color:#25403F;border-radius:999px;padding:9px 14px;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase">Uso exclusivo</span>
+          <span style="background:#EAF3F4;color:#25403F;border-radius:999px;padding:9px 14px;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase">Turno día o noche</span>
+          <span style="background:#EAF3F4;color:#25403F;border-radius:999px;padding:9px 14px;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase">Pet friendly</span>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:30px">
+          <a href="#reservar" style="text-decoration:none;background:#2A1F15;color:#FFF9F2;padding:17px 28px;border-radius:999px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase" style-hover="background:#5B6B37">Ver disponibilidad</a>
+          <a href="#galeria" style="text-decoration:none;border:1px solid #DCCCB8;color:#2A1F15;padding:17px 26px;border-radius:999px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase" style-hover="background:#F4CE91;border-color:#F4CE91">Ver fotos</a>
+        </div>
+      </div>
     </div>
+
   </div>
 </section>
 
 <section id="instalaciones" style="background:#EAF3F4;padding:clamp(60px,9vw,120px) 18px">
-  <div style="max-width:1280px;margin:0 auto">
-    <p style="margin:0 0 20px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#4C5A27">02 — Instalaciones</p>
-    <h2 style="margin:0 0 clamp(34px,5vw,56px);font-family:'Poppins',sans-serif;font-weight:500;font-size:clamp(28px,4.2vw,50px);line-height:1.08;letter-spacing:-0.015em;color:#1F2F2E;max-width:20ch;text-wrap:balance">Todo listo para que solo vengas a disfrutar.</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:clamp(20px,3vw,34px)">
-      <div>
-        <div style="height:clamp(200px,24vw,300px);border-radius:999px 999px 20px 20px;overflow:hidden"><image-slot id="v2-i1" shape="rect" placeholder="Habitación climatizada"></image-slot></div>
-        <p style="margin:20px 0 12px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#2F5E63">Confort</p>
-        <div style="display:grid;gap:8px;font-size:15px;color:#25403F">
-          <span style="border-bottom:1px solid #D6E6E7;padding-bottom:8px">Habitación climatizada</span>
-          <span style="border-bottom:1px solid #D6E6E7;padding-bottom:8px">WiFi</span>
-          <span style="border-bottom:1px solid #D6E6E7;padding-bottom:8px">Smart TV</span>
-          <span>Equipo Bluetooth</span>
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:clamp(28px,4vw,64px);align-items:stretch">
+    <div style="{{ facilitiesRailStyle }}">
+      <p style="margin:0 0 18px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#3F5A59">Instalaciones</p>
+      <h2 style="margin:0 0 22px;font-family:'Poppins',sans-serif;font-weight:500;font-size:clamp(28px,4.2vw,50px);line-height:1.08;letter-spacing:-0.015em;color:#1F2F2E;max-width:16ch;text-wrap:balance">Todo listo para que solo vengas a disfrutar.</h2>
+      <p style="margin:0 0 26px;font-size:16px;line-height:1.65;color:#3F5A59;max-width:40ch">Cada turno incluye el uso completo de la casa, el quincho y el parque. No hace falta traer nada más que las ganas.</p>
+      <div style="flex:1;min-height:clamp(240px,30vw,320px);border-radius:12px;overflow:hidden;background:#D9E8E9"><image-slot id="v2-i1" shape="rect" placeholder="Piscina de noche con LED"></image-slot></div>
+    </div>
+
+    <div style="display:grid;gap:clamp(14px,1.8vw,20px)">
+      <div style="background:#FFFDFA;border-radius:14px;padding:clamp(20px,2.6vw,30px);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 18px;align-items:baseline">
+        <h3 style="margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:clamp(20px,2.2vw,26px);line-height:1.15;color:#1F2F2E">Confort</h3>
+        <span style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#3F5A59">04 servicios</span>
+        <div style="grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:8px;margin-top:14px">
+          <span style="background:#EAF3F4;color:#25403F;border-radius:8px;padding:10px 14px;font-size:14px">Habitación climatizada</span>
+          <span style="background:#EAF3F4;color:#25403F;border-radius:8px;padding:10px 14px;font-size:14px">WiFi</span>
+          <span style="background:#EAF3F4;color:#25403F;border-radius:8px;padding:10px 14px;font-size:14px">Smart TV</span>
+          <span style="background:#EAF3F4;color:#25403F;border-radius:8px;padding:10px 14px;font-size:14px">Equipo Bluetooth</span>
         </div>
       </div>
-      <div>
-        <div style="height:clamp(200px,24vw,300px);border-radius:999px 999px 20px 20px;overflow:hidden"><image-slot id="v2-i2" shape="rect" placeholder="Parrilla y cocina"></image-slot></div>
-        <p style="margin:20px 0 12px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#8E4C28">Cocina &amp; parrilla</p>
-        <div style="display:grid;gap:8px;font-size:15px;color:#25403F">
-          <span style="border-bottom:1px solid #D6E6E7;padding-bottom:8px">Heladera / congelador</span>
-          <span style="border-bottom:1px solid #D6E6E7;padding-bottom:8px">Parrilla</span>
-          <span style="border-bottom:1px solid #D6E6E7;padding-bottom:8px">Utensilios y cocina</span>
-          <span>Electrodomésticos</span>
+
+      <div style="background:#FFFDFA;border-radius:14px;padding:clamp(20px,2.6vw,30px);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 18px;align-items:baseline">
+        <h3 style="margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:clamp(20px,2.2vw,26px);line-height:1.15;color:#1F2F2E">Cocina &amp; parrilla</h3>
+        <span style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#3F5A59">05 servicios</span>
+        <div style="grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:8px;margin-top:14px">
+          <span style="background:#FBF0DF;color:#5A4326;border-radius:8px;padding:10px 14px;font-size:14px">Heladera / congelador</span>
+          <span style="background:#FBF0DF;color:#5A4326;border-radius:8px;padding:10px 14px;font-size:14px">Parrilla</span>
+          <span style="background:#FBF0DF;color:#5A4326;border-radius:8px;padding:10px 14px;font-size:14px">Cocina completa</span>
+          <span style="background:#FBF0DF;color:#5A4326;border-radius:8px;padding:10px 14px;font-size:14px">Utensilios</span>
+          <span style="background:#FBF0DF;color:#5A4326;border-radius:8px;padding:10px 14px;font-size:14px">Electrodomésticos</span>
         </div>
       </div>
-      <div>
-        <div style="height:clamp(200px,24vw,300px);border-radius:999px 999px 20px 20px;overflow:hidden"><image-slot id="v2-i3" shape="rect" placeholder="Piscina de noche con LED"></image-slot></div>
-        <p style="margin:20px 0 12px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#4C5A27">Piscina &amp; exterior</p>
-        <div style="display:grid;gap:8px;font-size:15px;color:#25403F">
-          <span style="border-bottom:1px solid #D6E6E7;padding-bottom:8px">Piscina con cascada</span>
-          <span style="border-bottom:1px solid #D6E6E7;padding-bottom:8px">Iluminación LED</span>
-          <span style="border-bottom:1px solid #D6E6E7;padding-bottom:8px">Patio</span>
-          <span>Espacios de descanso</span>
+
+      <div style="background:#FFFDFA;border-radius:14px;padding:clamp(20px,2.6vw,30px);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 18px;align-items:baseline">
+        <h3 style="margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:clamp(20px,2.2vw,26px);line-height:1.15;color:#1F2F2E">Piscina &amp; exterior</h3>
+        <span style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#3F5A59">04 servicios</span>
+        <div style="grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:8px;margin-top:14px">
+          <span style="background:#E7EEDC;color:#3D4A22;border-radius:8px;padding:10px 14px;font-size:14px">Piscina con cascada</span>
+          <span style="background:#E7EEDC;color:#3D4A22;border-radius:8px;padding:10px 14px;font-size:14px">Iluminación LED</span>
+          <span style="background:#E7EEDC;color:#3D4A22;border-radius:8px;padding:10px 14px;font-size:14px">Patio</span>
+          <span style="background:#E7EEDC;color:#3D4A22;border-radius:8px;padding:10px 14px;font-size:14px">Espacios de descanso</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="galeria" style="padding:clamp(60px,9vw,120px) 18px;background:#FDF3E7">
+<section id="galeria" style="padding:clamp(60px,9vw,120px) 18px">
   <div style="max-width:1280px;margin:0 auto">
     <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap">
       <div>
-        <p style="margin:0 0 20px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#8E4C28">03 — Galería</p>
+        <p style="margin:0 0 20px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#6E5C48">Galería</p>
         <h2 style="margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:clamp(28px,4.2vw,50px);line-height:1.08;letter-spacing:-0.015em;color:#2A1F15">Conocé Quinta RV.</h2>
       </div>
-      <button onClick="{{ toggleAllPhotos }}" style="background:none;border:none;border-bottom:1px solid #2A1F15;padding:0 0 4px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#2A1F15;cursor:pointer" style-hover="border-color:#5B6B37">{{ galleryToggleLabel }}</button>
+      <button onClick="{{ openCurrent }}" style="background:none;border:none;border-bottom:1px solid #2A1F15;padding:0 0 4px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#2A1F15;cursor:pointer" style-hover="border-color:#5B6B37">Ver la foto en grande</button>
     </div>
     <div style="display:flex;gap:18px;flex-wrap:wrap;margin:clamp(26px,3vw,40px) 0 22px">
       <sc-for list="{{ categories }}" as="cat" hint-placeholder-count="7">
         <button onClick="{{ cat.onClick }}" style="{{ cat.style }}">{{ cat.label }}</button>
       </sc-for>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px">
-      <sc-for list="{{ visiblePhotos }}" as="photo" hint-placeholder-count="6">
-        <div onClick="{{ photo.onClick }}" style="{{ photo.wrapStyle }}">
-          <image-slot id="{{ photo.slotId }}" shape="rect" placeholder="{{ photo.label }}"></image-slot>
-        </div>
-      </sc-for>
+    <div style="position:relative;border-radius:14px;overflow:hidden;background:#EFE7DC;touch-action:pan-y">
+      <div onPointerDown="{{ dragStart }}" onPointerMove="{{ dragMove }}" onPointerUp="{{ dragEnd }}" onPointerCancel="{{ dragEnd }}" ref="{{ trackRef }}" style="{{ trackStyle }}">
+        <sc-for list="{{ carouselPhotos }}" as="photo" hint-placeholder-count="5">
+          <div style="flex:0 0 100%;height:clamp(260px,40vw,520px);user-select:none">
+            <image-slot id="{{ photo.slotId }}" shape="rect" src="{{ photo.src }}" placeholder="{{ photo.label }}"></image-slot>
+          </div>
+        </sc-for>
+      </div>
+      <button onClick="{{ galPrev }}" style="{{ prevStyle }}" aria-label="Anterior">‹</button>
+      <button onClick="{{ galNext }}" style="{{ nextStyle }}" aria-label="Siguiente">›</button>
+      <div style="position:absolute;left:18px;bottom:16px;display:flex;gap:10px;align-items:center;background:rgba(26,20,13,0.62);color:#FFF9F2;padding:8px 14px;border-radius:999px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;pointer-events:none">
+        <span>{{ galCounter }}</span><span style="opacity:.6">·</span><span>{{ galCurrentLabel }}</span>
+      </div>
+      <button onClick="{{ openCurrent }}" style="position:absolute;right:16px;bottom:16px;background:#FFF9F2;border:none;color:#2A1F15;padding:11px 18px;border-radius:999px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer" style-hover="background:#FFFFFF">Ampliar</button>
+    </div>
+
+    <div style="overflow-x:auto;overflow-y:hidden;margin-top:10px;scrollbar-width:none;-webkit-overflow-scrolling:touch" ref="{{ thumbsRef }}">
+      <div style="display:flex;gap:4px;height:84px;width:fit-content;padding:2px">
+        <sc-for list="{{ carouselThumbs }}" as="thumb" hint-placeholder-count="8">
+          <button onClick="{{ thumb.onClick }}" style="{{ thumb.style }}" aria-label="{{ thumb.label }}">
+            <image-slot id="{{ thumb.slotId }}" shape="rect" src="{{ thumb.src }}" placeholder="{{ thumb.label }}"></image-slot>
+          </button>
+        </sc-for>
+      </div>
     </div>
   </div>
 </section>
 
 <sc-if value="{{ lightboxOpen }}" hint-placeholder-val="{{ false }}">
   <div onClick="{{ closeLightbox }}" style="position:fixed;inset:0;z-index:90;background:rgba(26,20,13,0.92);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;gap:16px">
-    <div style="width:min(1000px,100%);height:min(72vh,660px);border-radius:20px;overflow:hidden">
-      <image-slot id="{{ lightboxSlotId }}" shape="rect" placeholder="{{ lightboxLabel }}"></image-slot>
+    <div style="width:min(1100px,100%);height:min(78vh,760px);border-radius:12px;overflow:hidden">
+      <image-slot id="{{ lightboxSlotId }}" shape="rect" fit="contain" src="{{ lightboxSrc }}" placeholder="{{ lightboxLabel }}"></image-slot>
     </div>
     <p style="margin:0;color:#FFF9F2;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase">{{ lightboxLabel }} — tocá fuera para cerrar</p>
   </div>
 </sc-if>
 
-<section id="tarifas" style="padding:clamp(60px,9vw,120px) 18px;background:#FFF9F2">
+<section id="tarifas" style="background:#2F3B24;padding:clamp(56px,8vw,110px) 18px;color:#FFF9F2;scroll-margin-top:80px">
   <div style="max-width:1280px;margin:0 auto">
-    <p style="margin:0 0 20px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#59662C">04 — Tarifas</p>
-    <h2 style="margin:0 0 clamp(30px,4vw,52px);font-family:'Poppins',sans-serif;font-weight:500;font-size:clamp(28px,4.2vw,50px);line-height:1.08;letter-spacing:-0.015em;color:#2A1F15;max-width:22ch;text-wrap:balance">Elegí cómo querés disfrutar la quinta.</h2>
-    <sc-for list="{{ rateCards }}" as="card" hint-placeholder-count="2">
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:clamp(20px,3vw,44px);padding:clamp(22px,2.6vw,34px);margin-bottom:16px;border-radius:26px;background:#FDF0DC;align-items:center">
-        <div style="height:clamp(200px,22vw,260px);border-radius:20px;overflow:hidden"><image-slot id="{{ card.slotId }}" shape="rect" placeholder="{{ card.photoLabel }}"></image-slot></div>
-        <div>
-          <h3 style="margin:0;font-family:'Poppins',sans-serif;font-weight:400;font-size:clamp(26px,3.4vw,40px);line-height:1.05;color:#2A1F15">{{ card.name }}</h3>
-          <p style="margin:10px 0 18px;font-size:15px;line-height:1.6;color:#6B5A49;max-width:38ch">{{ card.description }}</p>
-          <div style="display:flex;gap:26px;flex-wrap:wrap;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6E5C48">
-            <span>{{ card.days }}</span><span>{{ card.capacity }}</span>
-          </div>
-        </div>
-        <div style="display:grid;gap:14px">
-          <sc-for list="{{ card.shifts }}" as="s" hint-placeholder-count="2">
-            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;border-bottom:1px solid #E7D9C8;padding-bottom:12px">
-              <span style="display:block">
-                <span style="display:block;font-size:15px;font-weight:600;color:#2A1F15">{{ s.label }}</span>
-                <span style="display:block;font-family:'DM Mono',monospace;font-size:11px;color:#6E5C48;margin-top:4px">{{ s.time }}</span>
-              </span>
-              <span style="font-family:'Poppins',sans-serif;font-size:clamp(20px,2.4vw,28px);color:#76513A;white-space:nowrap">{{ s.priceFmt }}</span>
-            </div>
-          </sc-for>
-          <a href="#reservar" style="text-decoration:none;text-align:center;background:#76513A;color:#FFF9F2;padding:16px;border-radius:999px;font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase" style-hover="background:#5B6B37">Ver disponibilidad</a>
-        </div>
-      </div>
-    </sc-for>
-    <p style="margin:24px 0 0;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;color:#6E5C48;text-transform:uppercase">Unidad de reserva: fecha + turno · precios administrables</p>
-  </div>
-</section>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:clamp(22px,3vw,44px);align-items:start">
+    <div>
+    <p id="reservar" style="margin:0 0 14px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#B7C79A;scroll-margin-top:96px">Reservá en 6 pasos</p>
+    <h3 style="margin:0 0 clamp(18px,2.4vw,26px);font-family:'Poppins',sans-serif;font-weight:500;font-size:clamp(24px,3.2vw,36px);line-height:1.1">Reservar nunca fue tan fácil.</h3>
 
-<section id="reservar" style="background:#4C5A27;padding:clamp(56px,8vw,110px) 18px;color:#FFF9F2">
-  <div style="max-width:720px;margin:0 auto">
-    <p style="margin:0 0 18px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#B7C79A;text-align:center">05 — Reservar</p>
-    <h2 style="margin:0 0 10px;font-family:'Poppins',sans-serif;font-weight:500;font-size:clamp(27px,4vw,46px);line-height:1.08;letter-spacing:-0.015em;text-align:center">Reservar nunca fue tan fácil.</h2>
-    <p style="margin:0 0 clamp(26px,4vw,44px);font-size:16px;line-height:1.6;color:#DCE4CC;text-align:center;max-width:44ch;margin-left:auto;margin-right:auto">Elegí tu fecha y te mostramos únicamente las opciones disponibles.</p>
-
-    <div style="background:#FFF9F2;color:#2A1F15;border-radius:26px;padding:clamp(20px,3.4vw,34px)">
+    <div>
+      <div style="background:#FFF9F2;color:#2A1F15;border-radius:14px;padding:clamp(20px,3.4vw,34px)">
       <sc-if value="{{ showStepper }}" hint-placeholder-val="{{ true }}">
         <div>
           <div style="display:flex;gap:5px;margin-bottom:24px">
@@ -250,7 +268,7 @@
                 </sc-for>
               </div>
               <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:18px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#6B5A49">
-                <span style="display:flex;align-items:center;gap:7px"><span style="width:10px;height:10px;border-radius:50%;background:#B9D9DD"></span>Libre</span>
+                <span style="display:flex;align-items:center;gap:7px"><span style="width:10px;height:10px;border-radius:50%;background:#5B6B37"></span>Libre</span>
                 <span style="display:flex;align-items:center;gap:7px"><span style="width:10px;height:10px;border-radius:50%;background:#F4CE91"></span>En proceso</span>
                 <span style="display:flex;align-items:center;gap:7px"><span style="width:10px;height:10px;border-radius:50%;background:#EFAE91"></span>Reservado</span>
                 <span style="display:flex;align-items:center;gap:7px"><span style="width:10px;height:10px;border-radius:50%;background:#D8D2CA"></span>Bloqueado</span>
@@ -307,9 +325,9 @@
               <p style="margin:14px 0 0;font-size:14px;color:#6B5A49;text-align:center">{{ capacityNote }}</p>
               <div style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-top:20px">
                 <span style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6E5C48">Total</span>
-                <span style="font-family:'Poppins',sans-serif;font-size:30px;color:#76513A">{{ totalFmt }}</span>
+                <span style="font-family:'Poppins',sans-serif;font-size:30px;color:#5B6B37">{{ totalFmt }}</span>
               </div>
-              <button onClick="{{ next }}" style="margin-top:20px;width:100%;background:#76513A;border:none;color:#FFF9F2;padding:19px;border-radius:999px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer" style-hover="background:#5B6B37">Continuar</button>
+              <button onClick="{{ next }}" style="margin-top:20px;width:100%;background:#2A1F15;border:none;color:#FFF9F2;padding:19px;border-radius:999px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer" style-hover="background:#5B6B37">Continuar</button>
               <button onClick="{{ back }}" style="margin-top:8px;width:100%;background:none;border:none;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6B5A49;cursor:pointer;padding:8px 0">‹ Cambiar turno</button>
             </div>
           </sc-if>
@@ -321,11 +339,11 @@
               <div style="display:grid;gap:16px">
                 <label style="display:block">
                   <span style="display:block;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#7A6856;margin-bottom:8px">Nombre y apellido</span>
-                  <input value="{{ name }}" onInput="{{ setName }}" placeholder="María González" style="width:100%;font-size:16px;padding:16px;border-radius:14px;border:1px solid #E0CFBC;background:#FFFFFF;color:#2A1F15" />
+                  <input value="{{ name }}" onInput="{{ setName }}" placeholder="María González" style="width:100%;font-size:16px;padding:16px;border-radius:10px;border:1px solid #E0CFBC;background:#FFFFFF;color:#2A1F15" />
                 </label>
                 <label style="display:block">
                   <span style="display:block;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#7A6856;margin-bottom:8px">WhatsApp</span>
-                  <input value="{{ phone }}" onInput="{{ setPhone }}" inputMode="tel" placeholder="0981 123 456" style="width:100%;font-size:16px;padding:16px;border-radius:14px;border:1px solid #E0CFBC;background:#FFFFFF;color:#2A1F15" />
+                  <input value="{{ phone }}" onInput="{{ setPhone }}" inputMode="tel" placeholder="0981 123 456" style="width:100%;font-size:16px;padding:16px;border-radius:10px;border:1px solid #E0CFBC;background:#FFFFFF;color:#2A1F15" />
                 </label>
               </div>
               <button onClick="{{ next }}" disabled="{{ dataIncomplete }}" style="{{ continueStyle }}">Ver resumen</button>
@@ -342,9 +360,9 @@
                   <div style="display:flex;justify-content:space-between;gap:14px;border-bottom:1px solid #EADCCB;padding-bottom:10px"><span style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#6E5C48">{{ row.k }}</span><span style="font-weight:600;text-align:right">{{ row.v }}</span></div>
                 </sc-for>
               </div>
-              <div style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-top:18px"><span style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6E5C48">Total</span><span style="font-family:'Poppins',sans-serif;font-size:30px;color:#76513A">{{ totalFmt }}</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-top:18px"><span style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6E5C48">Total</span><span style="font-family:'Poppins',sans-serif;font-size:30px;color:#5B6B37">{{ totalFmt }}</span></div>
               <div style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-top:6px"><span style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6E5C48">Seña {{ depositPct }}%</span><span style="font-size:17px;font-weight:700">{{ depositFmt }}</span></div>
-              <button onClick="{{ confirm }}" style="margin-top:22px;width:100%;background:#76513A;border:none;color:#FFF9F2;padding:19px;border-radius:999px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer" style-hover="background:#5B6B37">Confirmar reserva</button>
+              <button onClick="{{ confirm }}" style="margin-top:22px;width:100%;background:#2A1F15;border:none;color:#FFF9F2;padding:19px;border-radius:999px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer" style-hover="background:#5B6B37">Confirmar reserva</button>
               <button onClick="{{ editFromSummary }}" style="margin-top:8px;width:100%;background:none;border:none;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6B5A49;cursor:pointer;padding:8px 0">Editar</button>
             </div>
           </sc-if>
@@ -353,7 +371,7 @@
 
       <sc-if value="{{ isHold }}" hint-placeholder-val="{{ false }}">
         <div>
-          <div style="background:#F9EBD1;border-radius:16px;padding:14px 16px;margin-bottom:22px">
+          <div style="background:#F9EBD1;border-radius:10px;padding:14px 16px;margin-bottom:22px">
             <p style="margin:0;font-size:14px;line-height:1.5;color:#5A4620">Tu fecha quedó retenida durante <strong>{{ holdMinutes }} minutos</strong> mientras realizás la transferencia.</p>
           </div>
           <p style="margin:0 0 6px;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#6E5C48">Pendiente de pago</p>
@@ -361,14 +379,14 @@
           <p style="margin:0 0 22px;font-family:'DM Mono',monospace;font-size:14px;color:#5B6B37">{{ code }}</p>
           <div style="display:grid;gap:12px;font-size:15px">
             <div style="display:flex;justify-content:space-between;gap:14px;border-bottom:1px solid #EADCCB;padding-bottom:10px"><span style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#6E5C48">Total</span><span style="font-weight:600">{{ totalFmt }}</span></div>
-            <div style="display:flex;justify-content:space-between;gap:14px;border-bottom:1px solid #EADCCB;padding-bottom:10px"><span style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#6E5C48">Monto a transferir</span><span style="font-family:'Poppins',sans-serif;font-size:26px;color:#76513A">{{ depositFmt }}</span></div>
+            <div style="display:flex;justify-content:space-between;gap:14px;border-bottom:1px solid #EADCCB;padding-bottom:10px"><span style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#6E5C48">Monto a transferir</span><span style="font-family:'Poppins',sans-serif;font-size:26px;color:#5B6B37">{{ depositFmt }}</span></div>
             <div style="display:flex;justify-content:space-between;gap:14px"><span style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#6E5C48">Alias</span><span style="font-family:'DM Mono',monospace">{{ alias }}</span></div>
           </div>
           <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap">
             <button onClick="{{ copyAlias }}" style="flex:1;min-width:150px;background:#FFFFFF;border:1px solid #E0CFBC;color:#2A1F15;padding:15px;border-radius:999px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer" style-hover="background:#F4CE91">{{ aliasCopyLabel }}</button>
             <button onClick="{{ copyAmount }}" style="flex:1;min-width:150px;background:#FFFFFF;border:1px solid #E0CFBC;color:#2A1F15;padding:15px;border-radius:999px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer" style-hover="background:#F4CE91">{{ amountCopyLabel }}</button>
           </div>
-          <a href="{{ whatsappUrl }}" target="_blank" onClick="{{ markSent }}" style="margin-top:14px;display:block;text-align:center;text-decoration:none;background:#4C5A27;color:#FFFFFF;padding:20px;border-radius:999px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase" style-hover="background:#4A5A2C">Ya transferí – enviar comprobante</a>
+          <a href="{{ whatsappUrl }}" target="_blank" onClick="{{ markSent }}" style="margin-top:14px;display:block;text-align:center;text-decoration:none;background:#5B6B37;color:#FFFFFF;padding:20px;border-radius:999px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase" style-hover="background:#4A5A2C">Ya transferí – enviar comprobante</a>
           <p style="margin:14px 0 0;font-size:12.5px;color:#6E5C48;text-align:center">La disponibilidad se vuelve a verificar en el servidor al confirmar.</p>
         </div>
       </sc-if>
@@ -376,10 +394,10 @@
       <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
         <div style="text-align:center">
           <h3 style="margin:0 0 10px;font-family:'Poppins',sans-serif;font-weight:400;font-size:clamp(24px,3vw,34px)">¡Ya falta poquito! 🌴</h3>
-          <p style="margin:0 auto 20px;font-size:15px;line-height:1.6;color:#5A4A3A;max-width:38ch">Recibimos tu solicitud. Tu fecha permanece bloqueada mientras verificamos el pago.</p>
+          <p style="margin:0 auto 20px;font-size:16px;line-height:1.6;color:#5A4A3A;max-width:38ch">Recibimos tu solicitud. Tu fecha permanece bloqueada mientras verificamos el pago.</p>
           <p style="margin:0 0 6px;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#6E5C48">Pendiente de confirmación</p>
           <p style="margin:0 0 22px;font-family:'DM Mono',monospace;font-size:17px;color:#5B6B37">{{ code }}</p>
-          <a href="{{ whatsappUrl }}" target="_blank" style="display:block;text-decoration:none;background:#4C5A27;color:#FFFFFF;padding:19px;border-radius:999px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase" style-hover="background:#4A5A2C">Enviar comprobante por WhatsApp</a>
+          <a href="{{ whatsappUrl }}" target="_blank" style="display:block;text-decoration:none;background:#5B6B37;color:#FFFFFF;padding:19px;border-radius:999px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase" style-hover="background:#4A5A2C">Enviar comprobante por WhatsApp</a>
           <button onClick="{{ restart }}" style="margin-top:10px;background:none;border:none;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6B5A49;cursor:pointer;padding:8px 0">Hacer otra reserva</button>
         </div>
       </sc-if>
@@ -399,25 +417,61 @@
         </sc-for>
       </div>
     </div>
+    </div>
+    </div>
+
+    <div>
+      <p style="margin:0 0 10px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#B7C79A">Modalidades y precios</p>
+      <h3 style="margin:0 0 clamp(16px,2vw,22px);font-family:'Poppins',sans-serif;font-weight:500;font-size:clamp(24px,3.2vw,36px);line-height:1.1;letter-spacing:-0.015em">Elegí cómo querés disfrutar la quinta.</h3>
+    <div style="display:grid;gap:clamp(16px,2vw,20px);align-content:start">
+      <sc-for list="{{ rateCards }}" as="card" hint-placeholder-count="2">
+        <div style="background:#FFF9F2;color:#2A1F15;border-radius:14px;overflow:hidden;display:flex;flex-direction:column">
+          <div style="padding:clamp(18px,2.2vw,26px);display:flex;flex-direction:column;gap:14px;flex:1">
+            <div>
+              <h3 style="margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:clamp(21px,2.4vw,27px);line-height:1.1;color:#2A1F15">{{ card.name }}</h3>
+              <p style="margin:8px 0 0;font-size:14.5px;line-height:1.55;color:#6B5A49">{{ card.description }}</p>
+            </div>
+            <div style="display:flex;gap:18px;flex-wrap:wrap;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#6E5C48">
+              <span>{{ card.days }}</span><span>{{ card.capacity }}</span>
+            </div>
+            <div style="display:grid;gap:10px;margin-top:auto">
+              <sc-for list="{{ card.shifts }}" as="s" hint-placeholder-count="2">
+                <div style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;border-top:1px solid #E7D9C8;padding-top:10px">
+                  <span style="display:block">
+                    <span style="display:block;font-size:14.5px;font-weight:600;color:#2A1F15">{{ s.label }}</span>
+                    <span style="display:block;font-family:'DM Mono',monospace;font-size:10.5px;color:#6E5C48;margin-top:3px">{{ s.time }}</span>
+                  </span>
+                  <span style="font-family:'Poppins',sans-serif;font-size:clamp(18px,2vw,24px);color:#5B6B37;white-space:nowrap">{{ s.priceFmt }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+      <p style="margin:16px 0 0;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#B7C79A">Unidad de reserva: fecha + turno · precios administrables</p>
+    </div>
+    </div>
   </div>
 </section>
 
-<section id="ubicacion" style="padding:clamp(60px,9vw,110px) 18px;background:#DCEDEF">
-  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:clamp(26px,4vw,50px);align-items:center">
+<section id="ubicacion" style="padding:clamp(60px,9vw,110px) 18px">
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:clamp(26px,4vw,50px);align-items:center">
     <div>
-      <p style="margin:0 0 20px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#2F5E63">06 — Ubicación</p>
+      <p style="margin:0 0 20px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#6E5C48">Ubicación</p>
       <h2 style="margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:clamp(27px,4vw,46px);line-height:1.08;letter-spacing:-0.015em;max-width:18ch;text-wrap:balance">Estamos más cerca de lo que imaginás.</h2>
       <p style="margin:20px 0 26px;font-size:16px;line-height:1.65;color:#5A4A3A;max-width:38ch">Yukyry – Luque, a pocos minutos del centro. La dirección exacta viaja con la confirmación de tu reserva.</p>
-      <a href="https://maps.google.com/?q=Yukyry+Luque+Paraguay" target="_blank" style="text-decoration:none;display:inline-block;background:#76513A;color:#FFF9F2;padding:17px 28px;border-radius:999px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase" style-hover="background:#5B6B37">Cómo llegar</a>
+      <a href="https://maps.google.com/?q=Yukyry+Luque+Paraguay" target="_blank" style="text-decoration:none;display:inline-block;background:#2A1F15;color:#FFF9F2;padding:17px 28px;border-radius:999px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase" style-hover="background:#5B6B37">Cómo llegar</a>
     </div>
-    <div style="height:clamp(250px,32vw,380px);border-radius:24px;overflow:hidden;border:1px solid #E7D9C8">
+    <div style="height:clamp(250px,32vw,380px);border-radius:12px;overflow:hidden;border:1px solid #E7D9C8">
       <iframe title="Mapa Quinta RV" src="https://www.openstreetmap.org/export/embed.html?bbox=-57.52%2C-25.28%2C-57.42%2C-25.20&amp;layer=mapnik" style="width:100%;height:100%;border:0;display:block"></iframe>
     </div>
   </div>
 </section>
 
 <section style="position:relative;min-height:clamp(400px,58vh,560px);display:flex;align-items:center;justify-content:center;overflow:hidden;text-align:center">
-  <div style="position:absolute;inset:0"><image-slot id="v2-cta" shape="rect" placeholder="Piscina al atardecer / de noche (horizontal)"></image-slot></div>
+  <div style="position:absolute;inset:0"><image-slot id="v2-cta3" shape="rect" src="uploads/quintarv/quinta-rv (14).webp" placeholder="Piscina al atardecer (horizontal)"></image-slot></div>
   <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,20,13,0.34),rgba(26,20,13,0.62));pointer-events:none"></div>
   <div style="position:relative;padding:44px 20px;max-width:760px">
     <h2 style="margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:clamp(30px,5vw,56px);line-height:1.08;letter-spacing:-0.015em;color:#FFFFFF">El próximo plan empieza acá.</h2>
@@ -426,9 +480,9 @@
   </div>
 </section>
 
-<footer style="background:#76513A;color:#FFF9F2;padding:clamp(46px,6vw,72px) 18px 34px;overflow:hidden">
+<footer style="background:#2A1F15;color:#FFF9F2;padding:clamp(46px,6vw,72px) 18px 34px;overflow:hidden">
   <div style="max-width:1280px;margin:0 auto">
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:28px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:28px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase">
       <div style="display:grid;gap:10px;align-content:start">
         <a href="#quinta" style="color:#E7DACB;text-decoration:none">La quinta</a>
         <a href="#instalaciones" style="color:#E7DACB;text-decoration:none">Instalaciones</a>
@@ -442,26 +496,306 @@
       <div style="display:grid;gap:10px;align-content:start">
         <a href="{{ whatsappPlain }}" target="_blank" style="color:#E7DACB;text-decoration:none">WhatsApp</a>
         <a href="https://maps.google.com/?q=Yukyry+Luque+Paraguay" target="_blank" style="color:#E7DACB;text-decoration:none">Yukyry · Luque</a>
-        <a href="#inicio" style="color:#EBDDCE;text-decoration:none">Política de privacidad</a>
+        <a href="#inicio" style="color:#C4B2A0;text-decoration:none">Política de privacidad</a>
       </div>
     </div>
     <p style="margin:clamp(34px,5vw,56px) 0 0;font-family:'Poppins',sans-serif;font-weight:600;font-size:clamp(30px,8.4vw,108px);line-height:1;letter-spacing:-0.02em;color:#FFF9F2">Casa Quinta RV</p>
-    <div style="margin-top:26px;padding-top:16px;border-top:1px solid rgba(255,249,242,0.2);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#EBDDCE">
+    <div style="margin-top:26px;padding-top:16px;border-top:1px solid rgba(255,249,242,0.2);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#C4B2A0">
       <span>© 2026 Casa Quinta RV</span>
-      <span style="display:flex;gap:18px"><a href="#inicio" style="color:#EBDDCE;text-decoration:none">Desarrollado por Neura</a><a href="#inicio" style="color:#D8C6B4;text-decoration:none">Admin</a></span>
+      <span style="display:flex;gap:18px"><a href="#inicio" style="color:#C4B2A0;text-decoration:none">Desarrollado por Neura</a><a onClick="{{ openAdmin }}" style="color:#C4B2A0;text-decoration:none;cursor:pointer">Admin</a></span>
     </div>
   </div>
 </footer>
 
-<div style="position:fixed;bottom:14px;left:14px;right:14px;z-index:60;display:flex;justify-content:center;pointer-events:none">
-  <div style="pointer-events:auto;background:#FFF9F2;border:1px solid #E0CFBC;box-shadow:0 18px 40px -22px rgba(42,31,21,0.5);border-radius:999px;padding:9px 9px 9px 22px;display:flex;align-items:center;gap:18px;max-width:560px;width:100%">
-    <span style="display:block;line-height:1.3">
-      <span style="display:block;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#6E5C48">Desde</span>
-      <span style="display:block;font-family:'Poppins',sans-serif;font-size:17px;color:#2A1F15">{{ fromPriceFmt }}</span>
-    </span>
-    <a href="#reservar" style="margin-left:auto;text-decoration:none;background:#2A1F15;color:#FFF9F2;padding:14px 24px;border-radius:999px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap" style-hover="background:#5B6B37">Reservar</a>
-  </div>
+<a href="{{ whatsappPlain }}" target="_blank" aria-label="Escribinos por WhatsApp" style="position:fixed;right:18px;bottom:18px;z-index:60;width:58px;height:58px;border-radius:50%;background:#25D366;box-shadow:0 16px 34px -16px rgba(20,60,30,0.65);display:flex;align-items:center;justify-content:center;text-decoration:none" style-hover="background:#1FBE5A">
+  <svg viewBox="0 0 24 24" width="30" height="30" fill="#FFFFFF" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2Zm0 18.13h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.22 8.22 0 0 1-1.26-4.36c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.7 8.21-8.24 8.21Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.71-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.24-.87.85-.87 2.07s.89 2.4 1.02 2.56c.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29Z"></path></svg>
+</a>
+
 </div>
+</sc-if>
+
+<sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
+<div style="min-height:100vh;background:#F3ECE2">
+
+  <!-- LOGIN -->
+  <sc-if value="{{ needsLogin }}" hint-placeholder-val="{{ true }}">
+    <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:#2F3B24">
+      <div style="width:100%;max-width:380px;background:#FFF9F2;border-radius:18px;padding:32px 28px">
+        <p style="margin:0 0 6px;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#7C8A5B">Casa Quinta RV</p>
+        <h1 style="margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:27px;letter-spacing:-0.015em;color:#2A1F15">Panel</h1>
+        <label style="display:block;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#6B5A49;margin:26px 0 8px">Email</label>
+        <input value="{{ adminEmail }}" onChange="{{ onAdminEmail }}" inputMode="email" placeholder="admin@quintarv.com" style="width:100%;padding:16px;font-size:16px;border:1px solid #E0CFBC;border-radius:10px;background:#FFFDFA;outline:none;color:#2A1F15" />
+        <label style="display:block;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#6B5A49;margin:16px 0 8px">Contraseña</label>
+        <input type="password" value="{{ adminPass }}" onChange="{{ onAdminPass }}" onKeyDown="{{ onLoginKey }}" placeholder="••••••••" style="width:100%;padding:16px;font-size:16px;border:1px solid #E0CFBC;border-radius:10px;background:#FFFDFA;outline:none;color:#2A1F15" />
+        <sc-if value="{{ loginError }}" hint-placeholder-val="{{ '' }}">
+          <div style="margin-top:16px;padding:12px 14px;background:#FBE7DC;border:1px solid #F0CDB8;color:#8E4C28;font-size:13px;border-radius:10px">{{ loginError }}</div>
+        </sc-if>
+        <button onClick="{{ doLogin }}" style="width:100%;margin-top:22px;background:#2A1F15;color:#FFF9F2;border:none;padding:18px;border-radius:999px;font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer" style-hover="background:#5B6B37">Ingresar</button>
+        <button onClick="{{ closeAdmin }}" style="width:100%;margin-top:10px;background:none;border:none;color:#6B5A49;font-size:12.5px;padding:10px;cursor:pointer">Volver al sitio</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- PANEL -->
+  <sc-if value="{{ loggedIn }}" hint-placeholder-val="{{ false }}">
+  <div>
+    <div style="background:#2A1F15;color:#FFF9F2">
+      <div style="max-width:1080px;margin:0 auto;padding:16px clamp(14px,3vw,22px);display:flex;align-items:center;gap:12px">
+        <div style="flex:1;min-width:0">
+          <div style="font-family:'Poppins',sans-serif;font-size:19px;letter-spacing:-0.01em">Panel · Casa Quinta RV</div>
+          <div style="font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#A89684;margin-top:3px">{{ adminWho }}</div>
+        </div>
+        <button onClick="{{ closeAdmin }}" style="background:none;border:1px solid rgba(255,249,242,0.28);color:#FFF9F2;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:12px 16px;border-radius:999px;cursor:pointer">Salir</button>
+      </div>
+      <div style="max-width:1080px;margin:0 auto;padding:0 clamp(14px,3vw,22px);display:flex;gap:5px;overflow-x:auto">
+        <sc-for list="{{ adminTabs }}" as="t" hint-placeholder-count="4">
+          <button onClick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="max-width:1080px;margin:0 auto;padding:26px clamp(14px,3vw,22px) 70px">
+
+      <sc-if value="{{ dbWarning }}" hint-placeholder-val="{{ '' }}">
+        <div style="margin-bottom:20px;padding:14px 16px;background:#F9EBD1;border:1px solid #E8C98D;color:#6B5327;font-size:13.5px;line-height:1.55;border-radius:12px">{{ dbWarning }}</div>
+      </sc-if>
+
+      <!-- ================= RESERVAS ================= -->
+      <sc-if value="{{ tabRes }}" hint-placeholder-val="{{ true }}">
+      <div>
+        <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+          <h2 style="margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:clamp(24px,3.4vw,34px);letter-spacing:-0.015em;color:#2A1F15">Reservas</h2>
+          <span style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#7C8A5B">{{ pendingCount }}</span>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:16px">
+          <sc-for list="{{ resFilters }}" as="f" hint-placeholder-count="4">
+            <button onClick="{{ f.onClick }}" style="{{ f.style }}">{{ f.label }}</button>
+          </sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-top:18px">
+          <sc-for list="{{ reservations }}" as="r" hint-placeholder-count="3">
+            <div style="background:#FFF9F2;border:1px solid #E7D9C8;border-radius:14px;padding:18px">
+              <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px">
+                <span style="font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.08em;color:#2A1F15">{{ r.code }}</span>
+                <span style="{{ r.badgeStyle }}">{{ r.status }}</span>
+                <span style="font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#8A7866">{{ r.origin }}</span>
+                <span style="margin-left:auto;font-size:12px;color:#8A7866">{{ r.created }}</span>
+              </div>
+              <div style="font-family:'Poppins',sans-serif;font-size:18px;margin-top:10px;color:#2A1F15">{{ r.name }}</div>
+              <a href="{{ r.waLink }}" target="_blank" style="display:inline-block;font-size:14px;color:#5B6B37;text-decoration:none;margin-top:2px">{{ r.phone }}</a>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,120px),1fr));gap:12px;margin-top:14px;padding-top:14px;border-top:1px solid #EDE2D4">
+                <div>
+                  <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8A7866">Fecha</div>
+                  <div style="font-size:14.5px;margin-top:4px;color:#2A1F15">{{ r.dateTxt }}</div>
+                </div>
+                <div>
+                  <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8A7866">Turno</div>
+                  <div style="font-size:14.5px;margin-top:4px;color:#2A1F15">{{ r.shiftTxt }}</div>
+                </div>
+                <div>
+                  <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8A7866">Modalidad</div>
+                  <div style="font-size:14.5px;margin-top:4px;color:#2A1F15">{{ r.modalityTxt }}</div>
+                </div>
+                <div>
+                  <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8A7866">Personas</div>
+                  <div style="font-size:14.5px;margin-top:4px;color:#2A1F15">{{ r.people }}</div>
+                </div>
+                <div>
+                  <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8A7866">Total / seña</div>
+                  <div style="font-size:14.5px;margin-top:4px;color:#2A1F15">{{ r.money }}</div>
+                </div>
+              </div>
+              <sc-if value="{{ r.actionable }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+                  <button onClick="{{ r.approve }}" style="flex:1;min-width:140px;background:#5B6B37;color:#FFF9F2;border:none;padding:15px;border-radius:999px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer">Confirmar</button>
+                  <button onClick="{{ r.reject }}" style="flex:1;min-width:140px;background:none;color:#9A6A50;border:1px solid #E6C9B6;padding:15px;border-radius:999px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer">Rechazar</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ r.reopenable }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:14px">
+                  <button onClick="{{ r.approve }}" style="background:none;border:1px solid #D9CBB8;color:#6B5A49;padding:11px 18px;border-radius:999px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer">Volver a confirmar</button>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ noReservations }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:18px;padding:34px 20px;text-align:center;background:#FFF9F2;border:1px dashed #DCCDBA;border-radius:14px;color:#8A7866;font-size:14px">{{ noReservationsTxt }}</div>
+        </sc-if>
+      </div>
+      </sc-if>
+
+      <!-- ================= CALENDARIO ================= -->
+      <sc-if value="{{ tabCal }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <h2 style="margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:clamp(24px,3.4vw,34px);letter-spacing:-0.015em;color:#2A1F15">Calendario</h2>
+        <p style="margin:8px 0 0;font-size:14.5px;line-height:1.6;color:#6B5A49;max-width:56ch">Cada día tiene dos turnos. Tocá <strong>D</strong> (día) o <strong>N</strong> (noche) para bloquearlo o liberarlo. Los turnos con reserva no se tocan desde acá: se manejan en la pestaña Reservas.</p>
+
+        <div style="background:#FFF9F2;border:1px solid #E7D9C8;border-radius:16px;padding:18px;margin-top:18px">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px">
+            <button onClick="{{ adminPrevMonth }}" style="width:42px;height:42px;border-radius:999px;border:1px solid #E0CFBC;background:#FFFDFA;color:#2A1F15;font-size:18px;cursor:pointer">‹</button>
+            <div style="font-family:'Poppins',sans-serif;font-size:19px;color:#2A1F15">{{ adminMonthLabel }}</div>
+            <button onClick="{{ adminNextMonth }}" style="width:42px;height:42px;border-radius:999px;border:1px solid #E0CFBC;background:#FFFDFA;color:#2A1F15;font-size:18px;cursor:pointer">›</button>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px">
+            <sc-for list="{{ weekdays }}" as="w" hint-placeholder-count="7">
+              <div style="text-align:center;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#8A7866;padding:4px 0">{{ w }}</div>
+            </sc-for>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px">
+            <sc-for list="{{ adminDays }}" as="d" hint-placeholder-count="35">
+              <div style="{{ d.cellStyle }}">
+                <div style="{{ d.numStyle }}">{{ d.num }}</div>
+                <div style="display:flex;gap:3px">
+                  <button onClick="{{ d.dayClick }}" title="{{ d.dayTitle }}" style="{{ d.dayStyle }}">D</button>
+                  <button onClick="{{ d.nightClick }}" title="{{ d.nightTitle }}" style="{{ d.nightStyle }}">N</button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:16px">
+            <sc-for list="{{ adminLegend }}" as="l" hint-placeholder-count="4">
+              <span style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:#6B5A49"><span style="width:13px;height:13px;border-radius:4px;background:{{ l.bg }};border:1px solid {{ l.border }}"></span>{{ l.label }}</span>
+            </sc-for>
+          </div>
+        </div>
+
+        <!-- Reserva a mano -->
+        <div style="background:#FFF9F2;border:1px solid #E7D9C8;border-radius:16px;padding:18px;margin-top:16px">
+          <h3 style="margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:21px;letter-spacing:-0.01em;color:#2A1F15">Cargar una reserva a mano</h3>
+          <p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:#6B5A49;max-width:60ch">Para lo que entra por WhatsApp, llamada o en persona. Se guarda como confirmada, así que ese turno queda ocupado en el calendario y en el sitio al instante.</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:14px;margin-top:18px">
+            <div>
+              <label style="display:block;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#6B5A49;margin-bottom:7px">Nombre del cliente</label>
+              <input value="{{ mrName }}" onChange="{{ onMrName }}" placeholder="Ej. María González" style="width:100%;padding:14px;font-size:15px;border:1px solid #E0CFBC;border-radius:10px;background:#FFFDFA;outline:none;color:#2A1F15" />
+            </div>
+            <div>
+              <label style="display:block;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#6B5A49;margin-bottom:7px">Teléfono / WhatsApp</label>
+              <input value="{{ mrPhone }}" onChange="{{ onMrPhone }}" inputMode="tel" placeholder="0981 123 456" style="width:100%;padding:14px;font-size:15px;border:1px solid #E0CFBC;border-radius:10px;background:#FFFDFA;outline:none;color:#2A1F15" />
+            </div>
+            <div>
+              <label style="display:block;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#6B5A49;margin-bottom:7px">Fecha</label>
+              <input type="date" value="{{ mrDate }}" onChange="{{ onMrDate }}" style="width:100%;padding:13px 14px;font-size:15px;border:1px solid #E0CFBC;border-radius:10px;background:#FFFDFA;outline:none;color:#2A1F15" />
+            </div>
+            <div>
+              <label style="display:block;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#6B5A49;margin-bottom:7px">Modalidad</label>
+              <select value="{{ mrModality }}" onChange="{{ onMrModality }}" style="width:100%;padding:14px;font-size:15px;border:1px solid #E0CFBC;border-radius:10px;background:#FFFDFA;color:#2A1F15">
+                <option value="full">Quinta completa</option>
+                <option value="couple">Promo pareja</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#6B5A49;margin-bottom:7px">Turno</label>
+              <select value="{{ mrShift }}" onChange="{{ onMrShift }}" style="width:100%;padding:14px;font-size:15px;border:1px solid #E0CFBC;border-radius:10px;background:#FFFDFA;color:#2A1F15">
+                <option value="day">Día</option>
+                <option value="night">Noche</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#6B5A49;margin-bottom:7px">Cantidad de personas</label>
+              <input inputMode="numeric" value="{{ mrPeople }}" onChange="{{ onMrPeople }}" placeholder="2" style="width:100%;padding:14px;font-size:15px;border:1px solid #E0CFBC;border-radius:10px;background:#FFFDFA;outline:none;color:#2A1F15" />
+            </div>
+            <div>
+              <label style="display:block;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#6B5A49;margin-bottom:7px">Monto total (Gs.)</label>
+              <input inputMode="numeric" value="{{ mrTotal }}" onChange="{{ onMrTotal }}" placeholder="{{ mrTotalHint }}" style="width:100%;padding:14px;font-size:15px;border:1px solid #E0CFBC;border-radius:10px;background:#FFFDFA;outline:none;color:#2A1F15" />
+            </div>
+            <div>
+              <label style="display:block;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#6B5A49;margin-bottom:7px">Monto de la seña (Gs.)</label>
+              <input inputMode="numeric" value="{{ mrDeposit }}" onChange="{{ onMrDeposit }}" placeholder="{{ mrDepositHint }}" style="width:100%;padding:14px;font-size:15px;border:1px solid #E0CFBC;border-radius:10px;background:#FFFDFA;outline:none;color:#2A1F15" />
+            </div>
+          </div>
+          <p style="margin:12px 0 0;font-size:12.5px;color:#8A7866">{{ mrHint }}</p>
+          <sc-if value="{{ mrError }}" hint-placeholder-val="{{ '' }}">
+            <div style="margin-top:14px;padding:12px 14px;background:#FBE7DC;border:1px solid #F0CDB8;color:#8E4C28;font-size:13px;border-radius:10px">{{ mrError }}</div>
+          </sc-if>
+          <sc-if value="{{ mrSaved }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:14px;padding:12px 14px;background:#E8EFDA;border:1px solid #C9D3B2;color:#4A5A2B;font-size:13px;border-radius:10px">Reserva guardada. El turno ya figura como ocupado.</div>
+          </sc-if>
+          <button onClick="{{ saveManual }}" style="width:100%;margin-top:16px;background:#2A1F15;color:#FFF9F2;border:none;padding:17px;border-radius:999px;font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer" style-hover="background:#5B6B37">Guardar reserva</button>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ================= GALERÍA ================= -->
+      <sc-if value="{{ tabGal }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap">
+          <div>
+            <h2 style="margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:clamp(24px,3.4vw,34px);letter-spacing:-0.015em;color:#2A1F15">Galería</h2>
+            <p style="margin:8px 0 0;font-size:14.5px;color:#6B5A49">Subí fotos, cambiales la categoría, reordenalas o borralas. {{ photosCount }}</p>
+          </div>
+          <label style="display:inline-flex;align-items:center;gap:8px;background:#2A1F15;color:#FFF9F2;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:14px 22px;border-radius:999px;cursor:pointer">
+            <span>Subir fotos</span>
+            <input type="file" accept="image/*" multiple onChange="{{ onUploadPhotos }}" style="display:none" />
+          </label>
+        </div>
+        <sc-if value="{{ uploading }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:14px;padding:12px 14px;background:#E8EFDA;border:1px solid #C9D3B2;color:#4A5A2B;font-size:13px;border-radius:10px">Subiendo… {{ uploadProgress }}</div>
+        </sc-if>
+        <sc-if value="{{ hasPhotos }}" hint-placeholder-val="{{ true }}">
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,165px),1fr));gap:12px;margin-top:20px">
+            <sc-for list="{{ adminPhotos }}" as="p" hint-placeholder-count="6">
+              <div style="background:#FFF9F2;border:1px solid #E7D9C8;border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:8px">
+                <div style="position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;background:#EFE7DC">
+                  <img src="{{ p.src }}" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />
+                </div>
+                <select value="{{ p.cat }}" onChange="{{ p.onChangeCat }}" style="width:100%;padding:8px;font-size:12.5px;border:1px solid #E0CFBC;border-radius:7px;background:#FFFDFA;color:#2A1F15">
+                  <option>Piscina</option><option>Exterior</option><option>Interior</option><option>Habitación</option><option>Quincho</option><option>Noche</option>
+                </select>
+                <div style="display:flex;gap:6px">
+                  <button onClick="{{ p.moveUp }}" title="Subir" style="flex:1;background:#F3ECE2;border:none;border-radius:7px;font-size:14px;padding:8px;cursor:pointer;color:#2A1F15">↑</button>
+                  <button onClick="{{ p.moveDown }}" title="Bajar" style="flex:1;background:#F3ECE2;border:none;border-radius:7px;font-size:14px;padding:8px;cursor:pointer;color:#2A1F15">↓</button>
+                  <button onClick="{{ p.remove }}" title="Eliminar" style="flex:1;background:#FBE7DC;border:none;border-radius:7px;font-size:13px;padding:8px;cursor:pointer;color:#8E4C28">✕</button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ noPhotos }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:20px;padding:34px 20px;text-align:center;background:#FFF9F2;border:1px dashed #DCCDBA;border-radius:14px;color:#8A7866;font-size:14px;line-height:1.6">Todavía no subiste ninguna foto.<br />Mientras tanto el sitio muestra las fotos que vinieron con el diseño.</div>
+        </sc-if>
+      </div>
+      </sc-if>
+
+      <!-- ================= CONFIGURACIÓN ================= -->
+      <sc-if value="{{ tabCfg }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <h2 style="margin:0;font-family:'Poppins',sans-serif;font-weight:500;font-size:clamp(24px,3.4vw,34px);letter-spacing:-0.015em;color:#2A1F15">Configuración</h2>
+        <p style="margin:8px 0 0;font-size:14.5px;line-height:1.6;color:#6B5A49;max-width:56ch">Estos valores son los que usa el sitio para mostrar precios y calcular la seña. Se guardan solos: cuando terminás de escribir, el campo avisa «Guardado».</p>
+
+        <sc-for list="{{ settingsGroups }}" as="g" hint-placeholder-count="3">
+          <div style="background:#FFF9F2;border:1px solid #E7D9C8;border-radius:16px;padding:18px;margin-top:16px">
+            <p style="margin:0 0 16px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#7C8A5B">{{ g.title }}</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:14px">
+              <sc-for list="{{ g.fields }}" as="f" hint-placeholder-count="4">
+                <div>
+                  <label style="display:block;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#6B5A49;margin-bottom:7px">{{ f.label }}</label>
+                  <input value="{{ f.value }}" onChange="{{ f.onChange }}" style="width:100%;padding:14px;font-size:15px;border:1px solid #E0CFBC;border-radius:10px;background:#FFFDFA;outline:none;color:#2A1F15" />
+                  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:6px">
+                    <span style="font-size:11.5px;color:#8A7866">{{ f.hint }}</span>
+                    <span style="flex:none;font-size:11px;font-weight:600;white-space:nowrap;color:{{ f.statusColor }}">{{ f.status }}</span>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+
+        <div style="background:#FFF9F2;border:1px solid #E7D9C8;border-radius:16px;padding:18px;margin-top:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+          <div style="flex:1;min-width:200px">
+            <div style="font-family:'Poppins',sans-serif;font-size:16px;color:#2A1F15">Promo pareja</div>
+            <div style="font-size:13.5px;color:#6B5A49;margin-top:4px">Si la apagás, deja de aparecer como modalidad en el sitio.</div>
+          </div>
+          <button onClick="{{ togglePromo }}" style="{{ promoStyle }}">{{ promoLabel }}</button>
+        </div>
+      </div>
+      </sc-if>
+
+    </div>
+  </div>
+  </sc-if>
+</div>
+</sc-if>
 
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{
@@ -475,19 +809,21 @@
 const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','setiembre','octubre','noviembre','diciembre'];
 const DIAS = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
 
+// Fotos que vinieron con el diseño. Son el fallback: apenas el admin sube
+// una foto desde el panel, la galería pasa a mostrar las de la base.
 const PHOTOS = [
-  { id: 'p1', cat: 'Piscina', label: 'Piscina con cascada' },
-  { id: 'p2', cat: 'Quincho', label: 'Quincho y parrilla' },
-  { id: 'p3', cat: 'Exterior', label: 'Jardín y reposeras' },
-  { id: 'p4', cat: 'Habitación', label: 'Habitación climatizada' },
-  { id: 'p5', cat: 'Noche', label: 'Piscina con luces LED' },
-  { id: 'p6', cat: 'Interior', label: 'Living / Smart TV' },
-  { id: 'p7', cat: 'Piscina', label: 'Piscina desde arriba' },
-  { id: 'p8', cat: 'Exterior', label: 'Predio y vegetación' },
-  { id: 'p9', cat: 'Quincho', label: 'Mesa larga del quincho' },
-  { id: 'p10', cat: 'Noche', label: 'Quincho de noche' },
-  { id: 'p11', cat: 'Interior', label: 'Cocina equipada' },
-  { id: 'p12', cat: 'Piscina', label: 'Detalle del agua' }
+  { id: 'p1', cat: 'Piscina', label: 'Piscina con cascada', src: 'uploads/quintarv/quinta-rv (13).webp' },
+  { id: 'p2', cat: 'Piscina', label: 'Piscina al atardecer', src: 'uploads/quintarv/quinta-rv (2) (1).webp' },
+  { id: 'p3', cat: 'Piscina', label: 'Piscina y sombrillas', src: 'uploads/quintarv/quinta-rv (15).webp' },
+  { id: 'p4', cat: 'Piscina', label: 'Piscina de día', src: 'uploads/quintarv/quinta-rv (8).webp' },
+  { id: 'p5', cat: 'Piscina', label: 'Piscina y hamaca paraguaya', src: 'uploads/quintarv/quinta-rv (11).webp' },
+  { id: 'p6', cat: 'Quincho', label: 'Quincho frente a la piscina', src: 'uploads/quintarv/quinta-rv (14).webp' },
+  { id: 'p7', cat: 'Quincho', label: 'Hamaca y estar del quincho', src: 'uploads/quintarv/quinta-rv (3) (1).webp' },
+  { id: 'p8', cat: 'Quincho', label: 'Salón del quincho', src: 'uploads/quintarv/quinta-rv (9).webp' },
+  { id: 'p9', cat: 'Exterior', label: 'Parque y galería', src: 'uploads/quintarv/quinta-rv (1).webp' },
+  { id: 'p10', cat: 'Habitación', label: 'Habitación climatizada', src: 'uploads/quintarv/quinta-rv (10).webp' },
+  { id: 'p11', cat: 'Interior', label: 'Baño completo', src: 'uploads/quintarv/quinta-rv (6).webp' },
+  { id: 'p12', cat: 'Noche', label: 'El predio de noche', src: 'uploads/quintarv/quinta-rv (7).webp' }
 ];
 const CATS = ['Todas', 'Piscina', 'Exterior', 'Interior', 'Habitación', 'Quincho', 'Noche'];
 const BENEFITS = [
@@ -499,51 +835,196 @@ const BENEFITS = [
   ['06', 'WiFi y Bluetooth', 'Conexión y música, si te hacen falta.']
 ];
 
+const SHIFT_NAME = { day: 'Día', night: 'Noche' };
+const MODALITY_NAME = { full: 'Quinta completa', couple: 'Promo pareja' };
+
 function hash(s) {
   let h = 2166136261;
   for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
   return Math.abs(h);
 }
 const gs = n => 'Gs. ' + Math.round(n).toLocaleString('es-PY').replace(/,/g, '.');
+const miles = n => Math.round(n).toLocaleString('es-PY').replace(/,/g, '.');
+const digits = v => String(v == null ? '' : v).replace(/[^0-9]/g, '');
 const iso = d => new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+const isAdminUrl = () => typeof location !== 'undefined' &&
+  (location.pathname === '/admin' || location.pathname === '/admin/' ||
+   location.hash === '#admin' || location.hash === '#/admin');
 
 class Component extends DCLogic {
   state = {
+    page: isAdminUrl() ? 'admin' : 'site',
     view: 'stepper', step: 1, month: null,
     date: null, modality: null, shift: null, people: null,
     name: '', phone: '', code: '', raceError: false,
-    cat: 'Todas', showAll: false, lightbox: null, copied: ''
+    cat: 'Todas', showAll: false, lightbox: null, copied: '',
+    galIndex: 0, dragDx: 0, dragging: false,
+    vw: typeof window !== 'undefined' ? window.innerWidth : 1280, menuOpen: false,
+
+    // --- panel ---
+    loggedIn: false, adminEmail: '', adminPass: '', loginError: '', adminWho: 'Administración',
+    adminTab: 'res', adminMonth: null, resFilter: 'PENDIENTE',
+    dbCfg: null, dbGallery: null, dbSlots: {}, dbReservations: [], dbError: '',
+    cfgSaved: {},
+    mrName: '', mrPhone: '', mrDate: '', mrModality: 'full', mrShift: 'day',
+    mrPeople: '', mrTotal: '', mrDeposit: '', mrError: '', mrSaved: false,
+    uploading: false, uploadProgress: ''
   };
 
-  // Configuración administrable (en producción: Supabase → settings / modalities / rates / time_slots)
+  _onResize = () => this.setState({ vw: window.innerWidth });
+  _onPopState = () => this.setState({ page: isAdminUrl() ? 'admin' : 'site' });
+
+  trackRef = React.createRef();
+  thumbsRef = React.createRef();
+  _drag = null;
+  _cfgTimers = {};
+  _cfgClear = {};
+
+  componentDidMount() {
+    window.addEventListener('resize', this._onResize);
+    window.addEventListener('popstate', this._onPopState);
+    this.hydrate();
+    this.checkSession();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._onResize);
+    window.removeEventListener('popstate', this._onPopState);
+  }
+
+  // El runtime llama a componentDidUpdate con un solo argumento (prevProps),
+  // asi que el estado anterior lo guardamos nosotros.
+  componentDidUpdate() {
+    const { galIndex, cat } = this.state;
+    if (this._lastGal === galIndex && this._lastCat === cat) return;
+    this._lastGal = galIndex; this._lastCat = cat;
+    this.centerThumb();
+  }
+
+  // ---------------------------------------------------------------- Supabase
+
+  supa() { return typeof window !== 'undefined' ? window.__supa : null; }
+
+  async checkSession() {
+    const supa = this.supa();
+    if (!supa) return setTimeout(() => this.checkSession(), 150);
+    const { data } = await supa.auth.getSession();
+    if (!data || !data.session || !data.session.user) return;
+    const chk = await supa.rpc('is_admin');
+    if (chk.data) this.setState({ loggedIn: true, adminWho: data.session.user.email || 'Administración' });
+    else await supa.auth.signOut();
+  }
+
+  async hydrate() {
+    const supa = this.supa();
+    if (!supa) return setTimeout(() => this.hydrate(), 150);
+    const [cfgR, resR, blkR, galR] = await Promise.all([
+      supa.from('config').select('*').eq('id', 1).maybeSingle(),
+      supa.from('reservations').select('*').order('created_at', { ascending: false }),
+      supa.from('blocked_slots').select('*'),
+      supa.from('gallery').select('*').order('sort_order', { ascending: true })
+    ]);
+
+    const err = (cfgR && cfgR.error) || (resR && resR.error);
+    const slots = {};
+    const rows = (resR && resR.data) || [];
+    rows.forEach(r => {
+      if (r.status === 'CONFIRMADA') slots[r.date + '|' + r.shift] = 'reserved';
+      else if (r.status === 'PENDIENTE') slots[r.date + '|' + r.shift] = 'pending';
+    });
+    ((blkR && blkR.data) || []).forEach(b => { slots[b.date + '|' + b.shift] = 'blocked'; });
+
+    this.setState({
+      dbCfg: (cfgR && cfgR.data) || null,
+      dbGallery: (galR && galR.data) || null,
+      dbReservations: rows,
+      dbSlots: slots,
+      dbError: err ? err.message : ''
+    });
+  }
+
+  photoUrl(path) {
+    if (!path) return '';
+    if (path.startsWith('http') || path.startsWith('uploads/')) return path;
+    const supa = this.supa();
+    if (!supa) return '';
+    const { data } = supa.storage.from('quintarv-photos').getPublicUrl(path);
+    return (data && data.publicUrl) || '';
+  }
+
+  // ---------------------------------------------------------------- galería
+
+  centerThumb() {
+    const el = this.thumbsRef.current;
+    if (!el) return;
+    const left = this.state.galIndex * 39 + 2 - (el.offsetWidth / 2 - 60);
+    el.scrollTo({ left: Math.max(0, left), behavior: 'smooth' });
+  }
+
+  allPhotos() {
+    const db = this.state.dbGallery;
+    if (db && db.length) {
+      return db.map(g => ({
+        id: 'db-' + g.id, cat: g.category,
+        label: g.title || 'Casa Quinta RV', src: this.photoUrl(g.path)
+      }));
+    }
+    return PHOTOS;
+  }
+  galPhotos() {
+    const all = this.allPhotos();
+    return this.state.cat === 'Todas' ? all : all.filter(p => p.cat === this.state.cat);
+  }
+  goGal(i) {
+    const max = this.galPhotos().length - 1;
+    this.setState({ galIndex: Math.max(0, Math.min(max, i)), dragDx: 0 });
+  }
+  stepGal(d) {
+    const max = this.galPhotos().length - 1;
+    this.setState(s => ({ galIndex: Math.max(0, Math.min(max, s.galIndex + d)), dragDx: 0 }));
+  }
+
+  // ---------------------------------------------------------------- config
+
+  // La base manda. Si todavía no respondió, valen los props del diseño.
   config() {
+    const c = this.state.dbCfg;
+    const num = (col, fallback) => (c && c[col] != null ? Number(c[col]) : fallback);
+    const txt = (col, fallback) => (c && c[col] != null ? String(c[col]) : fallback);
+    const dayTime = txt('day_time', '10:00 – 18:00');
+    const nightTime = txt('night_time', '19:00 – 03:00');
     return {
-      depositPct: this.props.depositPct ?? 30,
-      holdMinutes: this.props.holdMinutes ?? 30,
-      alias: this.props.alias ?? 'quintarv.py',
-      whatsapp: String(this.props.whatsapp ?? '595981123456').replace(/[^0-9]/g, ''),
-      extraPerson: this.props.extraPerson ?? 50000,
+      depositPct: num('deposit_pct', this.props.depositPct ?? 30),
+      holdMinutes: num('hold_minutes', this.props.holdMinutes ?? 30),
+      alias: txt('alias', this.props.alias ?? 'quintarv.py'),
+      whatsapp: digits(txt('whatsapp', this.props.whatsapp ?? '595981123456')),
+      extraPerson: num('price_extra_person', this.props.extraPerson ?? 50000),
+      dayTime, nightTime,
       modalities: [
         {
           id: 'full', name: 'Quinta completa',
           description: 'Uso exclusivo del predio: piscina, quincho, parrilla y habitación climatizada.',
-          days: 'Todos los días', capacity: 'Hasta 15 personas', included: 15, max: 25,
+          days: 'Todos los días',
+          capacity: 'Hasta ' + num('included_full', 15) + ' personas',
+          included: num('included_full', 15), max: num('max_full', 25),
           slotId: 'v2-rate-full', photoLabel: 'Quinta completa — piscina y quincho',
           weekdays: [0, 1, 2, 3, 4, 5, 6],
           shifts: [
-            { id: 'day', label: 'Turno día', time: '10:00 – 18:00', price: 900000 },
-            { id: 'night', label: 'Turno noche', time: '19:00 – 03:00', price: 1100000 }
+            { id: 'day', label: 'Turno día', time: dayTime, price: num('price_full_day', 900000) },
+            { id: 'night', label: 'Turno noche', time: nightTime, price: num('price_full_night', 1100000) }
           ]
         },
         {
-          id: 'couple', name: 'Promo pareja', active: this.props.promoPareja ?? true,
+          id: 'couple', name: 'Promo pareja',
+          active: c ? !!c.promo_couple : (this.props.promoPareja ?? true),
           description: 'Un turno para dos, con piscina y quincho para ustedes solos.',
-          days: 'Lunes a jueves', capacity: '2 personas', included: 2, max: 2,
+          days: 'Lunes a jueves',
+          capacity: num('max_couple', 2) + ' personas',
+          included: num('included_couple', 2), max: num('max_couple', 2),
           slotId: 'v2-rate-couple', photoLabel: 'Promo pareja — atardecer en la piscina',
           weekdays: [1, 2, 3, 4],
           shifts: [
-            { id: 'day', label: 'Turno día', time: '10:00 – 18:00', price: 450000 },
-            { id: 'night', label: 'Turno noche', time: '19:00 – 03:00', price: 550000 }
+            { id: 'day', label: 'Turno día', time: dayTime, price: num('price_couple_day', 450000) },
+            { id: 'night', label: 'Turno noche', time: nightTime, price: num('price_couple_night', 550000) }
           ]
         }
       ]
@@ -551,15 +1032,14 @@ class Component extends DCLogic {
   }
 
   activeModalities() { return this.config().modalities.filter(m => m.active !== false); }
+  modalityById(id) { return this.config().modalities.find(m => m.id === id) || null; }
+
+  // ---------------------------------------------------------------- turnos
 
   slotState(dateIso, shiftId) {
     const today = new Date(); today.setHours(0, 0, 0, 0);
     if (new Date(dateIso + 'T12:00:00') < today) return 'blocked';
-    const h = hash(dateIso + shiftId) % 100;
-    if (h < 14) return 'reserved';
-    if (h < 21) return 'pending';
-    if (h < 26) return 'blocked';
-    return 'available';
+    return this.state.dbSlots[dateIso + '|' + shiftId] || 'available';
   }
 
   dayState(dateIso) {
@@ -572,6 +1052,11 @@ class Component extends DCLogic {
 
   monthRef() {
     if (this.state.month) return this.state.month;
+    const n = new Date();
+    return { y: n.getFullYear(), m: n.getMonth() };
+  }
+  adminMonthRef() {
+    if (this.state.adminMonth) return this.state.adminMonth;
     const n = new Date();
     return { y: n.getFullYear(), m: n.getMonth() };
   }
@@ -592,10 +1077,24 @@ class Component extends DCLogic {
   }
   deposit() { return Math.round(this.total() * this.config().depositPct / 100); }
 
-  dateLabel() {
-    if (!this.state.date) return '';
-    const d = new Date(this.state.date + 'T12:00:00');
+  priceFor(modalityId, shiftId, people) {
+    const m = this.modalityById(modalityId);
+    if (!m) return 0;
+    const s = m.shifts.find(x => x.id === shiftId);
+    if (!s) return 0;
+    return s.price + Math.max(0, (people || m.included) - m.included) * this.config().extraPerson;
+  }
+
+  dateLabel(key) {
+    const k = key || this.state.date;
+    if (!k) return '';
+    const d = new Date(k + 'T12:00:00');
     return DIAS[d.getDay()] + ' ' + d.getDate() + ' de ' + MESES[d.getMonth()];
+  }
+  shortDate(key) {
+    if (!key) return '—';
+    const d = new Date(key + 'T12:00:00');
+    return d.getDate() + '/' + (d.getMonth() + 1) + '/' + String(d.getFullYear()).slice(2);
   }
 
   copy(text, key) {
@@ -606,7 +1105,243 @@ class Component extends DCLogic {
 
   dayStyle(bg, color, cursor, border) {
     return 'aspect-ratio:1;min-height:44px;border-radius:50%;border:' + border + ';background:' + bg +
-      ';color:' + color + ";font-family:'Poppins',sans-serif;font-size:15px;font-weight:600;cursor:" + cursor;
+      ';color:' + color + ";font-family:'Poppins',sans-serif;font-size:16px;font-weight:600;cursor:" + cursor;
+  }
+
+  // ---------------------------------------------------------------- panel
+
+  goAdmin() {
+    try { history.pushState({}, '', '/admin'); } catch (e) { location.hash = 'admin'; }
+    this.setState({ page: 'admin', menuOpen: false });
+  }
+
+  async doLogin() {
+    const email = (this.state.adminEmail || '').trim().toLowerCase();
+    const pass = this.state.adminPass || '';
+    const supa = this.supa();
+    if (!supa) { this.setState({ loginError: 'Todavía conectando con el servidor. Probá de nuevo en un segundo.' }); return; }
+    if (!email || !pass) { this.setState({ loginError: 'Completá el email y la contraseña.' }); return; }
+    this.setState({ loginError: '' });
+    const { data, error } = await supa.auth.signInWithPassword({ email, password: pass });
+    if (error || !data || !data.user) {
+      this.setState({ loginError: 'Email o contraseña incorrectos.' });
+      return;
+    }
+    const chk = await supa.rpc('is_admin');
+    if (chk.error || !chk.data) {
+      await supa.auth.signOut();
+      this.setState({ loginError: 'Ese usuario no tiene acceso al panel.' + (chk.error ? ' (' + chk.error.message + ')' : '') });
+      return;
+    }
+    this.setState({ loggedIn: true, loginError: '', adminPass: '', adminWho: data.user.email || 'Administración' });
+    this.hydrate();
+  }
+
+  async closeAdmin() {
+    const supa = this.supa();
+    if (supa) await supa.auth.signOut();
+    try { history.pushState({}, '', '/'); } catch (e) { location.hash = ''; }
+    this.setState({ page: 'site', loggedIn: false, adminPass: '' });
+  }
+
+  // Guardado automático de cada campo de configuración, con un timer propio
+  // por campo para que editar dos seguidos no descarte el primero.
+  cfgSet(key, col, value) {
+    this.setState(s => ({ dbCfg: Object.assign({ id: 1 }, s.dbCfg, { [col]: value }) }));
+    const supa = this.supa();
+    if (!supa) return this.cfgStatus(key, 'error');
+    this.cfgStatus(key, 'saving');
+    clearTimeout(this._cfgTimers[key]);
+    this._cfgTimers[key] = setTimeout(async () => {
+      // .select() devuelve las filas tocadas: si RLS bloquea vienen 0 y avisamos.
+      const r = await supa.from('config').update({ [col]: value }).eq('id', 1).select('id');
+      this.cfgStatus(key, (!r.error && r.data && r.data.length) ? 'saved' : 'error');
+    }, 500);
+  }
+  cfgStatus(key, st) {
+    this.setState(s => ({ cfgSaved: Object.assign({}, s.cfgSaved, { [key]: st }) }));
+    if (st !== 'saved') return;
+    clearTimeout(this._cfgClear[key]);
+    this._cfgClear[key] = setTimeout(() => this.setState(s => {
+      if (s.cfgSaved[key] !== 'saved') return null;
+      const n = Object.assign({}, s.cfgSaved); delete n[key]; return { cfgSaved: n };
+    }), 2400);
+  }
+
+  async toggleSlot(dateIso, shiftId) {
+    const cur = this.state.dbSlots[dateIso + '|' + shiftId];
+    if (cur === 'reserved' || cur === 'pending') return;   // pertenece a una reserva
+    const k = dateIso + '|' + shiftId;
+    this.setState(s => {
+      const n = Object.assign({}, s.dbSlots);
+      if (n[k] === 'blocked') delete n[k]; else n[k] = 'blocked';
+      return { dbSlots: n };
+    });
+    const supa = this.supa();
+    if (!supa) return;
+    if (cur === 'blocked') await supa.from('blocked_slots').delete().eq('date', dateIso).eq('shift', shiftId);
+    else await supa.from('blocked_slots').insert({ date: dateIso, shift: shiftId, reason: 'manual' });
+  }
+
+  async decide(code, next) {
+    const supa = this.supa();
+    if (supa) {
+      const r = await supa.from('reservations').update({ status: next }).eq('code', code).select('code');
+      if (r.error || !r.data || !r.data.length) {
+        this.setState({ dbError: 'No se pudo actualizar la reserva. Revisá que el usuario sea admin.' });
+        return;
+      }
+    }
+    this.hydrate();
+  }
+
+  newCode(dateIso, shiftId, name) {
+    const d = new Date(dateIso + 'T12:00:00');
+    const dd = String(d.getDate()).padStart(2, '0') + String(d.getMonth() + 1).padStart(2, '0') + String(d.getFullYear()).slice(2);
+    return 'QRV-' + dd + '-' + hash(dateIso + shiftId + name + Date.now()).toString(16).slice(0, 4).toUpperCase();
+  }
+
+  // Reserva cargada a mano (WhatsApp, llamada, presencial). Entra CONFIRMADA
+  // para que el turno quede ocupado en el sitio al instante.
+  async saveManual() {
+    const s = this.state;
+    const name = (s.mrName || '').trim();
+    const phone = (s.mrPhone || '').trim();
+    const date = s.mrDate;
+    const modality = s.mrModality, shift = s.mrShift;
+    const m = this.modalityById(modality);
+    const people = Math.max(1, Number(digits(s.mrPeople)) || (m ? m.included : 1));
+
+    if (!name || !phone) return this.setState({ mrError: 'Completá el nombre y el teléfono.', mrSaved: false });
+    if (!date) return this.setState({ mrError: 'Elegí la fecha del turno.', mrSaved: false });
+    const st = this.slotState(date, shift);
+    if (st !== 'available') {
+      return this.setState({
+        mrError: 'Ese turno no está libre (' + (st === 'blocked' ? 'bloqueado o ya pasó' : 'ya tiene una reserva') + '). Elegí otro.',
+        mrSaved: false
+      });
+    }
+
+    const total = Number(digits(s.mrTotal)) || this.priceFor(modality, shift, people);
+    const deposit = Number(digits(s.mrDeposit)) || Math.round(total * this.config().depositPct / 100);
+    const code = this.newCode(date, shift, name);
+
+    const supa = this.supa();
+    if (supa) {
+      const r = await supa.from('reservations').insert({
+        code, name, phone, date, modality, shift, people, total, deposit,
+        status: 'CONFIRMADA', source: 'manual'
+      });
+      if (r.error) {
+        return this.setState({ mrError: 'No se pudo guardar: ' + r.error.message, mrSaved: false });
+      }
+    }
+    this.setState({
+      mrName: '', mrPhone: '', mrDate: '', mrPeople: '', mrTotal: '', mrDeposit: '',
+      mrError: '', mrSaved: true
+    });
+    this.hydrate();
+  }
+
+  async uploadPhotos(files) {
+    const supa = this.supa();
+    if (!files || !files.length || !supa) return;
+    this.setState({ uploading: true, uploadProgress: '0 / ' + files.length });
+    const maxSort = (this.state.dbGallery || []).reduce((mx, g) => Math.max(mx, g.sort_order || 0), 0);
+    let done = 0;
+    for (const f of files) {
+      const ext = (f.name.split('.').pop() || 'jpg').toLowerCase();
+      const path = 'photo-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8) + '.' + ext;
+      const up = await supa.storage.from('quintarv-photos').upload(path, f, { cacheControl: '3600', upsert: false });
+      if (!up.error) await supa.from('gallery').insert({ path, category: 'Piscina', sort_order: maxSort + done + 1 });
+      done++;
+      this.setState({ uploadProgress: done + ' / ' + files.length });
+    }
+    this.setState({ uploading: false, uploadProgress: '' });
+    this.hydrate();
+  }
+  async setPhotoCat(id, cat) {
+    this.setState(s => ({ dbGallery: (s.dbGallery || []).map(g => g.id === id ? Object.assign({}, g, { category: cat }) : g) }));
+    const supa = this.supa();
+    if (supa) await supa.from('gallery').update({ category: cat }).eq('id', id);
+  }
+  async movePhoto(id, dir) {
+    const list = (this.state.dbGallery || []).slice();
+    const i = list.findIndex(g => g.id === id);
+    const j = i + dir;
+    if (i < 0 || j < 0 || j >= list.length) return;
+    const a = list[i], b = list[j];
+    list[i] = b; list[j] = a;
+    list.forEach((g, k) => { g.sort_order = k + 1; });
+    this.setState({ dbGallery: list });
+    const supa = this.supa();
+    if (supa) {
+      await Promise.all([
+        supa.from('gallery').update({ sort_order: b.sort_order }).eq('id', b.id),
+        supa.from('gallery').update({ sort_order: a.sort_order }).eq('id', a.id)
+      ]);
+    }
+  }
+  async removePhoto(id, path) {
+    if (!confirm('¿Borrar esta foto de la galería?')) return;
+    this.setState(s => ({ dbGallery: (s.dbGallery || []).filter(g => g.id !== id) }));
+    const supa = this.supa();
+    if (!supa) return;
+    if (path && !path.startsWith('uploads/') && !path.startsWith('http')) {
+      await supa.storage.from('quintarv-photos').remove([path]);
+    }
+    await supa.from('gallery').delete().eq('id', id);
+  }
+
+  // ---------------------------------------------------------------- render
+
+  adminCalendar() {
+    const ref = this.adminMonthRef();
+    const pad = new Date(ref.y, ref.m, 1).getDay();
+    const dim = new Date(ref.y, ref.m + 1, 0).getDate();
+    const cells = [];
+    const blank = {
+      cellStyle: 'border:none;background:none', numStyle: 'display:none', num: '',
+      dayStyle: 'display:none', nightStyle: 'display:none',
+      dayTitle: '', nightTitle: '', dayClick: () => {}, nightClick: () => {}
+    };
+    for (let i = 0; i < pad; i++) cells.push(blank);
+
+    const look = {
+      available: { bg: '#FFFFFF', fg: '#2A1F15', border: '#C9D3B2', txt: 'Libre · tocá para bloquear' },
+      pending:   { bg: '#F9EBD1', fg: '#6B5327', border: '#F1DDB4', txt: 'Reserva pendiente' },
+      reserved:  { bg: '#BE3B36', fg: '#FFF1EE', border: '#BE3B36', txt: 'Reservado' },
+      blocked:   { bg: '#26221E', fg: 'rgba(255,249,242,0.78)', border: '#26221E', txt: 'Bloqueado · tocá para liberar' }
+    };
+
+    for (let d = 1; d <= dim; d++) {
+      const key = iso(new Date(ref.y, ref.m, d, 12));
+      const past = new Date(key + 'T12:00:00') < new Date(new Date().setHours(0, 0, 0, 0));
+      const mk = (shift) => {
+        const raw = this.state.dbSlots[key + '|' + shift];
+        const stt = past ? 'blocked' : (raw || 'available');
+        const l = past ? { bg: '#F6F3EF', fg: '#B3ABA1', border: '#EDE7E0', txt: 'ya paso' } : look[stt];
+        const locked = past || stt === 'reserved' || stt === 'pending';
+        return {
+          style: 'flex:1;min-width:0;border-radius:6px;border:1px solid ' + l.border + ';background:' + l.bg +
+            ';color:' + l.fg + ";font-family:'DM Mono',monospace;font-size:9.5px;padding:4px 0;cursor:" +
+            (locked ? 'not-allowed' : 'pointer'),
+          title: (shift === 'day' ? 'Día' : 'Noche') + ': ' + (past ? 'ya pasó' : l.txt),
+          onClick: locked ? () => {} : () => this.toggleSlot(key, shift)
+        };
+      };
+      const dS = mk('day'), nS = mk('night');
+      cells.push({
+        num: String(d),
+        cellStyle: 'border:1px solid #EDE2D4;border-radius:9px;background:#FFFDFA;padding:5px 4px;display:flex;flex-direction:column;gap:4px' +
+          (past ? ';opacity:0.6' : ''),
+        numStyle: "text-align:center;font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;color:#2A1F15;line-height:1",
+        dayStyle: dS.style, dayTitle: dS.title, dayClick: dS.onClick,
+        nightStyle: nS.style, nightTitle: nS.title, nightClick: nS.onClick
+      });
+    }
+    while (cells.length % 7 !== 0) cells.push(blank);
+    return { cells, label: MESES[ref.m].charAt(0).toUpperCase() + MESES[ref.m].slice(1) + ' ' + ref.y, ref };
   }
 
   renderVals() {
@@ -620,12 +1355,16 @@ class Component extends DCLogic {
       const key = iso(new Date(ref.y, ref.m, d, 12));
       const s = this.dayState(key);
       const sel = st.date === key;
+      // Un dia que ya paso no es lo mismo que uno bloqueado: el negro queda
+      // reservado para el bloqueo real del admin.
+      const past = new Date(key + 'T12:00:00') < new Date(new Date().setHours(0, 0, 0, 0));
       let style;
-      if (sel) style = this.dayStyle('#EFAE91', '#3A2417', 'pointer', '1px solid #DE9067');
-      else if (s === 'available') style = this.dayStyle('#EAF4F5', '#2A1F15', 'pointer', '1px solid #B9D9DD');
+      if (past) style = this.dayStyle('#F6F3EF', '#B3ABA1', 'not-allowed', '1px solid #EDE7E0');
+      else if (sel) style = this.dayStyle('#2A1F15', '#FFF9F2', 'pointer', '1px solid #2A1F15');
+      else if (s === 'available') style = this.dayStyle('#FFFFFF', '#2A1F15', 'pointer', '1px solid #C9D3B2');
       else if (s === 'pending') style = this.dayStyle('#F9EBD1', '#6B5327', 'not-allowed', '1px solid #F1DDB4');
-      else if (s === 'reserved') style = this.dayStyle('#FBE7DC', '#9A6A50', 'not-allowed', '1px solid #F3D8C8');
-      else style = this.dayStyle('#F2EFEB', '#6F6962', 'not-allowed', '1px solid #E7E2DC');
+      else if (s === 'reserved') style = this.dayStyle('#BE3B36', '#FFF1EE', 'not-allowed', '1px solid #BE3B36');
+      else style = this.dayStyle('#26221E', 'rgba(255,249,242,0.74)', 'not-allowed', '1px solid #26221E');
       const free = s === 'available';
       days.push({
         label: String(d), disabled: !free, style,
@@ -641,9 +1380,9 @@ class Component extends DCLogic {
       })
       .map(m => ({
         name: m.name, hint: m.capacity + ' · ' + m.days,
-        style: 'text-align:left;padding:20px;border-radius:20px;cursor:pointer;background:' +
-          (st.modality === m.id ? '#FDECD8' : '#FFFFFF') + ';border:1px solid ' +
-          (st.modality === m.id ? '#EFAE91' : '#E6D9C8'),
+        style: 'text-align:left;padding:20px;border-radius:12px;cursor:pointer;background:' +
+          (st.modality === m.id ? '#F9EBD1' : '#FFFFFF') + ';border:1px solid ' +
+          (st.modality === m.id ? '#E8C98D' : '#E6D9C8'),
         onClick: () => this.setState({ modality: m.id, step: 3, shift: null, people: m.included })
       }));
 
@@ -655,9 +1394,9 @@ class Component extends DCLogic {
         label: s.label, time: s.time, priceFmt: gs(s.price),
         stateLabel: free ? 'Disponible' : state === 'pending' ? 'En proceso' : 'Ocupado',
         disabled: !free,
-        style: 'width:100%;text-align:left;padding:20px;border-radius:20px;background:' +
-          (st.shift === s.id ? '#FDECD8' : free ? '#FFFFFF' : '#F6F3EF') + ';border:1px solid ' +
-          (st.shift === s.id ? '#EFAE91' : free ? '#E6D9C8' : '#EDE7E0') +
+        style: 'width:100%;text-align:left;padding:20px;border-radius:12px;background:' +
+          (st.shift === s.id ? '#F9EBD1' : free ? '#FFFFFF' : '#F6F3EF') + ';border:1px solid ' +
+          (st.shift === s.id ? '#E8C98D' : free ? '#E6D9C8' : '#EDE7E0') +
           ';cursor:' + (free ? 'pointer' : 'not-allowed') + ';opacity:' + (free ? '1' : '0.6'),
         onClick: free ? () => this.setState({ shift: s.id, step: 4, people: sm.included }) : () => {}
       };
@@ -671,9 +1410,9 @@ class Component extends DCLogic {
         : 'Modalidad para ' + sm.max + ' personas.')
       : '';
 
-    const filtered = st.cat === 'Todas' ? PHOTOS : PHOTOS.filter(p => p.cat === st.cat);
-    const visible = st.showAll ? filtered : filtered.slice(0, 5);
-    const lb = st.lightbox ? PHOTOS.find(p => p.id === st.lightbox) : null;
+    const filtered = this.galPhotos();
+    const gi = Math.max(0, Math.min(filtered.length - 1, st.galIndex));
+    const lb = st.lightbox ? this.allPhotos().find(p => p.id === st.lightbox) : null;
 
     // próximos turnos libres (fecha + turno)
     const nextSlots = [];
@@ -702,29 +1441,136 @@ class Component extends DCLogic {
     const dataIncomplete = st.name.trim().length < 3 || st.phone.replace(/[^0-9]/g, '').length < 7;
     const allPrices = this.activeModalities().flatMap(m => m.shifts.map(s => s.price));
 
+    const mobile = st.vw < 860;
+
+    // ------------------------------------------------------------- panel
+    const tab = (id, label) => ({
+      label,
+      onClick: () => this.setState({ adminTab: id }),
+      style: 'border:none;border-radius:10px 10px 0 0;padding:13px 18px;cursor:pointer;white-space:nowrap;' +
+        "font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;background:" +
+        (st.adminTab === id ? '#F3ECE2' : 'rgba(255,249,242,0.1)') + ';color:' +
+        (st.adminTab === id ? '#2A1F15' : '#C4B2A0')
+    });
+
+    const badgeStyle = status => {
+      const c = status === 'CONFIRMADA' ? ['#E8EFDA', '#4A5A2B']
+        : status === 'RECHAZADA' ? ['#FBE7DC', '#8E4C28']
+        : status === 'VENCIDA' ? ['#EDE7E0', '#6F6962']
+        : ['#F9EBD1', '#6B5327'];
+      return "font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:" +
+        c[0] + ';color:' + c[1];
+    };
+
+    const resList = st.dbReservations.filter(r => st.resFilter === 'TODAS' || r.status === st.resFilter);
+    const pendingN = st.dbReservations.filter(r => r.status === 'PENDIENTE').length;
+
+    const filterBtn = (id, label) => ({
+      label,
+      onClick: () => this.setState({ resFilter: id }),
+      style: "border-radius:999px;padding:9px 16px;cursor:pointer;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;background:" +
+        (st.resFilter === id ? '#2A1F15' : 'transparent') + ';color:' + (st.resFilter === id ? '#FFF9F2' : '#6B5A49') +
+        ';border:1px solid ' + (st.resFilter === id ? '#2A1F15' : '#DCCDBA')
+    });
+
+    const waAdmin = raw => {
+      const d = digits(raw);
+      if (!d) return '';
+      return 'https://wa.me/' + (d.startsWith('595') ? d : d.startsWith('0') ? '595' + d.slice(1) : '595' + d);
+    };
+
+    const saved = st.cfgSaved || {};
+    const fieldNum = (key, col, label, value, hint) => ({
+      label, value: miles(value), hint: hint || '',
+      onChange: e => this.cfgSet(key, col, Number(digits(e.target.value)) || 0),
+      status: saved[key] === 'saving' ? 'Guardando…' : saved[key] === 'saved' ? 'Guardado' : saved[key] === 'error' ? 'No se pudo guardar' : '',
+      statusColor: saved[key] === 'error' ? '#8E4C28' : '#5B6B37'
+    });
+    const fieldPlain = (key, col, label, value, hint) => ({
+      label, value: String(value), hint: hint || '',
+      onChange: e => this.cfgSet(key, col, Number(digits(e.target.value)) || 0),
+      status: saved[key] === 'saving' ? 'Guardando…' : saved[key] === 'saved' ? 'Guardado' : saved[key] === 'error' ? 'No se pudo guardar' : '',
+      statusColor: saved[key] === 'error' ? '#8E4C28' : '#5B6B37'
+    });
+    const fieldTxt = (key, col, label, value, hint) => ({
+      label, value: String(value), hint: hint || '',
+      onChange: e => this.cfgSet(key, col, e.target.value),
+      status: saved[key] === 'saving' ? 'Guardando…' : saved[key] === 'saved' ? 'Guardado' : saved[key] === 'error' ? 'No se pudo guardar' : '',
+      statusColor: saved[key] === 'error' ? '#8E4C28' : '#5B6B37'
+    });
+
+    const c = st.dbCfg || {};
+    const val = (col, d) => (c[col] != null ? c[col] : d);
+    const cal = this.adminCalendar();
+
+    const mrM = this.modalityById(st.mrModality);
+    const mrPeople = Math.max(1, Number(digits(st.mrPeople)) || (mrM ? mrM.included : 1));
+    const mrSuggested = st.mrDate ? this.priceFor(st.mrModality, st.mrShift, mrPeople) : 0;
+
+    const promoOn = st.dbCfg ? !!st.dbCfg.promo_couple : true;
+
     return {
+      // -------- routing
+      isSite: st.page === 'site',
+      isAdmin: st.page === 'admin',
+      needsLogin: st.page === 'admin' && !st.loggedIn,
+      loggedIn: st.page === 'admin' && st.loggedIn,
+      openAdmin: () => this.goAdmin(),
+      closeAdmin: () => this.closeAdmin(),
+      adminWho: st.adminWho,
+
+      // -------- sitio
+      facilitiesRailStyle: 'display:flex;flex-direction:column',
+      navStyle: mobile
+        ? (st.menuOpen
+          ? "position:absolute;top:100%;left:0;right:0;background:#FFF9F2;border-bottom:1px solid #E7D9C8;display:flex;flex-direction:column;gap:6px;padding:14px 18px 20px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase"
+          : 'display:none')
+        : "display:flex;gap:20px;flex-wrap:wrap;align-items:center;margin-left:auto;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase",
+      headerCtaStyle: "text-decoration:none;background:#2A1F15;color:#FFF9F2;padding:12px 20px;border-radius:999px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap" + (mobile ? ';margin-left:auto' : ''),
+      menuBtnStyle: mobile
+        ? 'width:46px;height:46px;min-width:46px;border-radius:999px;border:1px solid #E0CFBC;background:#FFFDFA;color:#2A1F15;font-size:18px;line-height:1;cursor:pointer'
+        : 'display:none',
+      menuIcon: st.menuOpen ? '✕' : '☰',
+      toggleMenu: () => this.setState({ menuOpen: !st.menuOpen }),
+      closeMenu: () => this.setState({ menuOpen: false }),
       benefits: BENEFITS.map(b => ({ n: b[0], title: b[1], text: b[2] })),
-      categories: CATS.map(c => ({
-        label: c,
-        onClick: () => this.setState({ cat: c, showAll: false }),
+      categories: CATS.map(cc => ({
+        label: cc,
+        onClick: () => this.setState({ cat: cc, galIndex: 0, dragDx: 0 }),
         style: "background:none;border:none;padding:0 0 5px;cursor:pointer;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:" +
-          (st.cat === c ? '#8E4C28' : '#6B5A49') + ';border-bottom:2px solid ' + (st.cat === c ? '#8E4C28' : 'transparent')
+          (st.cat === cc ? '#2A1F15' : '#6B5A49') + ';border-bottom:1px solid ' + (st.cat === cc ? '#2A1F15' : 'transparent')
       })),
-      visiblePhotos: visible.map((p, i) => {
-        const hero = i === 0 && !st.showAll;
-        const shapes = ['24px', '999px 999px 24px 24px', '24px 999px 24px 999px', '24px', '999px 24px 999px 24px'];
-        return {
-          slotId: 'v2-' + p.id, label: p.label,
-          wrapStyle: 'height:' + (hero ? 'clamp(260px,34vw,420px)' : 'clamp(180px,22vw,260px)') +
-            ';border-radius:' + (hero ? '28px' : shapes[i % shapes.length]) +
-            ';overflow:hidden;cursor:zoom-in;grid-column:span ' + (hero ? '2' : '1'),
-          onClick: () => this.setState({ lightbox: p.id })
-        };
-      }),
-      galleryToggleLabel: st.showAll ? 'Ver menos' : 'Ver todas las fotos',
-      toggleAllPhotos: () => this.setState({ showAll: !st.showAll }),
+      carouselPhotos: filtered.map(p => ({ slotId: 'v2g-' + p.id, label: p.label, src: p.src })),
+      carouselThumbs: filtered.map((p, i) => ({
+        slotId: 'v2t-' + p.id, label: p.label, src: p.src,
+        onClick: () => this.goGal(i),
+        style: 'position:relative;flex:0 0 auto;height:100%;width:' + (i === gi ? '120px' : '35px') +
+          ';min-width:0;min-height:0;margin:0 ' + (i === gi ? '2px' : '0') + ';padding:0;border:none;border-radius:8px;overflow:hidden;cursor:pointer;background:#EFE7DC;transition:width .3s ease,margin .3s ease;opacity:' +
+          (i === gi ? '1' : '0.72')
+      })),
+      trackStyle: 'display:flex;transform:translateX(calc(' + (-gi * 100) + '% + ' + st.dragDx + 'px));' +
+        (st.dragging ? '' : 'transition:transform .45s cubic-bezier(.22,.61,.36,1);') + 'cursor:grab;touch-action:pan-y',
+      trackRef: this.trackRef,
+      thumbsRef: this.thumbsRef,
+      galCounter: (filtered.length ? gi + 1 : 0) + ' / ' + filtered.length,
+      galCurrentLabel: filtered.length ? filtered[gi].label : '',
+      galPrev: () => this.stepGal(-1),
+      galNext: () => this.stepGal(1),
+      prevStyle: 'position:absolute;left:14px;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;padding-bottom:4px;background:#FFF9F2;color:#2A1F15;box-shadow:0 6px 18px rgba(42,31,21,0.25);z-index:2;cursor:' + (gi === 0 ? 'not-allowed' : 'pointer') + ';opacity:' + (gi === 0 ? '0.4' : '0.88'),
+      nextStyle: 'position:absolute;right:14px;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;padding-bottom:4px;background:#FFF9F2;color:#2A1F15;box-shadow:0 6px 18px rgba(42,31,21,0.25);z-index:2;cursor:' + (gi >= filtered.length - 1 ? 'not-allowed' : 'pointer') + ';opacity:' + (gi >= filtered.length - 1 ? '0.4' : '0.88'),
+      openCurrent: () => { if (filtered.length) this.setState({ lightbox: filtered[gi].id }); },
+      dragStart: (e) => { this._drag = { x: e.clientX, w: this.trackRef.current ? this.trackRef.current.offsetWidth : 1 }; this.setState({ dragging: true }); },
+      dragMove: (e) => { if (this._drag) this.setState({ dragDx: (e.clientX - this._drag.x) * 0.9 }); },
+      dragEnd: (e) => {
+        if (!this._drag) return;
+        const dx = e.clientX - this._drag.x, w = this._drag.w;
+        this._drag = null;
+        this.setState({ dragging: false, dragDx: 0 });
+        if (Math.abs(dx) > w * 0.2) this.stepGal(dx > 0 ? -1 : 1);
+      },
       lightboxOpen: !!lb,
-      lightboxSlotId: lb ? 'v2-' + lb.id : '',
+      lightboxSlotId: lb ? 'v2g-' + lb.id : '',
+      lightboxSrc: lb ? lb.src : '',
       lightboxLabel: lb ? lb.label : '',
       closeLightbox: () => this.setState({ lightbox: null }),
 
@@ -747,7 +1593,7 @@ class Component extends DCLogic {
       isDone: st.view === 'done',
       raceError: st.raceError,
       progress: [1, 2, 3, 4, 5, 6].map(n => ({
-        style: 'flex:1;height:3px;border-radius:99px;background:' + (n <= st.step ? '#A55F35' : '#EADDCB')
+        style: 'flex:1;height:3px;border-radius:99px;background:' + (n <= st.step ? '#5B6B37' : '#E8DDCE')
       })),
       monthLabel: MESES[ref.m] + ' ' + ref.y,
       weekdays: DIAS,
@@ -785,15 +1631,33 @@ class Component extends DCLogic {
         { k: 'Personas', v: String(people) },
         { k: 'A nombre de', v: st.name }
       ],
-      confirm: () => {
+      confirm: async () => {
         if (!st.date || !ss || this.slotState(st.date, ss.id) !== 'available') {
           this.setState({ raceError: true, step: 1, date: null, modality: null, shift: null });
           return;
         }
-        const d = new Date(st.date + 'T12:00:00');
-        const dd = String(d.getDate()).padStart(2, '0') + String(d.getMonth() + 1).padStart(2, '0') + String(d.getFullYear()).slice(2);
-        const suffix = hash(st.date + ss.id + st.name + Date.now()).toString(16).slice(0, 4).toUpperCase();
-        this.setState({ view: 'hold', code: 'QRV-' + dd + '-' + suffix, raceError: false });
+        const code = this.newCode(st.date, ss.id, st.name);
+        const supa = this.supa();
+        if (supa) {
+          // El índice único de (fecha, turno) hace de árbitro: si dos personas
+          // confirman el mismo turno al mismo tiempo, la segunda recibe error.
+          const r = await supa.from('reservations').insert({
+            code, name: st.name, phone: st.phone, date: st.date,
+            modality: sm.id, shift: ss.id, people,
+            total: this.total(), deposit: this.deposit(),
+            status: 'PENDIENTE', source: 'web'
+          });
+          if (r.error) {
+            this.setState({ raceError: true, step: 1, view: 'stepper', date: null, modality: null, shift: null });
+            this.hydrate();
+            return;
+          }
+        }
+        this.setState(s => ({
+          view: 'hold', code, raceError: false,
+          dbSlots: Object.assign({}, s.dbSlots, { [st.date + '|' + ss.id]: 'pending' })
+        }));
+        this.hydrate();
       },
       code: st.code,
       copyAlias: () => this.copy(cfg.alias, 'alias'),
@@ -803,7 +1667,131 @@ class Component extends DCLogic {
       whatsappUrl: 'https://wa.me/' + cfg.whatsapp + '?text=' + encodeURIComponent(msg),
       whatsappPlain: 'https://wa.me/' + cfg.whatsapp,
       markSent: () => setTimeout(() => this.setState({ view: 'done' }), 400),
-      restart: () => this.setState({ view: 'stepper', step: 1, date: null, modality: null, shift: null, people: null, name: '', phone: '', code: '' })
+      restart: () => this.setState({ view: 'stepper', step: 1, date: null, modality: null, shift: null, people: null, name: '', phone: '', code: '' }),
+
+      // -------- panel: login
+      adminEmail: st.adminEmail, adminPass: st.adminPass, loginError: st.loginError,
+      onAdminEmail: e => this.setState({ adminEmail: e.target.value, loginError: '' }),
+      onAdminPass: e => this.setState({ adminPass: e.target.value, loginError: '' }),
+      onLoginKey: e => { if (e.key === 'Enter') this.doLogin(); },
+      doLogin: () => this.doLogin(),
+
+      // -------- panel: tabs
+      adminTabs: [tab('res', 'Reservas'), tab('cal', 'Calendario'), tab('gal', 'Galería'), tab('cfg', 'Configuración')],
+      tabRes: st.adminTab === 'res', tabCal: st.adminTab === 'cal',
+      tabGal: st.adminTab === 'gal', tabCfg: st.adminTab === 'cfg',
+      dbWarning: st.dbError
+        ? 'No se pudo leer la base: ' + st.dbError + ' — revisá que el schema `quintarv` esté en Exposed schemas de Supabase.'
+        : '',
+
+      // -------- panel: reservas
+      pendingCount: pendingN === 1 ? '1 pendiente' : pendingN + ' pendientes',
+      resFilters: [filterBtn('PENDIENTE', 'Pendientes'), filterBtn('CONFIRMADA', 'Confirmadas'), filterBtn('RECHAZADA', 'Rechazadas'), filterBtn('TODAS', 'Todas')],
+      noReservations: resList.length === 0,
+      noReservationsTxt: st.resFilter === 'TODAS' ? 'Todavía no hay reservas.' : 'No hay reservas en este estado.',
+      reservations: resList.map(r => ({
+        code: r.code, name: r.name, phone: r.phone,
+        waLink: waAdmin(r.phone),
+        status: r.status, badgeStyle: badgeStyle(r.status),
+        origin: r.source === 'manual' ? 'a mano' : 'web',
+        created: new Date(r.created_at).toLocaleString('es-PY', { dateStyle: 'short', timeStyle: 'short' }),
+        dateTxt: this.shortDate(r.date),
+        shiftTxt: SHIFT_NAME[r.shift] || r.shift,
+        modalityTxt: MODALITY_NAME[r.modality] || r.modality,
+        people: String(r.people),
+        money: gs(r.total) + ' / ' + (r.deposit != null ? miles(r.deposit) : miles(r.total * cfg.depositPct / 100)),
+        actionable: r.status === 'PENDIENTE',
+        reopenable: r.status === 'RECHAZADA' || r.status === 'VENCIDA',
+        approve: () => this.decide(r.code, 'CONFIRMADA'),
+        reject: () => this.decide(r.code, 'RECHAZADA')
+      })),
+
+      // -------- panel: calendario
+      adminDays: cal.cells,
+      adminMonthLabel: cal.label,
+      adminPrevMonth: () => this.setState({ adminMonth: cal.ref.m === 0 ? { y: cal.ref.y - 1, m: 11 } : { y: cal.ref.y, m: cal.ref.m - 1 } }),
+      adminNextMonth: () => this.setState({ adminMonth: cal.ref.m === 11 ? { y: cal.ref.y + 1, m: 0 } : { y: cal.ref.y, m: cal.ref.m + 1 } }),
+      adminLegend: [
+        { label: 'Libre', bg: '#FFFFFF', border: '#C9D3B2' },
+        { label: 'Pendiente', bg: '#F9EBD1', border: '#F1DDB4' },
+        { label: 'Reservado', bg: '#BE3B36', border: '#BE3B36' },
+        { label: 'Bloqueado', bg: '#26221E', border: '#26221E' }
+      ],
+
+      // -------- panel: reserva a mano
+      mrName: st.mrName, mrPhone: st.mrPhone, mrDate: st.mrDate,
+      mrModality: st.mrModality, mrShift: st.mrShift,
+      mrPeople: st.mrPeople, mrTotal: st.mrTotal ? miles(Number(digits(st.mrTotal))) : '',
+      mrDeposit: st.mrDeposit ? miles(Number(digits(st.mrDeposit))) : '',
+      mrTotalHint: mrSuggested ? miles(mrSuggested) : '0',
+      mrDepositHint: mrSuggested ? miles(Math.round(mrSuggested * cfg.depositPct / 100)) : '0',
+      mrHint: mrSuggested
+        ? 'Si dejás los montos vacíos se guarda el precio de lista: ' + gs(mrSuggested) + ' con ' + gs(Math.round(mrSuggested * cfg.depositPct / 100)) + ' de seña.'
+        : 'Elegí la fecha y el turno y te calculo el precio de lista.',
+      mrError: st.mrError, mrSaved: st.mrSaved,
+      onMrName: e => this.setState({ mrName: e.target.value, mrError: '', mrSaved: false }),
+      onMrPhone: e => this.setState({ mrPhone: e.target.value.replace(/[^\d\s+()-]/g, ''), mrError: '', mrSaved: false }),
+      onMrDate: e => this.setState({ mrDate: e.target.value, mrError: '', mrSaved: false }),
+      onMrModality: e => this.setState({ mrModality: e.target.value, mrError: '', mrSaved: false }),
+      onMrShift: e => this.setState({ mrShift: e.target.value, mrError: '', mrSaved: false }),
+      onMrPeople: e => this.setState({ mrPeople: digits(e.target.value), mrError: '', mrSaved: false }),
+      onMrTotal: e => this.setState({ mrTotal: digits(e.target.value), mrError: '', mrSaved: false }),
+      onMrDeposit: e => this.setState({ mrDeposit: digits(e.target.value), mrError: '', mrSaved: false }),
+      saveManual: () => this.saveManual(),
+
+      // -------- panel: galería
+      uploading: st.uploading, uploadProgress: st.uploadProgress,
+      onUploadPhotos: e => this.uploadPhotos(e.target.files),
+      photosCount: st.dbGallery == null ? 'Cargando…'
+        : st.dbGallery.length === 1 ? '1 foto' : st.dbGallery.length + ' fotos',
+      hasPhotos: !!(st.dbGallery && st.dbGallery.length),
+      noPhotos: !!(st.dbGallery && st.dbGallery.length === 0),
+      adminPhotos: (st.dbGallery || []).map(g => ({
+        id: g.id, src: this.photoUrl(g.path), cat: g.category,
+        onChangeCat: e => this.setPhotoCat(g.id, e.target.value),
+        moveUp: () => this.movePhoto(g.id, -1),
+        moveDown: () => this.movePhoto(g.id, +1),
+        remove: () => this.removePhoto(g.id, g.path)
+      })),
+
+      // -------- panel: configuración
+      settingsGroups: [
+        {
+          title: 'Precios por turno',
+          fields: [
+            fieldNum('fullDay', 'price_full_day', 'Quinta completa · día (Gs.)', val('price_full_day', 900000)),
+            fieldNum('fullNight', 'price_full_night', 'Quinta completa · noche (Gs.)', val('price_full_night', 1100000)),
+            fieldNum('coupleDay', 'price_couple_day', 'Promo pareja · día (Gs.)', val('price_couple_day', 450000)),
+            fieldNum('coupleNight', 'price_couple_night', 'Promo pareja · noche (Gs.)', val('price_couple_night', 550000)),
+            fieldNum('extra', 'price_extra_person', 'Persona adicional (Gs.)', val('price_extra_person', 50000))
+          ]
+        },
+        {
+          title: 'Capacidad y horarios',
+          fields: [
+            fieldPlain('incFull', 'included_full', 'Personas incluidas · quinta completa', val('included_full', 15)),
+            fieldPlain('maxFull', 'max_full', 'Máximo de personas · quinta completa', val('max_full', 25)),
+            fieldPlain('maxCouple', 'max_couple', 'Personas · promo pareja', val('max_couple', 2)),
+            fieldTxt('dayTime', 'day_time', 'Horario del turno día', val('day_time', '10:00 – 18:00')),
+            fieldTxt('nightTime', 'night_time', 'Horario del turno noche', val('night_time', '19:00 – 03:00'))
+          ]
+        },
+        {
+          title: 'Reservas y contacto',
+          fields: [
+            fieldPlain('depositPct', 'deposit_pct', 'Porcentaje de seña (%)', val('deposit_pct', 30)),
+            fieldPlain('hold', 'hold_minutes', 'Vencimiento de la pre-reserva (min)', val('hold_minutes', 30)),
+            fieldTxt('alias', 'alias', 'Alias de transferencia', val('alias', 'quintarv.py')),
+            fieldTxt('wa', 'whatsapp', 'WhatsApp', val('whatsapp', '595981123456'),
+              cfg.whatsapp ? 'Los mensajes van a wa.me/' + cfg.whatsapp : 'Escribí el número con el código: 595981123456')
+          ]
+        }
+      ],
+      promoLabel: promoOn ? 'Activa' : 'Apagada',
+      promoStyle: "border-radius:999px;padding:13px 26px;cursor:pointer;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;border:1px solid " +
+        (promoOn ? '#5B6B37' : '#DCCDBA') + ';background:' + (promoOn ? '#5B6B37' : 'transparent') +
+        ';color:' + (promoOn ? '#FFF9F2' : '#6B5A49'),
+      togglePromo: () => this.cfgSet('promo', 'promo_couple', !promoOn)
     };
   }
 }

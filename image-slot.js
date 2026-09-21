@@ -171,8 +171,8 @@
 
   function load() {
     if (loadP) return loadP;
-    // Static hosts (Vercel) do not serve dotfiles, so fall back to the same
-    // sidecar without the leading dot when the dotted one 404s.
+    // Los hosts estaticos (Vercel) no sirven dotfiles: si el sidecar con
+    // punto da 404, probamos el mismo archivo sin punto.
     loadP = fetch(STATE_FILE)
       .then((r) => (r.ok ? r : fetch(STATE_FILE.replace(/^[.]/, ''))))
       .then((r) => (r.ok ? r.json() : null))
