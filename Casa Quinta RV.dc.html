@@ -770,7 +770,7 @@
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:14px">
               <sc-for list="{{ g.fields }}" as="f" hint-placeholder-count="4">
                 <div>
-                  <label style="display:block;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#6B5A49;margin-bottom:7px">{{ f.label }}</label>
+                  <label style="display:flex;align-items:flex-end;min-height:28px;line-height:1.45;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#6B5A49;margin-bottom:7px">{{ f.label }}</label>
                   <input value="{{ f.value }}" onChange="{{ f.onChange }}" style="width:100%;padding:14px;font-size:15px;border:1px solid #E0CFBC;border-radius:10px;background:#FFFDFA;outline:none;color:#2A1F15" />
                   <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:6px">
                     <span style="font-size:11.5px;color:#8A7866">{{ f.hint }}</span>
@@ -945,7 +945,10 @@ class Component extends DCLogic {
 
   photoUrl(path) {
     if (!path) return '';
-    if (path.startsWith('http') || path.startsWith('uploads/')) return path;
+    if (path.startsWith('http')) return path;
+    // Las fotos que vinieron con el diseno viven en el repo. Absoluta, para que
+    // tambien resuelvan desde /admin y no cuelguen de la ruta actual.
+    if (path.startsWith('uploads/')) return '/' + path;
     const supa = this.supa();
     if (!supa) return '';
     const { data } = supa.storage.from('quintarv-photos').getPublicUrl(path);
@@ -1770,8 +1773,8 @@ class Component extends DCLogic {
         {
           title: 'Capacidad y horarios',
           fields: [
-            fieldPlain('incFull', 'included_full', 'Personas incluidas · quinta completa', val('included_full', 15)),
-            fieldPlain('maxFull', 'max_full', 'Máximo de personas · quinta completa', val('max_full', 25)),
+            fieldPlain('incFull', 'included_full', 'Incluidas · quinta completa', val('included_full', 15)),
+            fieldPlain('maxFull', 'max_full', 'Máximo · quinta completa', val('max_full', 25)),
             fieldPlain('maxCouple', 'max_couple', 'Personas · promo pareja', val('max_couple', 2)),
             fieldTxt('dayTime', 'day_time', 'Horario del turno día', val('day_time', '10:00 – 18:00')),
             fieldTxt('nightTime', 'night_time', 'Horario del turno noche', val('night_time', '19:00 – 03:00'))
@@ -1781,7 +1784,7 @@ class Component extends DCLogic {
           title: 'Reservas y contacto',
           fields: [
             fieldPlain('depositPct', 'deposit_pct', 'Porcentaje de seña (%)', val('deposit_pct', 30)),
-            fieldPlain('hold', 'hold_minutes', 'Vencimiento de la pre-reserva (min)', val('hold_minutes', 30)),
+            fieldPlain('hold', 'hold_minutes', 'Vencimiento pre-reserva (min)', val('hold_minutes', 30)),
             fieldTxt('alias', 'alias', 'Alias de transferencia', val('alias', 'quintarv.py')),
             fieldTxt('wa', 'whatsapp', 'WhatsApp', val('whatsapp', '595981123456'),
               cfg.whatsapp ? 'Los mensajes van a wa.me/' + cfg.whatsapp : 'Escribí el número con el código: 595981123456')
