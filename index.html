@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -55,7 +55,7 @@
     <a href="#inicio" style="text-decoration:none;display:flex;align-items:center;gap:10px;flex:none;min-width:0">
       <img src="/favicon-96.png" alt="Casa Quinta RV" style="{{ brandLogoStyle }}" />
       <span style="display:flex;align-items:baseline;gap:9px">
-        <span style="{{ brandNameStyle }}">Quinta RV</span>
+        <span translate="no" style="{{ brandNameStyle }}">Quinta RV</span>
         <span style="{{ brandTagStyle }}">Yukyry</span>
       </span>
     </a>
@@ -263,7 +263,7 @@
               </div>
               <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin-bottom:8px">
                 <sc-for list="{{ weekdays }}" as="w" hint-placeholder-count="7">
-                  <p style="margin:0;text-align:center;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#6E5C48">{{ w }}</p>
+                  <p translate="no" style="margin:0;text-align:center;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#6E5C48">{{ w }}</p>
                 </sc-for>
               </div>
               <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px">
@@ -647,7 +647,7 @@
           </div>
           <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px">
             <sc-for list="{{ weekdays }}" as="w" hint-placeholder-count="7">
-              <div style="text-align:center;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#8A7866;padding:4px 0">{{ w }}</div>
+              <div translate="no" style="text-align:center;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#8A7866;padding:4px 0">{{ w }}</div>
             </sc-for>
           </div>
           <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px">
